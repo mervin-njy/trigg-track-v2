@@ -1,6 +1,6 @@
 # trigg-track-v2
 
-Reiterated version of [trigg.track](https://github.com/mervin-njy/trigg-track), with the following key differences mostly in technologies used:
+Reiterated version of [trigg.track.](https://github.com/mervin-njy/trigg-track), with the following key differences mostly in technologies used:
 
 |    **Trigg.Track.** | **v1**                | **v2**                |
 |---------------------|-----------------------|-----------------------|
@@ -20,7 +20,7 @@ There are two main types of users.
 |       **User type** | **Health loggers**                                                     | **Service Providers** |
 |--------------------:|------------------------------------------------------------------------|-----------------------|
 |             Purpose | 1. To log daily data regarding health condition and variables to track | 1. To                 |
-|                     | 2. To view history of recorded data in various assortment.             |                       |
-|                     | 3. To key in                                                           |                       |
+|                       2. To view history of recorded data in various assortment.             |                       |
+|                       3. To key in                                                           |                       |
 | Profile information | 1                                                                      | 1                     |
 |           Functions | 1                                                                      | 1                     |
