@@ -11,8 +11,6 @@ Reiterated version of [trigg.track.](https://github.com/mervin-njy/trigg-track),
 | User Authentication | -                     | yes                   |
 |  Data visualization | -                     | yes                   |
 
-The server side repository can be found [here](https://github.com/mervin-njy/trigg-track-v2_client).
-
 ## Diagrams
 
 ### User Authentication
@@ -47,4 +45,4 @@ There are two main types of users.
 
 ### Database tables & relationships
 
-![database tables & relationships](diagrams/database_tables_relationships.drawio.svg)
+![database tables & relationships](./diagrams/database_tables_relationships.drawio.svg)
