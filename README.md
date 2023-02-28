@@ -1,9 +1,9 @@
-# trigg-track-v2
+# Trigg.Track. v2
 
 Reiterated version of [trigg.track.](https://github.com/mervin-njy/trigg-track), with the following key differences mostly in technologies used:
 
-|    **Trigg.Track.** | **v1**                | **v2**                |
-|---------------------|-----------------------|-----------------------|
+|   **Trigg.Track.**  |         **v1**        |         **v2**        |
+|:-------------------:|:---------------------:|:---------------------:|
 |               Model | NoSQL - Firestore     | SQL - PostgreSQL      |
 |          Controller | -                     | Express with Node.js  |
 |                View | React with JavaScript | React with TypeScript |
