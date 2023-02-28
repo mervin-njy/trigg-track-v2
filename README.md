@@ -13,6 +13,8 @@ Reiterated version of [trigg.track.](https://github.com/mervin-njy/trigg-track),
 
 The server side repository can be found [here](https://github.com/mervin-njy/trigg-track-v2_client).
 
+## Diagrams
+
 ### User Authentication
 
 There are two main types of users. 
@@ -42,3 +44,7 @@ There are two main types of users.
 |                     | 9. To communicate with SPs                                                                                                                           | "                                                                                                                                              | yes               |
 |                     | 10. To add review comments for SPs                                                                                                                   | "                                                                                                                                              | -                 |
 |                     | 11. To communicate with other HLs in another platform                                                                                                | -                                                                                                                                              | yes               |
+
+### Database tables & relationships
+
+![database tables & relationships](diagrams/database_tables_relationships.drawio.svg)
