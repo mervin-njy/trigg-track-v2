@@ -3,7 +3,7 @@
 Reiterated version of [trigg.track.](https://github.com/mervin-njy/trigg-track), with the following key differences mostly in technologies used:
 
 |    **Trigg.Track.** | **v1**                | **v2**                |
-|--------------------:|-----------------------|-----------------------|
+| ------------------: | --------------------- | --------------------- |
 |               Model | NoSQL - Firestore     | SQL - PostgreSQL      |
 |          Controller | -                     | Express with Node.js  |
 |                View | React with JavaScript | React with TypeScript |
@@ -15,10 +15,10 @@ Reiterated version of [trigg.track.](https://github.com/mervin-njy/trigg-track),
 
 ### User Authentication
 
-There are two main types of users. 
+There are two main types of users.
 
 |       **User type** | **Health loggers (HL)**                                                                                                                              | **Service Providers (SP)**                                                                                                                     | **Stretch Goal?** |
-|--------------------:|------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|-------------------|
+| ------------------: | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
 |             Purpose | To log daily data regarding health condition and variables. By tracking potential triggers, one can seek external help to plan for lifestyle change. | To promote services, browse and connect with potential customers. Track conditions of existing customers, provide consultations and solutions. | NA                |
 | Profile information | 1. username                                                                                                                                          | "                                                                                                                                              | -                 |
 |                     | 2. password                                                                                                                                          | "                                                                                                                                              | -                 |
@@ -46,3 +46,18 @@ There are two main types of users.
 ### Database tables & relationships
 
 ![database tables & relationships](./diagrams/database/database_tables_relationships.drawio.svg)
+
+## Dependencies
+
+### Client:
+
+1. npm i -D tailwindcss
+2. npx tailwindcss init
+
+### Server:
+
+1. npm init -y
+2. npm i express nodemon
+3. npm i express-validator
+4. npm i cors dotenv
+5. npm i express-session bcrypt
