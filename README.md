@@ -45,4 +45,4 @@ There are two main types of users.
 
 ### Database tables & relationships
 
-![database tables & relationships](./diagrams/database_tables_relationships.drawio.svg)
+![database tables & relationships](./diagrams/database/database_tables_relationships.drawio.svg)
