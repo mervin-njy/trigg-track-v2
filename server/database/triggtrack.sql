@@ -4,8 +4,6 @@
 
 BEGIN;
 
--- SET client_encoding = 'LATIN1';
-
 CREATE TABLE IF NOT EXIST "user" (
     username VARCHAR(100) NOT NULL PRIMARY KEY,
     hash VARCHAR(100) NOT NULL,
@@ -22,18 +20,39 @@ CREATE TABLE IF NOT EXIST "user" (
 );
 
 CREATE TABLE IF NOT EXIST "logger_service" (
-  username VARCHAR(100) NOT NULL,
+  username VARCHAR(100) NOT NULL PRIMARY KEY,
   associated_username VARCHAR(100) NOT NULL,
   status VARCHAR(20) NOT NULL,
   review_date DATE NULL,
-  FOREIGN KEY (user_username)
+  FOREIGN KEY (username)
       REFERENCES user (username),
-  FOREIGN KEY (record_date)
-      REFERENCES user (username),
-  FOREIGN KEY (user_id)
-      REFERENCES accounts (user_id),
+  FOREIGN KEY (review_date)
+      REFERENCES review (date),
   CONSTRAINT status_check CHECK ((status = 'Nil'::text) OR (status = 'Potential'::text) OR (status = 'Requested'::text) OR (status = 'Partnered'::text))
 );
+
+CREATE TABLE IF NOT EXIST "record" (
+  logger_username VARCHAR(100) NOT NULL PRIMARY KEY,
+  date DATE NOT NULL,
+  type VARCHAR(20) NOT NULL,
+  name VARCHAR(100) NOT NULL,
+  category VARCHAR(100) NOT NULL,
+  record_entry_id INT(4)
+  FOREIGN KEY (logger_username)
+      REFERENCES user (username),
+  FOREIGN KEY (record_entry_id)
+      REFERENCES record_entry (id),
+  CONSTRAINT type_check CHECK ((type = 'Condition'::text) OR (status = 'Variable'::text))
+);
+
+CREATE TABLE IF NOT EXIST "record_entry" (
+  id SERIAL NOT NULL PRIMARY KEY,
+  title VARCHAR(50) NOT NULL,
+  item TEXT NOT NULL,
+  image_url TEXT NULL,
+  trigger_tag VARCHAR(100) NOT NULL,
+);
+
 
 COPY city (id, name, countrycode, district, population) FROM stdin;
 1	Kabul	AFG	Kabol	1780000
