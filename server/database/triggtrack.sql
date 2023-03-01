@@ -7,29 +7,32 @@ BEGIN;
 -- SET client_encoding = 'LATIN1';
 
 CREATE TABLE IF NOT EXIST "user" (
-    username VARCHAR(50) NOT NULL PRIMARY KEY,
-    password VARCHAR(50) NOT NULL,
+    username VARCHAR(100) NOT NULL PRIMARY KEY,
+    hash VARCHAR(100) NOT NULL,
     user_type VARCHAR(20) NOT NULL,
+    access_type VARCHAR(20) NOT NULL,
     full_name TEXT NOT NULL,
     profile_picture text NULL,  -- image
     profession VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL,
     bio TEXT NOT NULL,
-    access_type VARCHAR(20) NOT NULL,
+    overall_rating INT(2) NULL,
     CONSTRAINT user_type_check CHECK ((user_type = 'Health Logger'::text) OR (user_type = 'Service Provider'::text))
     CONSTRAINT access_type_check CHECK ((access_type = 'Private'::text) OR (user_type = 'Public'::text) OR (user_type = 'Protected'::text))
 );
 
-CREATE TABLE IF NOT EXIST "user_logger" (
-  user_username VARCHAR(50) NOT NULL PRIMARY KEY,
-  record_dates VARCHAR(50) [] NOT NULL,
-  servicer_usernames VARCHAR(50) [] NOT NULL,
+CREATE TABLE IF NOT EXIST "logger_service" (
+  username VARCHAR(100) NOT NULL,
+  associated_username VARCHAR(100) NOT NULL,
+  status VARCHAR(20) NOT NULL,
+  review_date DATE NULL,
   FOREIGN KEY (user_username)
       REFERENCES user (username),
   FOREIGN KEY (record_date)
       REFERENCES user (username),
   FOREIGN KEY (user_id)
-      REFERENCES accounts (user_id)
+      REFERENCES accounts (user_id),
+  CONSTRAINT status_check CHECK ((status = 'Nil'::text) OR (status = 'Potential'::text) OR (status = 'Requested'::text) OR (status = 'Partnered'::text))
 );
 
 COPY city (id, name, countrycode, district, population) FROM stdin;
