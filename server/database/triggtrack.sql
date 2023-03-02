@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS "user", "record_entry", "record", "triggers", "review", "lo
 -- 1. add online/offline status
 -- 2. add last logged in
 CREATE TABLE "user" (
-    "username" VARCHAR(100) NOT NULL PRIMARY KEY UNIQUE,
+    "username" VARCHAR(100) PRIMARY KEY,
     "hash" VARCHAR(100) NOT NULL,
     "user_type" VARCHAR(20) NOT NULL,
     "access_type" VARCHAR(20) NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE "user" (
 );
 
 CREATE TABLE "record_entry" (
-  "id" SERIAL NOT NULL PRIMARY KEY UNIQUE,
+  "id" SERIAL NOT NULL PRIMARY KEY,
   "title" VARCHAR(50) NOT NULL,
   "item" TEXT NOT NULL,
   "image_url" TEXT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE "record" (
 );
 
 CREATE TABLE "triggers" (
-  "logger_username" VARCHAR(100) NOT NULL PRIMARY KEY,
+  "logger_username" VARCHAR(100) PRIMARY KEY,
   "trigger_condition" VARCHAR(100) NOT NULL,
   "trigger_variable" VARCHAR(100) NOT NULL,
   "trigger_id" INT4 NOT NULL,
@@ -67,7 +67,7 @@ CREATE TABLE "triggers" (
 );
 
 CREATE TABLE "review" (
-  "date" DATE NOT NULL PRIMARY KEY UNIQUE,
+  "date" DATE NOT NULL PRIMARY KEY,
   "logger_review" TEXT NOT NULL,
   "logger_rating" INT2 NOT NULL,
   CONSTRAINT "rating_check" 
@@ -75,13 +75,17 @@ CREATE TABLE "review" (
 );
 
 CREATE TABLE "logger_service" (
-  "username" VARCHAR(100) NOT NULL UNIQUE,
-  "associated_username" VARCHAR(100) NOT NULL,
+  "username" VARCHAR(100),
+  "associated_username" VARCHAR(100),
   "status" VARCHAR(20) NOT NULL,
-  "review_date" DATE NULL PRIMARY KEY,
-  CONSTRAINT "fk_username"
+  "review_date" DATE NULL,
+  PRIMARY KEY ("username", "associated_username"),
+  CONSTRAINT "fk_user"
     FOREIGN KEY ("username")
         REFERENCES "user" ("username"),
+  CONSTRAINT "fk_association"
+    FOREIGN KEY ("associated_username")
+        REFERENCES "user" ("username"),      
   CONSTRAINT "fk_review"
     FOREIGN KEY ("review_date")
         REFERENCES "review" ("date"),
@@ -91,12 +95,13 @@ CREATE TABLE "logger_service" (
 
 CREATE TABLE "comment" (
   "servicer_username" VARCHAR(100) NOT NULL,
+  "logger_username" VARCHAR(100) NOT NULL,
   "servicer_comment" VARCHAR(255) NOT NULL,
   "servicer_response" BOOLEAN NULL,
-  "record_entry_id" INT4 NOT NULL PRIMARY KEY,
+  "record_entry_id" INT4 PRIMARY KEY,
   CONSTRAINT "fk_username"
-    FOREIGN KEY ("servicer_username")
-        REFERENCES "logger_service" ("username"),
+    FOREIGN KEY ("servicer_username", "logger_username")
+        REFERENCES "logger_service" ("username", "associated_username"),    -- ***
   CONSTRAINT "fk_record"
     FOREIGN KEY ("record_entry_id")
         REFERENCES "record_entry" ("id")
@@ -107,13 +112,14 @@ COPY "user" ("username", "hash", "user_type", "access_type", "display_name", "pr
 mervin_njy,mervin123,Health Logger,Public,Ng Jian Yi Mervin,Student,mervin_njy@outlook.com,Long time victim of eczema flares on a daily basis\, gets triggered easily by sweat\, stress\, lack of sleep and probably diet - here to find out! Tries to exercise 1-3 times a week and cook if possible.
 gavin_low,gavin123,Health Logger,Private,Gavin Low,Student,gavin_low@outlook.com,Here for the LOLs.
 amir,amir123,Service Provider,Public,Amir,Dietitian,amir@gmail.com,Inspired by a personal history of poor eating habits\, I draw motivational factors to personalize good habits in your eating patterns.
+izhar,izhar123,Service Provider,Public,Izhar,Dietitian,izhar@gmail.com,Inspired scholar that fixes all problems.
 \.
 
 -- TODO: add image once working
 COPY "record_entry" ("id", "title", "item", "trigger_tag") FROM stdin (DELIMITER ',');
-881234001,location,Home,false
-881234002,1,Pancakes w/ maple syrup,false
-881234003,2,Filtered coffee,false
+881234001,location,Mei cheng food court,false
+881234002,1,Mifen w/ chicken cutlet\, spring rolls & cabbage w/ carrots,false
+881234003,2,Kopi C kosong peng,false
 881234004,location,Putra Minang,false
 881234005,1,Nasi padang w/ beef rendang\, curry cabbage w/ carrots & french beans \, bergedil,false
 881234006,location,Funtea,false
@@ -130,20 +136,10 @@ mervin_njy,2023-03-02,Variable,Diet,Lunch,881234006
 mervin_njy,2023-03-02,Variable,Diet,Lunch,881234007
 \.
 
--- ALTER TABLE ONLY city
---     ADD CONSTRAINT city_pkey PRIMARY KEY (id);
-
--- ALTER TABLE ONLY country
---     ADD CONSTRAINT country_pkey PRIMARY KEY (code);
-
--- ALTER TABLE ONLY countrylanguage
---     ADD CONSTRAINT countrylanguage_pkey PRIMARY KEY (countrycode, "language");
-
--- ALTER TABLE ONLY country
---     ADD CONSTRAINT country_capital_fkey FOREIGN KEY (capital) REFERENCES city(id);
-
--- ALTER TABLE ONLY countrylanguage
---     ADD CONSTRAINT countrylanguage_countrycode_fkey FOREIGN KEY (countrycode) REFERENCES country(code);
+COPY "logger_service" ("username", "associated_username", "status") FROM stdin (DELIMITER ',');
+mervin_njy,amir,Requested
+mervin_njy,izhar,Partnered
+\.
 
 COMMIT;
 
