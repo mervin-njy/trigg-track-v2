@@ -4,7 +4,11 @@
 
 BEGIN;
 
+-- DELETE TABLES BEFORE STARTING ---------------------------------------------------------------------------------------------------------------
+
 DROP TABLE IF EXISTS "user", "record_entry", "record", "triggers", "review", "logger_service", "comment";
+
+-- CREATE TABLES -------------------------------------------------------------------------------------------------------------------------------
 
 -- TODO: 
 -- 1. add online/offline status
@@ -71,7 +75,7 @@ CREATE TABLE "review" (
   "logger_review" TEXT NOT NULL,
   "logger_rating" INT2 NOT NULL,
   CONSTRAINT "rating_check" 
-    CHECK (("logger_rating" > 0) AND ("logger_rating" < 5))
+    CHECK (("logger_rating" > 0) AND ("logger_rating" <= 5))
 );
 
 CREATE TABLE "logger_service" (
@@ -107,23 +111,24 @@ CREATE TABLE "comment" (
         REFERENCES "record_entry" ("id")
 );
 
+-- SEEDING SAMPLE INITIAL DATA ----------------------------------------------------------------------------------------------------------
 
 COPY "user" ("username", "hash", "user_type", "access_type", "display_name", "profession", "email", "bio") FROM stdin (DELIMITER ',');
-mervin_njy,mervin123,Health Logger,Public,Ng Jian Yi Mervin,Student,mervin_njy@outlook.com,Long time victim of eczema flares on a daily basis\, gets triggered easily by sweat\, stress\, lack of sleep and probably diet - here to find out! Tries to exercise 1-3 times a week and cook if possible.
-gavin_low,gavin123,Health Logger,Private,Gavin Low,Student,gavin_low@outlook.com,Here for the LOLs.
-amir,amir123,Service Provider,Public,Amir,Dietitian,amir@gmail.com,Inspired by a personal history of poor eating habits\, I draw motivational factors to personalize good habits in your eating patterns.
-izhar,izhar123,Service Provider,Public,Izhar,Dietitian,izhar@gmail.com,Inspired scholar that fixes all problems.
+mervin_njy,mervin123,Health Logger,Public,Ng Jian Yi Mervin,Student,mervin_njy@outlook.com,"Long time victim of eczema flares on a daily basis\, gets triggered easily by sweat\, stress\, lack of sleep and probably diet - here to find out! Tries to exercise 1-3 times a week and cook if possible."
+gavin_low,gavin123,Health Logger,Private,Gavin Low,Student,gavin_low@outlook.com,"Here for the LOLs."
+amir,amir123,Service Provider,Public,Amir,Dietitian,amir@gmail.com,"Inspired by a personal history of poor eating habits\, I draw motivational factors to personalize good habits in your eating patterns."
+izhar,izhar123,Service Provider,Public,Izhar,Dietitian,izhar@gmail.com,"Inspired scholar that fixes all problems."
 \.
 
 -- TODO: add image once working
 COPY "record_entry" ("id", "title", "item", "trigger_tag") FROM stdin (DELIMITER ',');
-881234001,location,Mei cheng food court,false
-881234002,1,Mifen w/ chicken cutlet\, spring rolls & cabbage w/ carrots,false
-881234003,2,Kopi C kosong peng,false
-881234004,location,Putra Minang,false
-881234005,1,Nasi padang w/ beef rendang\, curry cabbage w/ carrots & french beans \, bergedil,false
-881234006,location,Funtea,false
-881234007,2,Kopi C kosong,false
+881234001,location,"Mei cheng food court",false
+881234002,1,"Mifen w/ chicken cutlet\, spring rolls & cabbage w/ carrots",false
+881234003,2,"Kopi C kosong peng",false
+881234004,location,"Putra Minang",false
+881234005,1,"Nasi padang w/ beef rendang\, curry cabbage w/ carrots & french beans \, bergedil",false
+881234006,location,"Funtea",false
+881234007,2,"Kopi C kosong",false
 \.
 
 COPY "record" ("logger_username", "date", "type", "name", "category", "record_entry_id") FROM stdin (DELIMITER ',');
@@ -142,7 +147,17 @@ mervin_njy,izhar,Partnered
 \.
 
 COPY "comment" ("servicer_username", "logger_username", "servicer_comment", "servicer_response", "record_entry_id") FROM stdin (DELIMITER ',');
-izhar,mervin_njy,That\'s nice\, but curry contains coconut milk... Try to avoid. And bojio?,false,881234005
+izhar,mervin_njy,"That\'s nice\, but curry contains coconut milk... Try to avoid. And bojio?",false,881234005
 \.
+
+COPY "review" ("date", "logger_review", "logger_rating") FROM stdin (DELIMITER ',');
+2023-03-10,"Fantastic and insightful service. Learnt a lot from the scholar - accurate description in the bio!",5
+\.
+
+COPY "triggers" ("logger_username","trigger_condition", "trigger_variable", "trigger_id") FROM stdin (DELIMITER ',');
+mervin_njy,"Eczema","Diet",881234005
+\.
+
+-- COMMIT ------------------------------------------------------------------------------------------------------------------------------------------
 
 COMMIT;
