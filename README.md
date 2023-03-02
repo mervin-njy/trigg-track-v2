@@ -59,5 +59,5 @@ There are two main types of users.
 1. npm init -y
 2. npm i express nodemon
 3. npm i express-validator
-4. npm i cors dotenv
+4. npm i pg cors dotenv
 5. npm i express-session bcrypt
