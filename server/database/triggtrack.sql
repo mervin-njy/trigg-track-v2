@@ -53,16 +53,29 @@ CREATE TABLE IF NOT EXIST "triggers" (
 );
 
 CREATE TABLE IF NOT EXIST "logger_service" (
-  username VARCHAR(100) NOT NULL PRIMARY KEY,
+  username VARCHAR(100) NOT NULL,
   associated_username VARCHAR(100) NOT NULL,
   status VARCHAR(20) NOT NULL,
-  review_date DATE NULL,
+  review_date DATE NULL PRIMARY KEY,
   FOREIGN KEY (username)
       REFERENCES user (username),
   FOREIGN KEY (review_date)
       REFERENCES review (date),
   CONSTRAINT status_check CHECK ((status = 'Nil'::text) OR (status = 'Potential'::text) OR (status = 'Requested'::text) OR (status = 'Partnered'::text))
 );
+
+CREATE TABLE IF NOT EXIST "comment" (
+  servicer_username VARCHAR(100) NOT NULL,
+  servicer_comment VARCHAR(255) NOT NULL,
+  servicer_response BOOLEAN NULL,
+  record_entry_id INT(4) NOT NULL PRIMARY KEY,
+  FOREIGN KEY (servicer_username)
+      REFERENCES logger_service (username),
+  FOREIGN KEY (record_entry_id)
+      REFERENCES record_entry (id),
+);
+
+
 
 
 COPY city (id, name, countrycode, district, population) FROM stdin;
