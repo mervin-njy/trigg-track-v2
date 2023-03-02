@@ -75,16 +75,16 @@ CREATE TABLE "review" (
 );
 
 CREATE TABLE "logger_service" (
-  "username" VARCHAR(100),
-  "associated_username" VARCHAR(100),
+  "logger_username" VARCHAR(100),
+  "servicer_username" VARCHAR(100),
   "status" VARCHAR(20) NOT NULL,
   "review_date" DATE NULL,
-  PRIMARY KEY ("username", "associated_username"),
-  CONSTRAINT "fk_user"
-    FOREIGN KEY ("username")
+  PRIMARY KEY ("logger_username", "servicer_username"),
+  CONSTRAINT "fk_logger"
+    FOREIGN KEY ("logger_username")
         REFERENCES "user" ("username"),
-  CONSTRAINT "fk_association"
-    FOREIGN KEY ("associated_username")
+  CONSTRAINT "fk_servicer"
+    FOREIGN KEY ("servicer_username")
         REFERENCES "user" ("username"),      
   CONSTRAINT "fk_review"
     FOREIGN KEY ("review_date")
@@ -101,7 +101,7 @@ CREATE TABLE "comment" (
   "record_entry_id" INT4 PRIMARY KEY,
   CONSTRAINT "fk_username"
     FOREIGN KEY ("servicer_username", "logger_username")
-        REFERENCES "logger_service" ("username", "associated_username"),    -- ***
+        REFERENCES "logger_service" ("servicer_username", "logger_username"),    -- ***
   CONSTRAINT "fk_record"
     FOREIGN KEY ("record_entry_id")
         REFERENCES "record_entry" ("id")
@@ -136,13 +136,13 @@ mervin_njy,2023-03-02,Variable,Diet,Lunch,881234006
 mervin_njy,2023-03-02,Variable,Diet,Lunch,881234007
 \.
 
-COPY "logger_service" ("username", "associated_username", "status") FROM stdin (DELIMITER ',');
+COPY "logger_service" ("logger_username", "servicer_username", "status") FROM stdin (DELIMITER ',');
 mervin_njy,amir,Requested
 mervin_njy,izhar,Partnered
 \.
 
-COMMIT;
+COPY "comment" ("servicer_username", "logger_username", "servicer_comment", "servicer_response", "record_entry_id") FROM stdin (DELIMITER ',');
+izhar,mervin_njy,That\'s nice\, but curry contains coconut milk... Try to avoid. And bojio?,false,881234005
+\.
 
--- ANALYZE city;
--- ANALYZE country;
--- ANALYZE countrylanguage;
+COMMIT;
