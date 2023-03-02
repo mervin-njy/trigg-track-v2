@@ -35,12 +35,14 @@ CREATE TABLE "record_entry" (
 );
 
 CREATE TABLE "record" (
-  "logger_username" VARCHAR(100) NOT NULL PRIMARY KEY,
+  "logger_username" VARCHAR(100) NOT NULL,
   "date" DATE NOT NULL,
   "type" VARCHAR(20) NOT NULL,
   "name" VARCHAR(100) NOT NULL,
   "category" VARCHAR(100) NOT NULL,
   "record_entry_id" INT4 NOT NULL,
+  CONSTRAINT "pk_user_record"
+    PRIMARY KEY("logger_username", "record_entry_id"),
   CONSTRAINT "fk_username"
     FOREIGN KEY ("logger_username")
         REFERENCES "user" ("username"),
@@ -52,10 +54,10 @@ CREATE TABLE "record" (
 );
 
 CREATE TABLE "triggers" (
-  "logger_username" VARCHAR(100) NOT NULL PRIMARY KEY UNIQUE,
+  "logger_username" VARCHAR(100) NOT NULL PRIMARY KEY,
   "trigger_condition" VARCHAR(100) NOT NULL,
   "trigger_variable" VARCHAR(100) NOT NULL,
-  "trigger_id" INT4 NOT NULL UNIQUE,
+  "trigger_id" INT4 NOT NULL,
   CONSTRAINT "fk_username"
     FOREIGN KEY ("logger_username")
         REFERENCES "user" ("username"),
@@ -74,9 +76,9 @@ CREATE TABLE "review" (
 
 CREATE TABLE "logger_service" (
   "username" VARCHAR(100) NOT NULL UNIQUE,
-  "associated_username" VARCHAR(100) NOT NULL UNIQUE,
+  "associated_username" VARCHAR(100) NOT NULL,
   "status" VARCHAR(20) NOT NULL,
-  "review_date" DATE NULL PRIMARY KEY UNIQUE,
+  "review_date" DATE NULL PRIMARY KEY,
   CONSTRAINT "fk_username"
     FOREIGN KEY ("username")
         REFERENCES "user" ("username"),
@@ -88,10 +90,10 @@ CREATE TABLE "logger_service" (
 );
 
 CREATE TABLE "comment" (
-  "servicer_username" VARCHAR(100) NOT NULL UNIQUE,
+  "servicer_username" VARCHAR(100) NOT NULL,
   "servicer_comment" VARCHAR(255) NOT NULL,
   "servicer_response" BOOLEAN NULL,
-  "record_entry_id" INT4 NOT NULL PRIMARY KEY UNIQUE,
+  "record_entry_id" INT4 NOT NULL PRIMARY KEY,
   CONSTRAINT "fk_username"
     FOREIGN KEY ("servicer_username")
         REFERENCES "logger_service" ("username"),
@@ -104,28 +106,29 @@ CREATE TABLE "comment" (
 COPY "user" ("username", "hash", "user_type", "access_type", "display_name", "profession", "email", "bio") FROM stdin (DELIMITER ',');
 mervin_njy,mervin123,Health Logger,Public,Ng Jian Yi Mervin,Student,mervin_njy@outlook.com,Long time victim of eczema flares on a daily basis\, gets triggered easily by sweat\, stress\, lack of sleep and probably diet - here to find out! Tries to exercise 1-3 times a week and cook if possible.
 gavin_low,gavin123,Health Logger,Private,Gavin Low,Student,gavin_low@outlook.com,Here for the LOLs.
-dr_amir,amir123,Service Provider,Public,Amir,Dietician,amir@gmail.com,Inspired by a personal history of poor eating habits\, I draw motivational factors to personalize good habits in your eating patterns.
+amir,amir123,Service Provider,Public,Amir,Dietitian,amir@gmail.com,Inspired by a personal history of poor eating habits\, I draw motivational factors to personalize good habits in your eating patterns.
 \.
 
-COPY "record_entry" ("id", "title", "item", "image_url", "trigger_tag") FROM stdin (DELIMITER ',');
-881234001,location,Home,null,false
-881234002,1,Pancakes w/ maple syrup,null,false
-881234003,2,Filtered coffee,null,false
-881234004,location,Putra Minang,null,false
-881234005,1,Nasi padang w/ beef rendang\, curry cabbage w/ carrots & french beans \, bergedil,null,false
-881234006,location,Funtea,null,false
-881234007,2,Kopi C kosong,null,false
+-- TODO: add image once working
+COPY "record_entry" ("id", "title", "item", "trigger_tag") FROM stdin (DELIMITER ',');
+881234001,location,Home,false
+881234002,1,Pancakes w/ maple syrup,false
+881234003,2,Filtered coffee,false
+881234004,location,Putra Minang,false
+881234005,1,Nasi padang w/ beef rendang\, curry cabbage w/ carrots & french beans \, bergedil,false
+881234006,location,Funtea,false
+881234007,2,Kopi C kosong,false
 \.
 
--- COPY "record" ("logger_username", "date", "type", "name", "category", "record_entry_id") FROM stdin (DELIMITER ',');
--- mervin_njy,2023-03-02,Variable,Diet,Breakfast,881234001
--- mervin_njy,2023-03-02,Variable,Diet,Breakfast,881234002
--- mervin_njy,2023-03-02,Variable,Diet,Breakfast,881234003
--- mervin_njy,2023-03-02,Variable,Diet,Lunch,881234004
--- mervin_njy,2023-03-02,Variable,Diet,Lunch,881234005
--- mervin_njy,2023-03-02,Variable,Diet,Lunch,881234006
--- mervin_njy,2023-03-02,Variable,Diet,Lunch,881234007
--- \.
+COPY "record" ("logger_username", "date", "type", "name", "category", "record_entry_id") FROM stdin (DELIMITER ',');
+mervin_njy,2023-03-02,Variable,Diet,Breakfast,881234001
+mervin_njy,2023-03-02,Variable,Diet,Breakfast,881234002
+mervin_njy,2023-03-02,Variable,Diet,Breakfast,881234003
+mervin_njy,2023-03-02,Variable,Diet,Lunch,881234004
+mervin_njy,2023-03-02,Variable,Diet,Lunch,881234005
+mervin_njy,2023-03-02,Variable,Diet,Lunch,881234006
+mervin_njy,2023-03-02,Variable,Diet,Lunch,881234007
+\.
 
 -- ALTER TABLE ONLY city
 --     ADD CONSTRAINT city_pkey PRIMARY KEY (id);
