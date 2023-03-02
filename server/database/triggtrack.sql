@@ -6,12 +6,15 @@ BEGIN;
 
 DROP TABLE IF EXISTS "user", "record_entry", "record", "triggers", "review", "logger_service", "comment";
 
+-- TODO: 
+-- 1. add online/offline status
+-- 2. add last logged in
 CREATE TABLE "user" (
     "username" VARCHAR(100) NOT NULL PRIMARY KEY UNIQUE,
     "hash" VARCHAR(100) NOT NULL,
     "user_type" VARCHAR(20) NOT NULL,
     "access_type" VARCHAR(20) NOT NULL,
-    "full_name" TEXT NOT NULL,
+    "display_name" TEXT NOT NULL,
     "profile_picture" text NULL,  -- image
     "profession" VARCHAR(100) NOT NULL,
     "email" VARCHAR(100) NOT NULL,
@@ -28,16 +31,16 @@ CREATE TABLE "record_entry" (
   "title" VARCHAR(50) NOT NULL,
   "item" TEXT NOT NULL,
   "image_url" TEXT NULL,
-  "trigger_tag" BOOLEAN NOT NULL UNIQUE
+  "trigger_tag" BOOLEAN NOT NULL
 );
 
 CREATE TABLE "record" (
-  "logger_username" VARCHAR(100) NOT NULL PRIMARY KEY UNIQUE,
+  "logger_username" VARCHAR(100) NOT NULL PRIMARY KEY,
   "date" DATE NOT NULL,
   "type" VARCHAR(20) NOT NULL,
   "name" VARCHAR(100) NOT NULL,
   "category" VARCHAR(100) NOT NULL,
-  "record_entry_id" INT4 NOT NULL UNIQUE,
+  "record_entry_id" INT4 NOT NULL,
   CONSTRAINT "fk_username"
     FOREIGN KEY ("logger_username")
         REFERENCES "user" ("username"),
@@ -98,36 +101,31 @@ CREATE TABLE "comment" (
 );
 
 
-COPY "user" ("username", "hash", "user_type", "access_type", "full_name", "profession", "email", "bio") FROM stdin (DELIMITER ',');
-mervin_njy,mervin123,Health Logger,Public,Ng Jian Yi Mervin,Student,mervin_njy@outlook.com,test
+COPY "user" ("username", "hash", "user_type", "access_type", "display_name", "profession", "email", "bio") FROM stdin (DELIMITER ',');
+mervin_njy,mervin123,Health Logger,Public,Ng Jian Yi Mervin,Student,mervin_njy@outlook.com,Long time victim of eczema flares on a daily basis\, gets triggered easily by sweat\, stress\, lack of sleep and probably diet - here to find out! Tries to exercise 1-3 times a week and cook if possible.
+gavin_low,gavin123,Health Logger,Private,Gavin Low,Student,gavin_low@outlook.com,Here for the LOLs.
+dr_amir,amir123,Service Provider,Public,Amir,Dietician,amir@gmail.com,Inspired by a personal history of poor eating habits\, I draw motivational factors to personalize good habits in your eating patterns.
 \.
 
--- COPY city (id, name, countrycode, district, population) FROM stdin;
--- 1	Kabul	AFG	Kabol	1780000
--- 2	Qandahar	AFG	Qandahar	237500
--- 3	Herat	AFG	Herat	186800
--- 4	Mazar-e-Sharif	AFG	Balkh	127800
--- 5	Amsterdam	NLD	Noord-Holland	731200
--- 6	Rotterdam	NLD	Zuid-Holland	593321
--- 7	Haag	NLD	Zuid-Holland	440900
--- 8	Utrecht	NLD	Utrecht	234323
--- 9	Eindhoven	NLD	Noord-Brabant	201843
--- 10	Tilburg	NLD	Noord-Brabant	193238
+COPY "record_entry" ("id", "title", "item", "image_url", "trigger_tag") FROM stdin (DELIMITER ',');
+881234001,location,Home,null,false
+881234002,1,Pancakes w/ maple syrup,null,false
+881234003,2,Filtered coffee,null,false
+881234004,location,Putra Minang,null,false
+881234005,1,Nasi padang w/ beef rendang\, curry cabbage w/ carrots & french beans \, bergedil,null,false
+881234006,location,Funtea,null,false
+881234007,2,Kopi C kosong,null,false
+\.
+
+-- COPY "record" ("logger_username", "date", "type", "name", "category", "record_entry_id") FROM stdin (DELIMITER ',');
+-- mervin_njy,2023-03-02,Variable,Diet,Breakfast,881234001
+-- mervin_njy,2023-03-02,Variable,Diet,Breakfast,881234002
+-- mervin_njy,2023-03-02,Variable,Diet,Breakfast,881234003
+-- mervin_njy,2023-03-02,Variable,Diet,Lunch,881234004
+-- mervin_njy,2023-03-02,Variable,Diet,Lunch,881234005
+-- mervin_njy,2023-03-02,Variable,Diet,Lunch,881234006
+-- mervin_njy,2023-03-02,Variable,Diet,Lunch,881234007
 -- \.
-
--- --
--- -- Data for Name: countrylanguage; Type: TABLE DATA; Schema: public; Owner: chriskl
--- --
-
--- COPY countrylanguage (countrycode, "language", isofficial, percentage) FROM stdin;
--- AFG	Pashto	t	52.400002
--- NLD	Dutch	t	95.599998
--- ANT	Papiamento	t	86.199997
--- ALB	Albaniana	t	97.900002
--- DZA	Arabic	t	86
--- ASM	Samoan	t	90.599998
--- \.
-
 
 -- ALTER TABLE ONLY city
 --     ADD CONSTRAINT city_pkey PRIMARY KEY (id);
