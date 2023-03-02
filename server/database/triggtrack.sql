@@ -19,25 +19,13 @@ CREATE TABLE IF NOT EXIST "user" (
     CONSTRAINT access_type_check CHECK ((access_type = 'Private'::text) OR (user_type = 'Public'::text) OR (user_type = 'Protected'::text))
 );
 
-CREATE TABLE IF NOT EXIST "logger_service" (
-  username VARCHAR(100) NOT NULL PRIMARY KEY,
-  associated_username VARCHAR(100) NOT NULL,
-  status VARCHAR(20) NOT NULL,
-  review_date DATE NULL,
-  FOREIGN KEY (username)
-      REFERENCES user (username),
-  FOREIGN KEY (review_date)
-      REFERENCES review (date),
-  CONSTRAINT status_check CHECK ((status = 'Nil'::text) OR (status = 'Potential'::text) OR (status = 'Requested'::text) OR (status = 'Partnered'::text))
-);
-
 CREATE TABLE IF NOT EXIST "record" (
   logger_username VARCHAR(100) NOT NULL PRIMARY KEY,
   date DATE NOT NULL,
   type VARCHAR(20) NOT NULL,
   name VARCHAR(100) NOT NULL,
   category VARCHAR(100) NOT NULL,
-  record_entry_id INT(4)
+  record_entry_id INT(4) NOT NULL,
   FOREIGN KEY (logger_username)
       REFERENCES user (username),
   FOREIGN KEY (record_entry_id)
@@ -50,7 +38,30 @@ CREATE TABLE IF NOT EXIST "record_entry" (
   title VARCHAR(50) NOT NULL,
   item TEXT NOT NULL,
   image_url TEXT NULL,
-  trigger_tag VARCHAR(100) NOT NULL,
+  trigger_tag BOOLEAN NOT NULL,
+);
+
+CREATE TABLE IF NOT EXIST "triggers" (
+  logger_username VARCHAR(100) NOT NULL PRIMARY KEY,
+  trigger_condition VARCHAR(100) NOT NULL,
+  trigger_variable VARCHAR(100) NOT NULL,
+  trigger_id INT(4) NOT NULL,
+  FOREIGN KEY (logger_username)
+      REFERENCES user (username),
+  FOREIGN KEY (trigger_id)
+      REFERENCES record_entry (id),
+);
+
+CREATE TABLE IF NOT EXIST "logger_service" (
+  username VARCHAR(100) NOT NULL PRIMARY KEY,
+  associated_username VARCHAR(100) NOT NULL,
+  status VARCHAR(20) NOT NULL,
+  review_date DATE NULL,
+  FOREIGN KEY (username)
+      REFERENCES user (username),
+  FOREIGN KEY (review_date)
+      REFERENCES review (date),
+  CONSTRAINT status_check CHECK ((status = 'Nil'::text) OR (status = 'Potential'::text) OR (status = 'Requested'::text) OR (status = 'Partnered'::text))
 );
 
 
