@@ -1,12 +1,11 @@
 --
 -- PostgreSQL port of the "TriggTrack" database.
 --
-
 BEGIN;
 
 -- DELETE TABLES BEFORE STARTING ---------------------------------------------------------------------------------------------------------------
-
 DROP TABLE IF EXISTS "user", "record_entry", "record", "triggers", "review", "logger_service", "comment";
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- CREATE TABLES -------------------------------------------------------------------------------------------------------------------------------
 
@@ -14,6 +13,7 @@ DROP TABLE IF EXISTS "user", "record_entry", "record", "triggers", "review", "lo
 -- 1. add online/offline status
 -- 2. add last logged in
 CREATE TABLE "user" (
+    "id" uuid DEFAULT uuid_generate_v4(),
     "username" VARCHAR(100) PRIMARY KEY,
     "hash" VARCHAR(100) NOT NULL,
     "user_type" VARCHAR(20) NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE "user" (
     "bio" TEXT NOT NULL,
     "overall_rating" INT2 NULL,
     CONSTRAINT "user_type_check" 
-        CHECK (("user_type" = 'Health Logger'::text) OR ("user_type" = 'Service Provider'::text)),
+        CHECK (("user_type" = 'Health Logger'::text) OR ("user_type" = 'Service Provider'::text) OR ("user_type" = 'Admin'::text)),
     CONSTRAINT "access_type_check" 
         CHECK (("access_type" = 'Private'::text) OR ("access_type" = 'Public'::text) OR ("access_type" = 'Protected'::text))
 );

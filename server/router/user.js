@@ -53,9 +53,9 @@ router.post("/login", userLogin);
 // R
 router.post("/refresh", refreshAccess);
 // R -
-router.get("/users", auth, getUsers);
+router.get("/getUsers", auth, getUsers);
 // R - search for user
-router.post("/user", auth, getUser);
+router.post("/getUser", auth, getUser);
 // D - for admin only
 router.delete("/delete", auth, deleteUser);
 // LOGOUT

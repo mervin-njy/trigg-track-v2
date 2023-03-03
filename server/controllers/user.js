@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { v4: uuidv4 } = require("uuid");
+// const { v4: uuidv4 } = require("uuid");
 // destructuring - rename v4 key as uuidv4 so it wont be generic
 const bcrypt = require("bcrypt");
 const pool = require("../database/db");
@@ -10,9 +10,8 @@ const createUser = async (req, res) => {
       'SELECT * FROM "user" WHERE "username" = $1',
       [req.body.username]
     );
-    console.log("user", user);
     if (user.rowCount) {
-      // check if rowCount is truth / !falsy (!0) => username is unique => can continue
+      // check if rowCount is truthy / !falsy (!0) => username is unique => can continue
       return res
         .status(400)
         .json({ status: "error", message: "duplicate username" });
@@ -34,44 +33,55 @@ const createUser = async (req, res) => {
       ]
     );
 
-    console.log("created user is ", createdUser);
+    console.log("created user is ", createdUser.rows[0]);
     res.json({ status: "okay", message: "user created" });
   } catch (error) {
-    console.log("PUT /users/create/ TRIGGTRACK", error);
+    console.log("PUT /users/create/", error);
     res.status(400).json({ status: "error", message: "an error has occurred" });
   }
 };
 
 const userLogin = async (req, res) => {
-  //   try {
-  //     const user = await User.findOne({ username: req.body.username });
-  //     if (!user) {
-  //       return res
-  //         .status(400)
-  //         .json({ status: "error", message: "not authorised" });
-  //     }
-  //     const result = await bcrypt.compare(req.body.password, user.hash);
-  //     if (!result) {
-  //       return res.status(401).json({ status: "error", message: "login failed" });
-  //     }
-  //     const payload = {
-  //       id: user._id,
-  //       username: user.username,
-  //     };
-  //     const access = jwt.sign(payload, process.env.ACCESS_SECRET, {
-  //       expiresIn: "20m",
-  //       jwtid: uuidv4(), // express is the only one where you need to add this => other packages /languages do it automatically for you
-  //     });
-  //     const refresh = jwt.sign(payload, process.env.REFRESH_SECRET, {
-  //       expiresIn: "30D",
-  //       jwtid: uuidv4(),
-  //     });
-  //     const response = { access, refresh };
-  //     res.json(response);
-  //   } catch (error) {
-  //     console.log("POST /users/login", error);
-  //     res.status(400).json({ status: "error", message: "login failed" });
-  //   }
+  try {
+    const user = await pool.query(
+      'SELECT * FROM "user" WHERE "username" = $1',
+      [req.body.username]
+    );
+    if (!user.rowCount) {
+      // check if rowCount is !truthy / falsy (0) => username does not exist (but don't expose exact error) => can continue
+      return res
+        .status(400)
+        .json({ status: "error", message: "not authorised" });
+    }
+
+    const result = await bcrypt.compare(req.body.password, user.rows[0].hash);
+    if (!result) {
+      return res.status(401).json({ status: "error", message: "login failed" });
+    }
+
+    const payload = {
+      id: user.rows[0].id,
+      username: user.rows[0].username,
+      email: user.rows[0].email,
+      userType: user.rows[0].user_type,
+    };
+
+    const access = jwt.sign(payload, process.env.ACCESS_SECRET, {
+      expiresIn: "20m",
+      jwtid: payload.id,
+    });
+
+    const refresh = jwt.sign(payload, process.env.REFRESH_SECRET, {
+      expiresIn: "30D",
+      jwtid: payload.id,
+    });
+
+    const response = { access, refresh };
+    res.json(response);
+  } catch (error) {
+    console.log("POST /users/login", error);
+    res.status(400).json({ status: "error", message: "login failed" });
+  }
 };
 
 // remove /logout
@@ -97,8 +107,18 @@ const refreshAccess = (req, res) => {
 };
 
 const getUsers = async (req, res) => {
-  //   const users = await User.find().select("name username");
-  //   res.json(users);
+  //   try {
+  //     const decoded = jwt.verify(req.body.access, process.env.ACCESS_SECRET);
+  //     console.log(decoded.user_type);
+
+  //     const users = await pool.query('SELECT * FROM "user"');
+  //     res.json(users.rows);
+  //   } catch (error) {
+  //     console.log("GET /users/getUsers", error);
+  //     res.status(400).json({ status: "error", message: error.message });
+  //   }
+  const users = await pool.query('SELECT * FROM "user"');
+  res.json(users.rows);
 };
 
 const getUser = async (req, res) => {
