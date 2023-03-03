@@ -13,12 +13,37 @@ const {
 } = require("../controllers/user");
 
 const {
-  createAppointment,
-  displayAllAppointments,
-  displayFilteredAppointments,
-  updateAppointment,
-  deleteAppointment,
-} = require("../controllers/appointment");
+  connectService,
+  viewProfile,
+  serviceInfo,
+  updateStatus,
+  discontinueService,
+} = require("../controllers/profile");
+
+const {
+  createEntry,
+  createRecord,
+  displayAllRecords,
+  displaySomeRecords,
+  updateEntry,
+  updateRecord,
+  deleteEntry,
+  deleteRecord,
+} = require("../controllers/record");
+
+const {
+  createComment,
+  updateComment,
+  deleteComment,
+} = require("../controllers/comment");
+
+const {
+  createReview,
+  displayAllReviews,
+  displaySomeReviews,
+  updateReview,
+  deleteReview,
+} = require("../controllers/review");
 
 // ----- USERS -----
 // C
@@ -29,46 +54,58 @@ router.post("/login", userLogin);
 router.post("/refresh", refreshAccess);
 // R -
 router.get("/users", auth, getUsers);
-// R -
+// R - search for user
 router.post("/user", auth, getUser);
-// D
+// D - for admin only
 router.delete("/delete", auth, deleteUser);
 // LOGOUT
 
+// ----- logger-service + shared endpoints -----
+// C
+router.put("/user/createConnection/:assoc_user", auth, connectService);
+// R
+router.get("/user/viewProfile/:username", auth, viewProfile);
+// R
+router.get("/user/serviceInfo/:assoc_user", auth, serviceInfo);
+// R
+router.get("/user/displayAllRecords/:logger", auth, displayAllRecords);
+// R
+router.post("/user/displaySomeRecords/:logger", auth, displaySomeRecords);
+// R
+router.get("/user/displayAllReviews/:servicer", auth, displayAllReviews);
+// R
+router.post("/user/displaySomeReviews/:servicer", auth, displaySomeReviews);
+// U
+router.patch("/user/updateStatus/:assoc_user", auth, updateStatus);
+// D
+router.delete("/user/discontinueService/:assoc_user", auth, discontinueService);
+
 // ----- Logger -----
 // C
-router.put("/logger/addServicer", auth, addServicer);
+router.put("/logger/createEntry", auth, createEntry);
 // C
-router.put("/logger/logEntry", auth, createEntry);
+router.put("/logger/createRecord", auth, createRecord);
 // C
-router.put("/logger/createReview", auth, createReview);
-// R
-router.get("/logger/displayAllRecords/:username", displayAllRecords);
-// R
-router.post("/logger/displayFilteredRecords", auth, displayFilteredRecords);
-// Add displayByFilters
+router.put("/logger/createReview/:servicer", auth, createReview); // + updateRating
 // U
 router.patch("/logger/updateEntry", auth, updateEntry);
+// U
+router.patch("/logger/updateRecord", auth, updateRecord);
+// U
+router.patch("/logger/updateReview", auth, updateReview);
 // D
 router.delete("/logger/deleteEntry", auth, deleteEntry);
 // D
 router.delete("/logger/deleteRecord", auth, deleteRecord);
 // D
 router.delete("/logger/deleteReview", auth, deleteReview);
-// D
-router.delete("/logger/deleteServicer", auth, deleteServicer);
 
 // ----- Servicer -----
 // C
-router.put("/user/createComment", auth, createAppointment);
-// R
-router.get("/user/displayAllAppts/:username", displayAllAppointments);
-// R
-router.post("/user/displayFilteredAppts", auth, displayFilteredAppointments);
-// Add displayByFilters
+router.put("/servicer/createComment/:logger", auth, createComment);
 // U
-router.patch("/user/updateAppt", auth, updateAppointment);
+router.patch("/servicer/updateComment", auth, updateComment);
 // D
-router.delete("/user/deleteAppt", auth, deleteAppointment);
+router.delete("/servicer/deleteComment", auth, deleteComment);
 
 module.exports = router;

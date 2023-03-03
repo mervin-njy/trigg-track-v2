@@ -60,4 +60,5 @@ There are two main types of users.
 2. npm i express nodemon
 3. npm i express-validator
 4. npm i pg cors dotenv
-5. npm i express-session bcrypt
+5. npm i express-session
+6. npm i jsonwebtoken uuid bcrypt
