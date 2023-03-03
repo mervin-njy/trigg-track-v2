@@ -63,6 +63,7 @@ const userLogin = async (req, res) => {
       id: user.rows[0].id,
       username: user.rows[0].username,
       email: user.rows[0].email,
+      accessType: user.rows[0].access_type,
       userType: user.rows[0].user_type,
     };
 
@@ -77,6 +78,7 @@ const userLogin = async (req, res) => {
     });
 
     const response = { access, refresh };
+    console.log(response);
     res.json(response);
   } catch (error) {
     console.log("POST /users/login", error);
@@ -88,37 +90,42 @@ const userLogin = async (req, res) => {
 
 const refreshAccess = (req, res) => {
   //   // no auth => access token already expired => no point authenticating
-  //   try {
-  //     const decoded = jwt.verify(req.body.refresh, process.env.REFRESH_SECRET);
-  //     const payload = {
-  //       id: decoded.id,
-  //       name: decoded.name,
-  //     };
-  //     const access = jwt.sign(payload, process.env.ACCESS_SECRET, {
-  //       expiresIn: "20m",
-  //       jwtid: uuidv4(),
-  //     });
-  //     const response = { access };
-  //     res.json(response);
-  //   } catch (error) {
-  //     console.log("POST /users/refresh", error);
-  //     res.status(401).json({ status: "error", message: "unauthorised" });
-  //   }
+  try {
+    const decoded = jwt.verify(req.body.refresh, process.env.REFRESH_SECRET);
+
+    const payload = {
+      id: decoded.id,
+      username: decoded.username,
+      email: decoded.email,
+      accessType: decoded.access_type,
+      userType: decoded.user_type,
+    };
+
+    const access = jwt.sign(payload, process.env.ACCESS_SECRET, {
+      expiresIn: "20m",
+      jwtid: payload.id,
+    });
+
+    const response = { access };
+    console.log(response);
+    res.json(response);
+  } catch (error) {
+    console.log("POST /users/refresh", error);
+    res.status(401).json({ status: "error", message: "unauthorised" });
+  }
 };
 
 const getUsers = async (req, res) => {
-  //   try {
-  //     const decoded = jwt.verify(req.body.access, process.env.ACCESS_SECRET);
-  //     console.log(decoded.user_type);
+  try {
+    const decoded = jwt.verify(req.body.access, process.env.ACCESS_SECRET);
+    console.log(decoded.userType);
 
-  //     const users = await pool.query('SELECT * FROM "user"');
-  //     res.json(users.rows);
-  //   } catch (error) {
-  //     console.log("GET /users/getUsers", error);
-  //     res.status(400).json({ status: "error", message: error.message });
-  //   }
-  const users = await pool.query('SELECT * FROM "user"');
-  res.json(users.rows);
+    const users = await pool.query('SELECT * FROM "user"');
+    res.json(users.rows);
+  } catch (error) {
+    console.log("GET /users/getUsers", error);
+    res.status(400).json({ status: "error", message: error.message });
+  }
 };
 
 const getUser = async (req, res) => {

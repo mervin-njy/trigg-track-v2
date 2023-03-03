@@ -7,9 +7,6 @@ const auth = (req, res, next) => {
   if (token) {
     try {
       console.log("verifying jwt...");
-      console.log(process.env.ACCESS_SECRET.length);
-      console.log(token, process.env.ACCESS_SECRET);
-      console.log(jwt.verify(token, process.env.ACCESS_SECRET));
       const decoded = jwt.verify(token, process.env.ACCESS_SECRET);
       console.log("decoded jwt:", decoded);
       req.decoded = decoded;
