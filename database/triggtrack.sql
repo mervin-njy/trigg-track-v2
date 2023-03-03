@@ -6,6 +6,7 @@ BEGIN;
 -- DELETE TABLES BEFORE STARTING ---------------------------------------------------------------------------------------------------------------
 DROP TABLE IF EXISTS "user", "record_entry", "record", "triggers", "review", "logger_service", "comment";
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 -- CREATE TABLES -------------------------------------------------------------------------------------------------------------------------------
 

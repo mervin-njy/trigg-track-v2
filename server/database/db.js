@@ -1,11 +1,13 @@
 const Pool = require("pg").Pool;
+const dotenv = require("dotenv");
+dotenv.config();
 
 const pool = new Pool({
-  user: "triggtrack_admin",
-  password: "trigger2tracker", // ALTER USER postgres WITH PASSWORD 'new_password';
-  host: "127.0.0.1",
-  port: 5432,
-  database: "triggtrack",
+  user: process.env.PGUSER,
+  password: process.env.PGPASSWORD, // ALTER USER postgres WITH PASSWORD 'new_password';
+  host: process.env.PGHOST,
+  port: process.env.PGPORT,
+  database: process.env.PGDATABASE,
 });
 
 module.exports = pool;
