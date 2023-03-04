@@ -50,10 +50,10 @@ CREATE TABLE "record" (
     PRIMARY KEY("logger_username", "record_entry_id"),
   CONSTRAINT "fk_username"
     FOREIGN KEY ("logger_username")
-        REFERENCES "user" ("username"),
+        REFERENCES "user" ("username") ON DELETE CASCADE,
   CONSTRAINT "fk_record_entry"
     FOREIGN KEY ("record_entry_id")
-        REFERENCES "record_entry" ("id"),
+        REFERENCES "record_entry" ("id") ON DELETE CASCADE,
   CONSTRAINT "type_check" 
     CHECK (("type" = 'Condition'::text) OR ("type" = 'Variable'::text))
 );
@@ -65,10 +65,10 @@ CREATE TABLE "triggers" (
   "trigger_id" INT4 NOT NULL,
   CONSTRAINT "fk_username"
     FOREIGN KEY ("logger_username")
-        REFERENCES "user" ("username"),
+        REFERENCES "user" ("username") ON DELETE CASCADE,
   CONSTRAINT "fk_trigger"
     FOREIGN KEY ("trigger_id")
-        REFERENCES "record_entry" ("id")
+        REFERENCES "record_entry" ("id") ON DELETE CASCADE
 );
 
 CREATE TABLE "review" (
@@ -87,13 +87,13 @@ CREATE TABLE "logger_service" (
   PRIMARY KEY ("logger_username", "servicer_username"),
   CONSTRAINT "fk_logger"
     FOREIGN KEY ("logger_username")
-        REFERENCES "user" ("username"),
+        REFERENCES "user" ("username") ON DELETE CASCADE,
   CONSTRAINT "fk_servicer"
     FOREIGN KEY ("servicer_username")
-        REFERENCES "user" ("username"),      
+        REFERENCES "user" ("username") ON DELETE CASCADE,      
   CONSTRAINT "fk_review"
     FOREIGN KEY ("review_date")
-        REFERENCES "review" ("date"),
+        REFERENCES "review" ("date") ON DELETE CASCADE,
   CONSTRAINT "status_check" 
     CHECK (("status" = 'Nil'::text) OR ("status" = 'Potential'::text) OR ("status" = 'Requested'::text) OR ("status" = 'Partnered'::text))
 );
@@ -106,10 +106,10 @@ CREATE TABLE "comment" (
   "record_entry_id" INT4 PRIMARY KEY,
   CONSTRAINT "fk_username"
     FOREIGN KEY ("servicer_username", "logger_username")
-        REFERENCES "logger_service" ("servicer_username", "logger_username"),    -- ***
+        REFERENCES "logger_service" ("servicer_username", "logger_username") ON DELETE CASCADE,    -- ***
   CONSTRAINT "fk_record"
     FOREIGN KEY ("record_entry_id")
-        REFERENCES "record_entry" ("id")
+        REFERENCES "record_entry" ("id") ON DELETE CASCADE
 );
 
 -- SEEDING SAMPLE INITIAL DATA ----------------------------------------------------------------------------------------------------------

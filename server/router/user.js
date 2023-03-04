@@ -9,6 +9,7 @@ const {
   refreshAccess,
   getUsers,
   getUser,
+  updateUser,
   deleteUser,
 } = require("../controllers/user");
 
@@ -56,7 +57,9 @@ router.post("/refresh", refreshAccess);
 router.get("/getUsers", auth, getUsers);
 // R - search for user
 router.post("/getUser", auth, getUser);
-// D - for admin only
+// U
+router.patch("/updateUser", auth, updateUser);
+// D - Admin: any acc, Others: own acc
 router.delete("/delete", auth, deleteUser);
 // LOGOUT
 

@@ -146,14 +146,33 @@ const getUser = async (req, res) => {
   //   }
 };
 
+const updateUser = async (req, res) => {};
+
 const deleteUser = async (req, res) => {
-  //   try {
-  //     await User.deleteOne({ username: req.body.username });
-  //     res.json({ status: "okay", message: "user deleted" });
-  //   } catch (error) {
-  //     console.log("DEL /users/delete", error);
-  //     res.status(400).json({ status: "error", message: "an error has occurred" });
-  //   }
+  try {
+    console.log("Decoded payload:", req.decoded);
+    // auth users: all userTypes
+
+    if (req.decoded.userType === "Admin") {
+      // Admin => can delete any account
+
+      await pool.query('DELETE FROM "user" WHERE username = $1', [
+        req.body.username,
+      ]);
+
+      console.log("Admin has deleted the following user:", req.body.username);
+    } else {
+      // Others => as long as login is successful, can delete own account
+
+      await pool.query('DELETE FROM "user" WHERE id = $1', [req.decoded.id]);
+
+      console.log("Logged in user has been deleted.");
+    }
+    res.json({ status: "okay", message: "user deleted" });
+  } catch (error) {
+    console.log("DEL /users/delete", error);
+    res.status(400).json({ status: "error", message: "an error has occurred" });
+  }
 };
 
 module.exports = {
@@ -162,5 +181,6 @@ module.exports = {
   refreshAccess,
   getUsers,
   getUser,
+  updateUser,
   deleteUser,
 };
