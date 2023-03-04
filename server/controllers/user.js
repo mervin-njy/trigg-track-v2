@@ -60,7 +60,6 @@ const userLogin = async (req, res) => {
     const payload = {
       id: user.rows[0].id,
       username: user.rows[0].username,
-      email: user.rows[0].email,
       accessType: user.rows[0].access_type,
       userType: user.rows[0].user_type,
     };
@@ -95,7 +94,6 @@ const refreshAccess = (req, res) => {
     const payload = {
       id: decoded.id,
       username: decoded.username,
-      email: decoded.email,
       accessType: decoded.accessType,
       userType: decoded.userType,
     };
@@ -163,11 +161,9 @@ const updateUser = async (req, res) => {
 
     // 2. pass all other info (whether changed or not) EXCEPT for username
     const updatedUser = await pool.query(
-      'UPDATE "user" SET (hash, user_type, access_type, display_name, profile_picture, profession, email, bio) = ($1, $2, $3, $4, $5, $6, $7, $8) WHERE id = $9 RETURNING *',
+      'UPDATE "user" SET (hash, display_name, profile_picture, profession, email, bio) = ($1, $2, $3, $4, $5, $6) WHERE id = $7 RETURNING *',
       [
         hash,
-        req.body.userType,
-        req.body.accessType,
         req.body.displayName,
         req.body.profilePicture,
         req.body.profession,
