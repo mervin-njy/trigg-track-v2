@@ -120,25 +120,25 @@ amir,amir123,Service Provider,Public,Amir,Dietitian,amir@gmail.com,"Inspired by 
 izhar,izhar123,Service Provider,Public,Izhar,Dietitian,izhar@gmail.com,"Inspired scholar that fixes all problems."
 \.
 
--- TODO: add image once working
-COPY "record_entry" ("id", "title", "item", "trigger_tag") FROM stdin (DELIMITER ',');
-881234001,location,"Mei cheng food court",false
-881234002,1,"Mifen w/ chicken cutlet\, spring rolls & cabbage w/ carrots",false
-881234003,2,"Kopi C kosong peng",false
-881234004,location,"Putra Minang",false
-881234005,1,"Nasi padang w/ beef rendang\, curry cabbage w/ carrots & french beans \, bergedil",false
-881234006,location,"Funtea",false
-881234007,2,"Kopi C kosong",false
+COPY "record" ("id", "logger_username", "date", "type", "name", "category") FROM stdin (DELIMITER ',');
+XYZ01,mervin_njy,2023-03-02,Variable,Diet,Breakfast
+XYZ01,mervin_njy,2023-03-02,Variable,Diet,Breakfast
+XYZ01,mervin_njy,2023-03-02,Variable,Diet,Breakfast
+XYZ01,mervin_njy,2023-03-02,Variable,Diet,Lunch
+XYZ01,mervin_njy,2023-03-02,Variable,Diet,Lunch
+XYZ01,mervin_njy,2023-03-02,Variable,Diet,Lunch
+XYZ01,mervin_njy,2023-03-02,Variable,Diet,Lunch
 \.
 
-COPY "record" ("logger_username", "date", "type", "name", "category", "record_entry_id") FROM stdin (DELIMITER ',');
-mervin_njy,2023-03-02,Variable,Diet,Breakfast,881234001
-mervin_njy,2023-03-02,Variable,Diet,Breakfast,881234002
-mervin_njy,2023-03-02,Variable,Diet,Breakfast,881234003
-mervin_njy,2023-03-02,Variable,Diet,Lunch,881234004
-mervin_njy,2023-03-02,Variable,Diet,Lunch,881234005
-mervin_njy,2023-03-02,Variable,Diet,Lunch,881234006
-mervin_njy,2023-03-02,Variable,Diet,Lunch,881234007
+-- TODO: add image once working
+COPY "record_entry" ("record_id", "id", "title", "item", "trigger_tag") FROM stdin (DELIMITER ',');
+XYZ01,881234001,location,"Mei cheng food court",false
+XYZ01,881234002,1,"Mifen w/ chicken cutlet\, spring rolls & cabbage w/ carrots",false
+XYZ01,881234003,2,"Kopi C kosong peng",false
+XYZ01,881234004,location,"Putra Minang",false
+XYZ01,881234005,1,"Nasi padang w/ beef rendang\, curry cabbage w/ carrots & french beans \, bergedil",false
+XYZ01,881234006,location,"Funtea",false
+XYZ01,881234007,2,"Kopi C kosong",false
 \.
 
 COPY "logger_service" ("logger_username", "servicer_username", "status") FROM stdin (DELIMITER ',');
