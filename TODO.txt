@@ -3,5 +3,5 @@
 3. rest of endpoints
 
 FIX ERRORS:
-1. check how to ON DELETE CASCADE record_entry (they currently don't hold primary keys)
+1. check how to ON DELETE CASCADE record_entry (they currently don't hold primary keys) [FIXED]
 2. SELECT WHERE condition 'col_val' does not exist i.e. SELECT * FROM "users" WHERE "user_type" != "Admin" (in /users/getUsers)

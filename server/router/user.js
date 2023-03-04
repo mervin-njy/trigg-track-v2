@@ -22,14 +22,15 @@ const {
 } = require("../controllers/profile");
 
 const {
-  createEntry,
+  getRecordDate,
   createRecord,
+  createEntry,
   displayAllRecords,
   displaySomeRecords,
-  updateEntry,
   updateRecord,
-  deleteEntry,
+  updateEntry,
   deleteRecord,
+  deleteEntry,
 } = require("../controllers/record");
 
 const {
@@ -67,9 +68,9 @@ router.delete("/delete", auth, deleteUser);
 // C
 router.put("/user/createConnection/:assoc_user", auth, connectService);
 // R
-router.get("/user/viewProfile/:username", auth, viewProfile);
+router.post("/user/viewProfile/:username", auth, viewProfile);
 // R
-router.get("/user/serviceInfo/:assoc_user", auth, serviceInfo);
+router.post("/user/serviceInfo/:assoc_user", auth, serviceInfo);
 // R
 router.get("/user/displayAllRecords/:logger", auth, displayAllRecords);
 // R
@@ -84,22 +85,24 @@ router.patch("/user/updateStatus/:assoc_user", auth, updateStatus);
 router.delete("/user/discontinueService/:assoc_user", auth, discontinueService);
 
 // ----- Logger -----
-// C
-router.put("/logger/createEntry", auth, createEntry);
+// R
+router.post("/logger/getRecordDate", auth, getRecordDate);
 // C
 router.put("/logger/createRecord", auth, createRecord);
 // C
+router.put("/logger/createEntry", auth, createEntry);
+// C
 router.put("/logger/createReview/:servicer", auth, createReview); // + updateRating
-// U
-router.patch("/logger/updateEntry", auth, updateEntry);
 // U
 router.patch("/logger/updateRecord", auth, updateRecord);
 // U
+router.patch("/logger/updateEntry", auth, updateEntry);
+// U
 router.patch("/logger/updateReview", auth, updateReview);
 // D
-router.delete("/logger/deleteEntry", auth, deleteEntry);
-// D
 router.delete("/logger/deleteRecord", auth, deleteRecord);
+// D
+router.delete("/logger/deleteEntry", auth, deleteEntry);
 // D
 router.delete("/logger/deleteReview", auth, deleteReview);
 

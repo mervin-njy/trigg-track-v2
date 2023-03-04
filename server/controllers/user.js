@@ -1,6 +1,4 @@
 const jwt = require("jsonwebtoken");
-// const { v4: uuidv4 } = require("uuid");
-// destructuring - rename v4 key as uuidv4 so it wont be generic
 const bcrypt = require("bcrypt");
 const pool = require("../database/db");
 
