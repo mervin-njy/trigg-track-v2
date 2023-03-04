@@ -109,7 +109,7 @@ const refreshAccess = (req, res) => {
     console.log(response);
     res.json(response);
   } catch (error) {
-    console.log("POST /users/refresh", error);
+    console.log("POST /users/refreshAccess", error);
     res.status(401).json({ status: "error", message: "unauthorised" });
   }
 };
@@ -141,8 +141,6 @@ const getUsers = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
-  // Check:
-  // if userType === "Admin" => can get all types
   //   try {
   //     const user = await User.findOne({ username: req.body.username }).select(
   //       "username"
@@ -158,7 +156,34 @@ const getUser = async (req, res) => {
   //   }
 };
 
-const updateUser = async (req, res) => {};
+const updateUser = async (req, res) => {
+  try {
+    // 1. rehash given password
+    const hash = await bcrypt.hash(req.body.password, 12);
+
+    // 2. pass all other info (whether changed or not) EXCEPT for username
+    const updatedUser = await pool.query(
+      'UPDATE "user" SET (hash, user_type, access_type, display_name, profile_picture, profession, email, bio) = ($1, $2, $3, $4, $5, $6, $7, $8) WHERE id = $9 RETURNING *',
+      [
+        hash,
+        req.body.userType,
+        req.body.accessType,
+        req.body.displayName,
+        req.body.profilePicture,
+        req.body.profession,
+        req.body.email,
+        req.body.bio,
+        req.decoded.id,
+      ]
+    );
+
+    console.log("updated user:", updatedUser.rows);
+    res.json({ status: "okay", message: "user profile has been updated" });
+  } catch (error) {
+    console.log("PATCH /users/updateUser", error);
+    res.status(400).json({ status: "error", message: error.message });
+  }
+};
 
 const deleteUser = async (req, res) => {
   try {
