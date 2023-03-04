@@ -49,9 +49,7 @@ const userLogin = async (req, res) => {
     );
     if (!user.rowCount) {
       // check if rowCount is !truthy / falsy (0) => username does not exist (but don't expose exact error) => can continue
-      return res
-        .status(400)
-        .json({ status: "error", message: "not authorised" });
+      return res.status(400).json({ status: "error", message: "login failed" });
     }
 
     const result = await bcrypt.compare(req.body.password, user.rows[0].hash);
@@ -116,12 +114,26 @@ const refreshAccess = (req, res) => {
   }
 };
 
+// TODO: restrict info each user can get
+// FIX WHERE condition = ___ => "col_value" does not exist
 const getUsers = async (req, res) => {
   try {
     console.log("Decoded payload:", req.decoded);
     // auth users: all userTypes => as long as login is successful, can view all users
-    const users = await pool.query('SELECT * FROM "user"');
-    res.json(users.rows);
+    console.log(req.decoded.userType);
+
+    if (req.decoded.userType === "Admin") {
+      const users = await pool.query('SELECT * FROM "user"');
+
+      res.json(users.rows);
+    } else {
+      // don't show admin
+      const users = await pool.query(
+        'SELECT * FROM "user" WHERE "user_type" IS NOT NULL' // "user_type" != "Admin"
+      );
+      // "username", "user_type", "access_type", "display_name", "profile_picture", "profession", "email", "bio", "overall_rating"
+      res.json(users.rows);
+    }
   } catch (error) {
     console.log("GET /users/getUsers", error);
     res.status(400).json({ status: "error", message: error.message });
