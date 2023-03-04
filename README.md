@@ -62,3 +62,14 @@ There are two main types of users.
 4. npm i pg cors dotenv
 5. npm i express-session
 6. npm i jsonwebtoken uuid bcrypt
+
+_.env config:_
+
+1. PORT
+2. ACCESS_SECRET
+3. REFRESH_SECRET
+4. PGUSER
+5. PGPASSWORD
+6. PGHOST
+7. PGPORT
+8. PGDATABASE

@@ -78,7 +78,8 @@ const userLogin = async (req, res) => {
     });
 
     const response = { access, refresh };
-    console.log(response);
+    console.log("tokens:", response);
+    console.log("user:", user.rows[0]);
     res.json(response);
   } catch (error) {
     console.log("POST /users/login", error);
@@ -97,8 +98,8 @@ const refreshAccess = (req, res) => {
       id: decoded.id,
       username: decoded.username,
       email: decoded.email,
-      accessType: decoded.access_type,
-      userType: decoded.user_type,
+      accessType: decoded.accessType,
+      userType: decoded.userType,
     };
 
     const access = jwt.sign(payload, process.env.ACCESS_SECRET, {
@@ -117,9 +118,8 @@ const refreshAccess = (req, res) => {
 
 const getUsers = async (req, res) => {
   try {
-    const decoded = jwt.verify(req.body.access, process.env.ACCESS_SECRET);
-    console.log(decoded.userType);
-
+    console.log("Decoded payload:", req.decoded);
+    // auth users: all userTypes => as long as login is successful, can view all users
     const users = await pool.query('SELECT * FROM "user"');
     res.json(users.rows);
   } catch (error) {
@@ -129,6 +129,8 @@ const getUsers = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
+  // Check:
+  // if userType === "Admin" => can get all types
   //   try {
   //     const user = await User.findOne({ username: req.body.username }).select(
   //       "username"

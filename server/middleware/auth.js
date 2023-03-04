@@ -8,8 +8,8 @@ const auth = (req, res, next) => {
     try {
       console.log("verifying jwt...");
       const decoded = jwt.verify(token, process.env.ACCESS_SECRET);
-      console.log("decoded jwt:", decoded);
       req.decoded = decoded;
+
       next();
     } catch (error) {
       return res.status(401).send({
