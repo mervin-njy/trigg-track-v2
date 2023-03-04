@@ -54,7 +54,7 @@ CREATE TABLE "record_entry" (
   "trigger_tag" BOOLEAN NOT NULL,
   CONSTRAINT "fk_record"
     FOREIGN KEY ("record_id")
-        REFERENCES "record" ("id") ON DELETE CASCADE,
+        REFERENCES "record" ("id") ON DELETE CASCADE
 );
 
 CREATE TABLE "triggers" (
@@ -121,24 +121,24 @@ izhar,izhar123,Service Provider,Public,Izhar,Dietitian,izhar@gmail.com,"Inspired
 \.
 
 COPY "record" ("id", "logger_username", "date", "type", "name", "category") FROM stdin (DELIMITER ',');
-XYZ01,mervin_njy,2023-03-02,Variable,Diet,Breakfast
-XYZ01,mervin_njy,2023-03-02,Variable,Diet,Breakfast
-XYZ01,mervin_njy,2023-03-02,Variable,Diet,Breakfast
-XYZ01,mervin_njy,2023-03-02,Variable,Diet,Lunch
-XYZ01,mervin_njy,2023-03-02,Variable,Diet,Lunch
-XYZ01,mervin_njy,2023-03-02,Variable,Diet,Lunch
-XYZ01,mervin_njy,2023-03-02,Variable,Diet,Lunch
+99901,mervin_njy,2023-03-02,Variable,Diet,Breakfast
+99901,mervin_njy,2023-03-02,Variable,Diet,Breakfast
+99901,mervin_njy,2023-03-02,Variable,Diet,Breakfast
+99901,mervin_njy,2023-03-02,Variable,Diet,Lunch
+99901,mervin_njy,2023-03-02,Variable,Diet,Lunch
+99901,mervin_njy,2023-03-02,Variable,Diet,Lunch
+99901,mervin_njy,2023-03-02,Variable,Diet,Lunch
 \.
 
 -- TODO: add image once working
 COPY "record_entry" ("record_id", "id", "title", "item", "trigger_tag") FROM stdin (DELIMITER ',');
-XYZ01,881234001,location,"Mei cheng food court",false
-XYZ01,881234002,1,"Mifen w/ chicken cutlet\, spring rolls & cabbage w/ carrots",false
-XYZ01,881234003,2,"Kopi C kosong peng",false
-XYZ01,881234004,location,"Putra Minang",false
-XYZ01,881234005,1,"Nasi padang w/ beef rendang\, curry cabbage w/ carrots & french beans \, bergedil",false
-XYZ01,881234006,location,"Funtea",false
-XYZ01,881234007,2,"Kopi C kosong",false
+99901,881234001,location,"Mei cheng food court",false
+99901,881234002,1,"Mifen w/ chicken cutlet\, spring rolls & cabbage w/ carrots",false
+99901,881234003,2,"Kopi C kosong peng",false
+99901,881234004,location,"Putra Minang",false
+99901,881234005,1,"Nasi padang w/ beef rendang\, curry cabbage w/ carrots & french beans \, bergedil",false
+99901,881234006,location,"Funtea",false
+99901,881234007,2,"Kopi C kosong",false
 \.
 
 COPY "logger_service" ("logger_username", "servicer_username", "status") FROM stdin (DELIMITER ',');
