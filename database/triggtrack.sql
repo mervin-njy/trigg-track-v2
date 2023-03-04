@@ -31,31 +31,30 @@ CREATE TABLE "user" (
         CHECK (("access_type" = 'Private'::text) OR ("access_type" = 'Public'::text) OR ("access_type" = 'Protected'::text))
 );
 
-CREATE TABLE "record_entry" (
-  "id" SERIAL NOT NULL PRIMARY KEY,
-  "title" VARCHAR(50) NOT NULL,
-  "item" TEXT NOT NULL,
-  "image_url" TEXT NULL,
-  "trigger_tag" BOOLEAN NOT NULL
-);
-
 CREATE TABLE "record" (
-  "logger_username" VARCHAR(100) NOT NULL,
+  "id" SERIAL PRIMARY KEY,
+  "logger_username" VARCHAR(100),
   "date" DATE NOT NULL,
   "type" VARCHAR(20) NOT NULL,
   "name" VARCHAR(100) NOT NULL,
   "category" VARCHAR(100) NOT NULL,
-  "record_entry_id" INT4 NOT NULL,
-  CONSTRAINT "pk_user_record"
-    PRIMARY KEY("logger_username", "record_entry_id"),
   CONSTRAINT "fk_username"
     FOREIGN KEY ("logger_username")
         REFERENCES "user" ("username") ON DELETE CASCADE,
-  CONSTRAINT "fk_record_entry"
-    FOREIGN KEY ("record_entry_id")
-        REFERENCES "record_entry" ("id") ON DELETE CASCADE,
   CONSTRAINT "type_check" 
     CHECK (("type" = 'Condition'::text) OR ("type" = 'Variable'::text))
+);
+
+CREATE TABLE "record_entry" (
+  "record_id" INT4,
+  "id" SERIAL PRIMARY KEY,
+  "title" VARCHAR(50) NOT NULL,
+  "item" TEXT NOT NULL,
+  "image_url" TEXT NULL,
+  "trigger_tag" BOOLEAN NOT NULL,
+  CONSTRAINT "fk_record"
+    FOREIGN KEY ("record_id")
+        REFERENCES "record" ("id") ON DELETE CASCADE,
 );
 
 CREATE TABLE "triggers" (
