@@ -32,29 +32,28 @@ CREATE TABLE "user" (
 );
 
 CREATE TABLE "record" (
-  "id" SERIAL PRIMARY KEY,
+  "date" DATE PRIMARY KEY,
   "logger_username" VARCHAR(100),
-  "date" DATE NOT NULL,
-  "type" VARCHAR(20) NOT NULL,
-  "name" VARCHAR(100) NOT NULL,
-  "category" VARCHAR(100) NOT NULL,
   CONSTRAINT "fk_username"
     FOREIGN KEY ("logger_username")
-        REFERENCES "user" ("username") ON DELETE CASCADE,
-  CONSTRAINT "type_check" 
-    CHECK (("type" = 'Condition'::text) OR ("type" = 'Variable'::text))
+        REFERENCES "user" ("username") ON DELETE CASCADE
 );
 
 CREATE TABLE "record_entry" (
-  "record_id" INT4,
+  "record_date" DATE,
   "id" SERIAL PRIMARY KEY,
+  "type" VARCHAR(20) NOT NULL,
+  "name" VARCHAR(100) NOT NULL,
+  "category" VARCHAR(100) NOT NULL,
   "title" VARCHAR(50) NOT NULL,
   "item" TEXT NOT NULL,
   "image_url" TEXT NULL,
   "trigger_tag" BOOLEAN NOT NULL,
   CONSTRAINT "fk_record"
-    FOREIGN KEY ("record_id")
-        REFERENCES "record" ("id") ON DELETE CASCADE
+    FOREIGN KEY ("record_date")
+        REFERENCES "record" ("date") ON DELETE CASCADE,
+  CONSTRAINT "type_check" 
+    CHECK (("type" = 'Condition'::text) OR ("type" = 'Variable'::text))
 );
 
 CREATE TABLE "triggers" (
