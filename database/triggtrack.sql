@@ -93,7 +93,7 @@ CREATE TABLE "logger_service" (
         REFERENCES "user" ("username") ON DELETE CASCADE,      
   CONSTRAINT "fk_review"
     FOREIGN KEY ("review_date")
-        REFERENCES "review" ("date") ON DELETE CASCADE,
+        REFERENCES "review" ("date"),
   CONSTRAINT "status_check" 
     CHECK (("status" = 'Nil'::text) OR ("status" = 'Potential'::text) OR ("status" = 'Requested'::text) OR ("status" = 'Partnered'::text))
 );
