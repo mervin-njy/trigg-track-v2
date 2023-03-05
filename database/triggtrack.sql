@@ -4,7 +4,7 @@
 BEGIN;
 
 -- DELETE TABLES BEFORE STARTING ---------------------------------------------------------------------------------------------------------------
-DROP TABLE IF EXISTS "user", "record_entry", "record", "triggers", "review", "logger_service", "comment";
+DROP TABLE IF EXISTS "user", "entry", "record", "triggers", "review", "logger_service", "comment";
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
@@ -41,7 +41,7 @@ CREATE TABLE "record" (
 );
 
 CREATE TABLE "entry" (
-  "record_id" INT4,
+  "record_id" INT4 NOT NULL,
   "id" SERIAL PRIMARY KEY,
   "type" VARCHAR(20) NOT NULL,
   "name" VARCHAR(100) NOT NULL,
@@ -127,7 +127,7 @@ COPY "record" ("id", "logger_username", "date") FROM stdin (DELIMITER ',');
 \.
 
 -- TODO: add image once working
-COPY "record_entry" ("record_id", "id", "type", "name", "category", "title", "item", "trigger_tag") FROM stdin (DELIMITER ',');
+COPY "entry" ("record_id", "id", "type", "name", "category", "title", "item", "trigger_tag") FROM stdin (DELIMITER ',');
 441234001,881234001,Variable,Diet,Breakfast,location,"Mei cheng food court",false
 441234001,881234002,Variable,Diet,Breakfast,1,"Mifen w/ chicken cutlet\, spring rolls & cabbage w/ carrots",false
 441234001,881234003,Variable,Diet,Breakfast,2,"Kopi C kosong peng",false

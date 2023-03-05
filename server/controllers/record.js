@@ -51,10 +51,18 @@ const createEntry = async (req, res) => {
         .json({ status: "error", message: "user type is not Health Logger" });
     }
 
-    // JOIN "record" to get id
+    // 1. get id of record date
+    const getDate = await pool.query(
+      'SELECT * FROM "record" WHERE "date" = $1',
+      [req.body.date]
+    );
+    console.log("record id to add entry into:", getDate.rows[0].id);
+
+    // 2. add with retrieved id
     const createdEntry = await pool.query(
-      'INSERT INTO "entry" (type, name, category, title, item, image_url, trigger_tag) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
+      'INSERT INTO "entry" (record_id, type, name, category, title, item, image_url, trigger_tag) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
       [
+        getDate.rows[0].id,
         req.body.type,
         req.body.name,
         req.body.category,
@@ -64,7 +72,7 @@ const createEntry = async (req, res) => {
         req.body.triggerTag,
       ]
     );
-    console.log("created user is ", createdEntry.rows[0]);
+    console.log("created entry is ", createdEntry.rows[0]);
     res.json({ status: "okay", message: "record created" });
   } catch (error) {
     console.log("PUT /logger/createEntry/", error);
@@ -74,7 +82,10 @@ const createEntry = async (req, res) => {
 
 const displayAllRecords = () => {};
 
-const displaySomeRecords = () => {};
+const displaySomeRecords = async (req, res) => {
+  // const selectedRecord = await pool.query('SELECT * FROM entry JOIN record ON entry.record_id = record.id WHERE record.date = $1', [req.body.date])
+  // TODO: combine comments
+};
 
 const updateRecord = () => {};
 
