@@ -121,20 +121,20 @@ izhar,$2b$12$A2Ye59uQbf6Hevwxs9mYguRg2sZFjZDoml1Sj13hNj8Ueb4a1ak.q,Service Provi
 \.
 
 COPY "record" ("id", "logger_username", "date") FROM stdin (DELIMITER ',');
-441234001,mervin_njy,2023-03-02
-441234002,mervin_njy,2023-03-03
-441234003,mervin_njy,2023-03-04
+1,mervin_njy,2023-03-02
+2,mervin_njy,2023-03-03
+3,mervin_njy,2023-03-04
 \.
 
 -- TODO: add image once working
 COPY "entry" ("record_id", "id", "type", "name", "category", "title", "item", "trigger_tag") FROM stdin (DELIMITER ',');
-441234001,881234001,Variable,Diet,Breakfast,location,"Mei cheng food court",false
-441234001,881234002,Variable,Diet,Breakfast,1,"Mifen w/ chicken cutlet\, spring rolls & cabbage w/ carrots",false
-441234001,881234003,Variable,Diet,Breakfast,2,"Kopi C kosong peng",false
-441234001,881234004,Variable,Diet,Lunch,location,"Putra Minang",false
-441234001,881234005,Variable,Diet,Lunch,1,"Nasi padang w/ beef rendang\, curry cabbage w/ carrots & french beans \, bergedil",false
-441234001,881234006,Variable,Diet,Lunch,location,"Funtea",false
-441234001,881234007,Variable,Diet,Lunch,2,"Kopi C kosong",false
+1,1,Variable,Diet,Breakfast,location,"Mei cheng food court",false
+1,2,Variable,Diet,Breakfast,1,"Mifen w/ chicken cutlet\, spring rolls & cabbage w/ carrots",false
+1,3,Variable,Diet,Breakfast,2,"Kopi C kosong peng",false
+1,4,Variable,Diet,Lunch,location,"Putra Minang",false
+1,5,Variable,Diet,Lunch,1,"Nasi padang w/ beef rendang\, curry cabbage w/ carrots & french beans \, bergedil",false
+1,6,Variable,Diet,Lunch,location,"Funtea",false
+1,7,Variable,Diet,Lunch,2,"Kopi C kosong",false
 \.
 
 COPY "logger_service" ("logger_username", "servicer_username", "status") FROM stdin (DELIMITER ',');

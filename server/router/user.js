@@ -25,8 +25,7 @@ const {
   getRecordDate,
   createRecord,
   createEntry,
-  displayAllRecords,
-  displaySomeRecords,
+  getRecordEntriesOnDate,
   updateRecord,
   updateEntry,
   deleteRecord,
@@ -49,19 +48,19 @@ const {
 
 // ----- USERS -----
 // C
-router.put("/createUser", createUser);
+router.put("/createUser", createUser); // DONE
 // R
-router.post("/loginUser", loginUser);
+router.post("/loginUser", loginUser); // DONE
 // R
-router.post("/refresh", refreshAccess);
+router.post("/refresh", refreshAccess); // DONE
 // R -
-router.get("/getUsers", auth, getUsers);
+router.get("/getUsers", auth, getUsers); // DONE
 // R - search for user
 router.post("/getUser", auth, getUser);
 // U
-router.patch("/updateUser", auth, updateUser);
+router.patch("/updateUser", auth, updateUser); // DONE
 // D - Admin: any acc, Others: own acc
-router.delete("/deleteUser", auth, deleteUser);
+router.delete("/deleteUser", auth, deleteUser); // DONE
 // LOGOUT
 
 // ----- logger-service + shared endpoints -----
@@ -72,9 +71,7 @@ router.post("/user/viewProfile/:username", auth, viewProfile);
 // R
 router.post("/user/serviceInfo/:assoc_user", auth, serviceInfo);
 // R
-router.get("/user/displayAllRecords/:logger", auth, displayAllRecords);
-// R
-router.post("/user/displaySomeRecords/:logger", auth, displaySomeRecords);
+router.post("/user/getRecordEntries", auth, getRecordEntriesOnDate); // DONE
 // R
 router.get("/user/displayAllReviews/:servicer", auth, displayAllReviews);
 // R
@@ -86,11 +83,11 @@ router.delete("/user/discontinueService/:assoc_user", auth, discontinueService);
 
 // ----- Logger -----
 // R
-router.post("/logger/getRecordDate", auth, getRecordDate);
+router.post("/logger/getRecordDate", auth, getRecordDate); // DONE
 // C
-router.put("/logger/createRecord", auth, createRecord);
+router.put("/logger/createRecord", auth, createRecord); // DONE
 // C
-router.put("/logger/createEntry", auth, createEntry);
+router.put("/logger/createEntry", auth, createEntry); // DONE
 // C
 router.put("/logger/createReview/:servicer", auth, createReview); // + updateRating
 // U

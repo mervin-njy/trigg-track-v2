@@ -10,6 +10,7 @@ const auth = (req, res, next) => {
       const decoded = jwt.verify(token, process.env.ACCESS_SECRET);
       req.decoded = decoded;
 
+      console.log("verified. continuing...");
       next();
     } catch (error) {
       return res.status(401).send({

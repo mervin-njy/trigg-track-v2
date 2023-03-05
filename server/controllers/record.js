@@ -80,11 +80,28 @@ const createEntry = async (req, res) => {
   }
 };
 
-const displayAllRecords = () => {};
-
-const displaySomeRecords = async (req, res) => {
-  // const selectedRecord = await pool.query('SELECT * FROM entry JOIN record ON entry.record_id = record.id WHERE record.date = $1', [req.body.date])
+const getRecordEntriesOnDate = async (req, res) => {
   // TODO: combine comments
+  try {
+    // 1. check if user's record date exists
+    const selectedRecord = await pool.query(
+      'SELECT * FROM "entry" JOIN "record" ON entry.record_id = record.id WHERE record.logger_username = $1 AND record.date LIKE $2',
+      [req.body.username, `%${req.body.date}`]
+    );
+    console.log(selectedRecord.rows);
+    if (!selectedRecord.rowCount) {
+      // check if rowCount is truthy / !falsy (!0) => username is unique => can continue
+      return res
+        .status(400)
+        .json({ status: "error", message: "record entries not found" });
+    }
+
+    console.log("entries retrieved: ", selectedRecord.rows);
+    res.json({ status: "okay", message: "entries exist" });
+  } catch (error) {
+    console.log("POST /user/getRecordEntries/", error);
+    res.status(400).json({ status: "error", message: "an error has occurred" });
+  }
 };
 
 const updateRecord = () => {};
@@ -99,8 +116,7 @@ module.exports = {
   getRecordDate,
   createRecord,
   createEntry,
-  displayAllRecords,
-  displaySomeRecords,
+  getRecordEntriesOnDate,
   updateRecord,
   updateEntry,
   deleteRecord,
