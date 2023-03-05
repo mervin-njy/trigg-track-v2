@@ -1,10 +1,23 @@
 import React from "react";
+import { Route, Routes, Navigate } from "react-router-dom";
+// import components
+import NavBar from "./components/NavBar/NavBar";
+import Home from "./components/home/Home";
+import Records from "./components/records/Records";
+// import custom hooks
 
 function App() {
   return (
-    <div>
-      <h2>GA SEI-41</h2>
-    </div>
+    <>
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<Navigate replace to="/home" />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/records" element={<Records />} />
+        {/* <Route path="/triggers" element={<TriggerDisplay />} /> */}
+        {/* <Route path="/about" element={<About />} /> */}
+      </Routes>
+    </>
   );
 }
 
