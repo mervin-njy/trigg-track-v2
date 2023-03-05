@@ -52,8 +52,9 @@ There are two main types of users.
 
 ### Client:
 
-1. npm i -D tailwindcss
-2. npx tailwindcss init
+1. npm i react-router-dom
+2. npm i -D tailwindcss
+3. npx tailwindcss init
 
 ### Server:
 
