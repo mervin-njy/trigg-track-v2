@@ -4,7 +4,7 @@ const getRecordDate = async (req, res) => {
   try {
     // 1. check if user's record date exists
     const userRecord = await pool.query(
-      'SELECT * FROM "record" WHERE "username" = $1 AND "date" = $2',
+      'SELECT * FROM "record" WHERE "logger_username" = $1 AND "date" = $2',
       [req.decoded.username, req.body.date]
     );
     if (!userRecord.rowCount) {
@@ -24,12 +24,17 @@ const getRecordDate = async (req, res) => {
 
 const createRecord = async (req, res) => {
   try {
+    // only allow Health loggers
+    if (req.decoded.userType !== "Health Logger") {
+      res.status(401).json({ status: "error", message: "unauthorised" });
+    }
+
     const createdRecord = await pool.query(
-      'INSERT INTO "record" (date, username) VALUES ($1, $2) RETURNING *',
+      'INSERT INTO "record" ("date", "logger_username") VALUES ($1, $2) RETURNING *',
       [req.body.date, req.decoded.username]
     );
 
-    console.log("created user is ", createdRecord.rows[0]);
+    console.log("created record is ", createdRecord.rows[0]);
     res.json({ status: "okay", message: "record created" });
   } catch (error) {
     console.log("PUT /logger/createRecord/", error);

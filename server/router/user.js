@@ -5,7 +5,7 @@ const auth = require("../middleware/auth");
 
 const {
   createUser,
-  userLogin,
+  loginUser,
   refreshAccess,
   getUsers,
   getUser,
@@ -49,9 +49,9 @@ const {
 
 // ----- USERS -----
 // C
-router.put("/create", createUser);
+router.put("/createUser", createUser);
 // R
-router.post("/login", userLogin);
+router.post("/loginUser", loginUser);
 // R
 router.post("/refresh", refreshAccess);
 // R -
@@ -61,7 +61,7 @@ router.post("/getUser", auth, getUser);
 // U
 router.patch("/updateUser", auth, updateUser);
 // D - Admin: any acc, Others: own acc
-router.delete("/delete", auth, deleteUser);
+router.delete("/deleteUser", auth, deleteUser);
 // LOGOUT
 
 // ----- logger-service + shared endpoints -----

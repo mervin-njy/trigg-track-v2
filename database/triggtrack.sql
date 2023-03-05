@@ -113,7 +113,7 @@ CREATE TABLE "comment" (
 -- SEEDING SAMPLE INITIAL DATA ----------------------------------------------------------------------------------------------------------
 
 COPY "user" ("username", "hash", "user_type", "access_type", "display_name", "profession", "email", "bio") FROM stdin (DELIMITER ',');
-mervin_njy,mervin123,Health Logger,Public,Mervin Ng,Student,mervin.njy@outlook.com,"Long time victim of eczema flares on a daily basis\, gets triggered easily by sweat\, stress\, lack of sleep and probably diet - here to find out! Tries to exercise 1-3 times a week and cook if possible."
+mervin_njy,$2b$12$oG6NpAAT8BfBxFskPQyUkOJsTqFDhR1.2niMMDSuEqU7vAmO1/YpO,Health Logger,Public,Mervin Ng,Student,mervin.njy@outlook.com,"Long time victim of eczema flares on a daily basis\, gets triggered easily by sweat\, stress\, lack of sleep and probably diet - here to find out! Tries to exercise 1-3 times a week and cook if possible."
 gavin_low,gavin123,Health Logger,Private,Gavin Low,Student,gavin_low@outlook.com,"Here for the LOLs."
 amir,amir123,Service Provider,Public,Amir,Dietitian,amir@gmail.com,"Inspired by a personal history of poor eating habits\, I draw motivational factors to personalize good habits in your eating patterns."
 izhar,izhar123,Service Provider,Public,Izhar,Dietitian,izhar@gmail.com,"Inspired scholar that fixes all problems."

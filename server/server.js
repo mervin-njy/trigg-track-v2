@@ -11,9 +11,7 @@ app.use(express.urlencoded({ extended: false }));
 // ROUTES
 // const CRUDRouter = require("./router/endpoint");
 const user = require("./router/user");
-
-// app.use("/endpoint", CRUDRouter);
-app.use("/users", user);
+app.use("/", user);
 
 const PORT = process.env.PORT || 5001;
 

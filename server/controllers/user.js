@@ -34,12 +34,12 @@ const createUser = async (req, res) => {
     console.log("created user is ", createdUser.rows[0]);
     res.json({ status: "okay", message: "user created" });
   } catch (error) {
-    console.log("PUT /users/create/", error);
+    console.log("PUT /createUser/", error);
     res.status(400).json({ status: "error", message: "an error has occurred" });
   }
 };
 
-const userLogin = async (req, res) => {
+const loginUser = async (req, res) => {
   try {
     const user = await pool.query(
       'SELECT * FROM "user" WHERE "username" = $1',
@@ -77,7 +77,7 @@ const userLogin = async (req, res) => {
     console.log("user:", user.rows[0]);
     res.json(response);
   } catch (error) {
-    console.log("POST /users/login", error);
+    console.log("POST /loginUser", error);
     res.status(400).json({ status: "error", message: "login failed" });
   }
 };
@@ -105,7 +105,7 @@ const refreshAccess = (req, res) => {
     console.log(response);
     res.json(response);
   } catch (error) {
-    console.log("POST /users/refreshAccess", error);
+    console.log("POST /refresh", error);
     res.status(401).json({ status: "error", message: "unauthorised" });
   }
 };
@@ -131,7 +131,7 @@ const getUsers = async (req, res) => {
       res.json(users.rows);
     }
   } catch (error) {
-    console.log("GET /users/getUsers", error);
+    console.log("GET /getUsers", error);
     res.status(400).json({ status: "error", message: error.message });
   }
 };
@@ -147,7 +147,7 @@ const getUser = async (req, res) => {
   //     }
   //     res.json(user);
   //   } catch (error) {
-  //     console.log("POST /users/user", error);
+  //     console.log("POST /getUser", error);
   //     res.status(400).json({ status: "error", message: "an error has occurred" });
   //   }
 };
@@ -174,7 +174,7 @@ const updateUser = async (req, res) => {
     console.log("updated user:", updatedUser.rows);
     res.json({ status: "okay", message: "user profile has been updated" });
   } catch (error) {
-    console.log("PATCH /users/updateUser", error);
+    console.log("PATCH /updateUser", error);
     res.status(400).json({ status: "error", message: error.message });
   }
 };
@@ -205,14 +205,14 @@ const deleteUser = async (req, res) => {
       res.json({ status: "okay", message: "user deleted" });
     }
   } catch (error) {
-    console.log("DEL /users/delete", error);
+    console.log("DEL /deleteUser", error);
     res.status(400).json({ status: "error", message: "an error has occurred" });
   }
 };
 
 module.exports = {
   createUser,
-  userLogin,
+  loginUser,
   refreshAccess,
   getUsers,
   getUser,
