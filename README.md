@@ -8,6 +8,7 @@ Reiterated version of [trigg.track.](https://github.com/mervin-njy/trigg-track),
 |          Controller | -                     | Express with Node.js  |
 |                View | React with JavaScript | React with TypeScript |
 |             Styling | Vanilla CSS           | Tailwind CSS          |
+|       HTTP requests | Read                  | CRUD                  |
 | User Authentication | -                     | yes                   |
 |  Data visualization | -                     | yes                   |
 
