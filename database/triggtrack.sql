@@ -40,7 +40,7 @@ CREATE TABLE "record" (
         REFERENCES "user" ("username") ON DELETE CASCADE
 );
 
-CREATE TABLE "record_entry" (
+CREATE TABLE "entry" (
   "record_id" INT4,
   "id" SERIAL PRIMARY KEY,
   "type" VARCHAR(20) NOT NULL,
@@ -67,7 +67,7 @@ CREATE TABLE "triggers" (
         REFERENCES "user" ("username") ON DELETE CASCADE,
   CONSTRAINT "fk_trigger"
     FOREIGN KEY ("trigger_id")
-        REFERENCES "record_entry" ("id") ON DELETE CASCADE
+        REFERENCES "entry" ("id") ON DELETE CASCADE
 );
 
 CREATE TABLE "review" (
@@ -108,7 +108,7 @@ CREATE TABLE "comment" (
         REFERENCES "logger_service" ("servicer_username", "logger_username") ON DELETE CASCADE,    -- ***
   CONSTRAINT "fk_record"
     FOREIGN KEY ("record_entry_id")
-        REFERENCES "record_entry" ("id") ON DELETE CASCADE
+        REFERENCES "entry" ("id") ON DELETE CASCADE
 );
 
 -- SEEDING SAMPLE INITIAL DATA ----------------------------------------------------------------------------------------------------------

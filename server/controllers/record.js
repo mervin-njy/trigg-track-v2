@@ -46,13 +46,15 @@ const createEntry = async (req, res) => {
   try {
     // only allow Health loggers
     if (req.decoded.userType !== "Health Logger") {
-      res.status(401).json({ status: "error", message: "unauthorised" });
+      res
+        .status(401)
+        .json({ status: "error", message: "user type is not Health Logger" });
     }
 
+    // JOIN "record" to get id
     const createdEntry = await pool.query(
-      'INSERT INTO "record" (record_date, type, name, category, title, item, image_url, trigger_tag) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
+      'INSERT INTO "entry" (type, name, category, title, item, image_url, trigger_tag) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
       [
-        req.body.date,
         req.body.type,
         req.body.name,
         req.body.category,
