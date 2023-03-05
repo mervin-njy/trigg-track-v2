@@ -34,7 +34,9 @@ CREATE TABLE "user" (
 CREATE TABLE "record" (
   "id" SERIAL PRIMARY KEY,
   "logger_username" VARCHAR(100),
-  "date" DATE,
+  "year" INT2 NOT NULL,
+  "month" INT2 NOT NULL,
+  "day" INT2 NOT NULL,
   CONSTRAINT "fk_username"
     FOREIGN KEY ("logger_username")
         REFERENCES "user" ("username") ON DELETE CASCADE
@@ -120,21 +122,21 @@ amir,$2b$12$HREihvzaneLUJe4Ibg//Ce.ZoKDI5bCxfJwOkfboFW5EJl9hpuyaO,Service Provid
 izhar,$2b$12$A2Ye59uQbf6Hevwxs9mYguRg2sZFjZDoml1Sj13hNj8Ueb4a1ak.q,Service Provider,Public,Izhar,Dietitian,izhar@gmail.com,"Inspired scholar that fixes all problems."
 \.
 
-COPY "record" ("id", "logger_username", "date") FROM stdin (DELIMITER ',');
-1,mervin_njy,2023-03-02
-2,mervin_njy,2023-03-03
-3,mervin_njy,2023-03-04
+COPY "record" ("id", "logger_username", "year", "month", "day") FROM stdin (DELIMITER ',');
+9901,mervin_njy,2023,03,02
+9902,mervin_njy,2023,03,03
+9903,mervin_njy,2023,03,04
 \.
 
 -- TODO: add image once working
 COPY "entry" ("record_id", "id", "type", "name", "category", "title", "item", "trigger_tag") FROM stdin (DELIMITER ',');
-1,1,Variable,Diet,Breakfast,location,"Mei cheng food court",false
-1,2,Variable,Diet,Breakfast,1,"Mifen w/ chicken cutlet\, spring rolls & cabbage w/ carrots",false
-1,3,Variable,Diet,Breakfast,2,"Kopi C kosong peng",false
-1,4,Variable,Diet,Lunch,location,"Putra Minang",false
-1,5,Variable,Diet,Lunch,1,"Nasi padang w/ beef rendang\, curry cabbage w/ carrots & french beans \, bergedil",false
-1,6,Variable,Diet,Lunch,location,"Funtea",false
-1,7,Variable,Diet,Lunch,2,"Kopi C kosong",false
+9901,9901,Variable,Diet,Breakfast,location,"Mei cheng food court",false
+9901,9902,Variable,Diet,Breakfast,1,"Mifen w/ chicken cutlet\, spring rolls & cabbage w/ carrots",false
+9901,9903,Variable,Diet,Breakfast,2,"Kopi C kosong peng",false
+9901,9904,Variable,Diet,Lunch,location,"Putra Minang",false
+9901,9905,Variable,Diet,Lunch,1,"Nasi padang w/ beef rendang\, curry cabbage w/ carrots & french beans \, bergedil",false
+9901,9906,Variable,Diet,Lunch,location,"Funtea",false
+9901,9907,Variable,Diet,Lunch,2,"Kopi C kosong",false
 \.
 
 COPY "logger_service" ("logger_username", "servicer_username", "status") FROM stdin (DELIMITER ',');
@@ -143,7 +145,7 @@ mervin_njy,izhar,Partnered
 \.
 
 COPY "comment" ("servicer_username", "logger_username", "servicer_comment", "servicer_response", "record_entry_id") FROM stdin (DELIMITER ',');
-izhar,mervin_njy,"That\'s nice\, but curry contains coconut milk... Try to avoid. And bojio?",false,881234005
+izhar,mervin_njy,"That\'s nice\, but curry contains coconut milk... Try to avoid. And bojio?",false,9905
 \.
 
 COPY "review" ("date", "logger_review", "logger_rating") FROM stdin (DELIMITER ',');
@@ -151,7 +153,7 @@ COPY "review" ("date", "logger_review", "logger_rating") FROM stdin (DELIMITER '
 \.
 
 COPY "triggers" ("logger_username","trigger_condition", "trigger_variable", "trigger_id") FROM stdin (DELIMITER ',');
-mervin_njy,"Eczema","Diet",881234005
+mervin_njy,"Eczema","Diet",9905
 \.
 
 -- COMMIT ------------------------------------------------------------------------------------------------------------------------------------------
