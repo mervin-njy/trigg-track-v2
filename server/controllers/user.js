@@ -5,7 +5,7 @@ const pool = require("../database/db");
 const createUser = async (req, res) => {
   try {
     const user = await pool.query(
-      'SELECT * FROM "user" WHERE "username" = $1',
+      `SELECT * FROM "user" WHERE "username" = $1`,
       [req.body.username]
     );
     if (user.rowCount) {
@@ -17,7 +17,7 @@ const createUser = async (req, res) => {
 
     const hash = await bcrypt.hash(req.body.password, 12);
     const createdUser = await pool.query(
-      'INSERT INTO "user" (username, hash, user_type, access_type, display_name, profile_picture, profession, email, bio) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *',
+      `INSERT INTO "user" (username, hash, user_type, access_type, display_name, profile_picture, profession, email, bio) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`,
       [
         req.body.username,
         hash,
@@ -42,7 +42,7 @@ const createUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     const user = await pool.query(
-      'SELECT * FROM "user" WHERE "username" = $1',
+      `SELECT * FROM "user" WHERE "username" = $1`,
       [req.body.username]
     );
     if (!user.rowCount) {
@@ -119,13 +119,13 @@ const getUsers = async (req, res) => {
     console.log(req.decoded.userType);
 
     if (req.decoded.userType === "Admin") {
-      const users = await pool.query('SELECT * FROM "user"');
+      const users = await pool.query(`SELECT * FROM "user"`);
 
       res.json(users.rows);
     } else {
       // don't show admin
       const users = await pool.query(
-        'SELECT * FROM "user" WHERE "user_type" IS NOT NULL' // "user_type" != "Admin"
+        `SELECT * FROM "user" WHERE "user_type" IS NOT NULL` // "user_type" != "Admin"
       );
       // "username", "user_type", "access_type", "display_name", "profile_picture", "profession", "email", "bio", "overall_rating"
       res.json(users.rows);
@@ -159,7 +159,7 @@ const updateUser = async (req, res) => {
 
     // 2. pass all other info (whether changed or not) EXCEPT for username
     const updatedUser = await pool.query(
-      'UPDATE "user" SET (hash, display_name, profile_picture, profession, email, bio) = ($1, $2, $3, $4, $5, $6) WHERE id = $7 RETURNING *',
+      `UPDATE "user" SET (hash, display_name, profile_picture, profession, email, bio) = ($1, $2, $3, $4, $5, $6) WHERE id = $7 RETURNING *`,
       [
         hash,
         req.body.displayName,
@@ -187,7 +187,7 @@ const deleteUser = async (req, res) => {
     if (req.decoded.userType === "Admin") {
       // Admin => can delete any account
 
-      await pool.query('DELETE FROM "user" WHERE username = $1', [
+      await pool.query(`DELETE FROM "user" WHERE username = $1`, [
         req.body.username,
       ]);
 
@@ -199,7 +199,7 @@ const deleteUser = async (req, res) => {
     } else {
       // Others => as long as login is successful, can delete own account
 
-      await pool.query('DELETE FROM "user" WHERE id = $1', [req.decoded.id]);
+      await pool.query(`DELETE FROM "user" WHERE id = $1`, [req.decoded.id]);
 
       console.log("Logged in user has been deleted.");
       res.json({ status: "okay", message: "user deleted" });
@@ -211,11 +211,11 @@ const deleteUser = async (req, res) => {
 };
 
 module.exports = {
-  createUser,
-  loginUser,
-  refreshAccess,
-  getUsers,
+  createUser, // DONE
+  loginUser, // DONE
+  refreshAccess, // DONE
+  getUsers, // DONE
   getUser,
-  updateUser,
-  deleteUser,
+  updateUser, // DONE
+  deleteUser, // DONE
 };
