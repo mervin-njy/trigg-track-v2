@@ -12,7 +12,7 @@ const ButtonSubmit = ({
 }) => {
   return (
     <button
-      className="cursor-pointer font-normal tracking-wider w-28 md:w-32 lg:w-36 border-solid border-3 rounded-sm mx-auto text-sm hover:text-xs"
+      className="cursor-pointer font-normal tracking-wider w-28 md:w-32 lg:w-36 border-solid border-3 rounded-sm mx-auto text-3xl hover:text-2xl"
       name={displayName}
       id={category}
       style={{

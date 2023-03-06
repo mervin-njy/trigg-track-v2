@@ -6,7 +6,7 @@ const FormInput = ({
   name,
   value,
   reference,
-  onValueChange,
+  onChange,
   required,
 }) => {
   return (
@@ -17,7 +17,7 @@ const FormInput = ({
         name={name}
         value={value}
         ref={reference}
-        onChange={(event) => onValueChange(event)}
+        onChange={(event) => onChange(event)}
         required={required}
       ></input>
     </>

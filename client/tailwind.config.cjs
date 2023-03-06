@@ -12,13 +12,13 @@ module.exports = {
         oxygen: ['"Oxygen"'],
         montserrat: ['"Montserrat"'],
       },
-      fontSize: {
-        xxxs: "0.75rem",
-        xxs: "1rem",
-        xs: "1.5rem",
-        sm: "2.4rem",
-        lg: "3.5rem",
-      },
+      // fontSize: {
+      //   xxxs: "0.75rem",
+      //   xxs: "1rem",
+      //   xs: "1.5rem",
+      //   sm: "2.4rem",
+      //   lg: "3.5rem",
+      // },
       colors: {
         orangeAccent: "#fab1a0", // admin
         orangeMain: "#ff7675",

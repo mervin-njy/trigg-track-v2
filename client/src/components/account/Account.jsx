@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import ButtonSubmit from "../Interactions/ButtonSubmit";
 import FormInput from "../Interactions/FormInput";
+import LoadingSpinner from "../Loading/LoadingSpinner";
 
 const Account = ({ setLoginPrompt }) => {
   // variables ----------------------------------------------------------------------------------------------------
@@ -24,6 +25,11 @@ const Account = ({ setLoginPrompt }) => {
     password: "",
   });
   const [checkStatus, setCheckStatus] = useState(false);
+  const [checkType, setCheckType] = useState(null); // "log in" || "sign up"
+  const [requestTypes, setRequestTypes] = useState({
+    accountEndpoint: "",
+    fetchMethod: "",
+  });
 
   // refs ---------------------------------------------------------------------------------------------------------
   const usernameRef = useRef();
@@ -32,6 +38,7 @@ const Account = ({ setLoginPrompt }) => {
   //   event handlers ---------------------------------------------------------------------------------------------
   const handleChange = (event) => {
     event.preventDefault();
+    console.log(accountInput);
     setAccountInput((prevAccountInput) => {
       return {
         ...prevAccountInput,
@@ -42,10 +49,22 @@ const Account = ({ setLoginPrompt }) => {
 
   const handleClick = (event) => {
     event.preventDefault();
-    setFocus();
-    console.log("button clicked");
+    // setFocus();
+    console.log(`button clicked: ${event.target.name}`);
     console.log(accountInput);
     setCheckStatus(true);
+
+    if (event.target.name === "Log in") {
+      setRequestTypes({
+        accountEndpoint: "loginUser",
+        fetchMethod: "POST",
+      });
+    } else if (event.target.name === "Sign up") {
+      setRequestTypes({
+        accountEndpoint: "createUser",
+        fetchMethod: "PUT",
+      });
+    }
 
     // if (event.target.name === "Log in") {
     //   console.log("- login");
@@ -57,21 +76,27 @@ const Account = ({ setLoginPrompt }) => {
     // }
   };
 
+  // functions ----------------------------------------------------------------------------------------------------
+  function isObject(value) {
+    return typeof value === "object" && value !== null && !Array.isArray(value);
+  }
+
   // effects ------------------------------------------------------------------------------------------------------
-  //   useEffect(() => {
-  //     // call GET API here
-  //     const fetchURL = `http://127.0.0.1:5001/${accountEndpoint}`;
-  //     const fetchOptions = {
-  //       method: fetchMethod, // login | "PUT" => createUser
-  //       headers: {
-  //         "Content-type": "application/json",
-  //       },
-  //       body: JSON.stringify(accountInput),
-  //       signal: controller.signal,
-  //     };
-  //     console.log("first useEffect");
-  //     fetchData(fetchURL, fetchOptions);
-  //   }, [checkStatus]);
+  useEffect(() => {
+    // http request here
+    const controller = new AbortController();
+    const fetchURL = `http://127.0.0.1:5001/${requestTypes.accountEndpoint}`;
+    const fetchOptions = {
+      method: requestTypes.fetchMethod, // "POST" => loginUser | "PUT" => createUser
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(accountInput),
+      signal: controller.signal,
+    };
+    console.log("first useEffect triggered:", requestTypes);
+    fetchData(fetchURL, fetchOptions);
+  }, [checkStatus]);
 
   return (
     <>
@@ -85,7 +110,7 @@ const Account = ({ setLoginPrompt }) => {
               type="text"
               name="username"
               value={accountInput.username}
-              ref={usernameRef}
+              reference={usernameRef}
               onChange={handleChange}
               required={true}
             />
@@ -97,7 +122,7 @@ const Account = ({ setLoginPrompt }) => {
               type="password"
               name="password"
               value={accountInput.password}
-              ref={passwordRef}
+              reference={passwordRef}
               onChange={handleChange}
               required={true}
             />
@@ -107,7 +132,7 @@ const Account = ({ setLoginPrompt }) => {
             <ButtonSubmit
               displayName={"Log in"}
               category={"account"}
-              width={"5rem"}
+              width={"12rem"}
               padding={"0.2rem"}
               margin={"0.1rem 0.5rem"}
               colourBackground={"yellowMain"}
@@ -119,6 +144,21 @@ const Account = ({ setLoginPrompt }) => {
       )}
       {showSignup && <h1>SHOW SIGNUP CARD</h1>}
       {showSettings && <h1>SHOW SETTINGS CARD</h1>}
+
+      {isObject(data) && (
+        <section>
+          {/* Display date's contents if fetched success and loaded */}
+          {!isLoading && data && <h1>{data}</h1>}
+          {/* While fetching, display load spinner */}
+          {isLoading && (
+            <div className="centered">
+              <LoadingSpinner />
+            </div>
+          )}
+          {/* Display error message if fetch has an error */}
+          {!isLoading && error && <p>{error}</p>}
+        </section>
+      )}
     </>
   );
 };
