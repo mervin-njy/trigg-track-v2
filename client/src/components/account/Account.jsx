@@ -5,7 +5,7 @@ import ButtonSubmit from "../Interactions/ButtonSubmit";
 import FormInput from "../Interactions/FormInput";
 import LoadingSpinner from "../Loading/LoadingSpinner";
 
-const Account = ({ setLoginPrompt }) => {
+const Account = ({ LoginPrompt, setLoginPrompt, setLoggedUserData }) => {
   // variables ----------------------------------------------------------------------------------------------------
   const { action } = useParams(); // login or signup or settings
   const showLogin = action === "login" ? true : false;
@@ -52,7 +52,9 @@ const Account = ({ setLoginPrompt }) => {
     // setFocus();
     console.log(`button clicked: ${event.target.name}`);
     console.log(accountInput);
-    setCheckStatus(true);
+    setCheckStatus((prevCheckStatus) => {
+      return !prevCheckStatus;
+    });
 
     if (event.target.name === "Log in") {
       setRequestTypes({
@@ -65,15 +67,6 @@ const Account = ({ setLoginPrompt }) => {
         fetchMethod: "PUT",
       });
     }
-
-    // if (event.target.name === "Log in") {
-    //   console.log("- login");
-    //   setLoginPrompt(false);
-    //   navigateToHome();
-    // } else if (event.target.name === "Sign up") {
-    //   console.log("- signup");
-    //   setSignup(true);
-    // }
   };
 
   // functions ----------------------------------------------------------------------------------------------------
@@ -82,8 +75,8 @@ const Account = ({ setLoginPrompt }) => {
   }
 
   // effects ------------------------------------------------------------------------------------------------------
+  // #1 - http request
   useEffect(() => {
-    // http request here
     const controller = new AbortController();
     const fetchURL = `http://127.0.0.1:5001/${requestTypes.accountEndpoint}`;
     const fetchOptions = {
@@ -94,10 +87,23 @@ const Account = ({ setLoginPrompt }) => {
       body: JSON.stringify(accountInput),
       signal: controller.signal,
     };
-    console.log("first useEffect triggered:", requestTypes);
+    console.log("1st useEffect triggered:", requestTypes);
     fetchData(fetchURL, fetchOptions);
   }, [checkStatus]);
 
+  // #2 - once data fetched => store in state
+  useEffect(() => {
+    // a. check for the options that exist
+    if (isObject(data)) {
+      // 1. set login status to true => disable: "show login prompt"
+      setLoginPrompt(false);
+      // lift state: logged in user data
+      setLoggedUserData(data);
+      console.log("2nd useEffect", data);
+    }
+  }, [data]);
+
+  // render component --------------------------------------------------------------------------------------------
   return (
     <>
       {showLogin && (
@@ -144,11 +150,16 @@ const Account = ({ setLoginPrompt }) => {
       )}
       {showSignup && <h1>SHOW SIGNUP CARD</h1>}
       {showSettings && <h1>SHOW SETTINGS CARD</h1>}
-
       {isObject(data) && (
         <section>
           {/* Display date's contents if fetched success and loaded */}
-          {!isLoading && data && <h1>{data}</h1>}
+          {!isLoading && data && (
+            <div>
+              {Object.values(data).map((info, index) => {
+                return <p key={index}>{info}</p>;
+              })}
+            </div>
+          )}
           {/* While fetching, display load spinner */}
           {isLoading && (
             <div className="centered">

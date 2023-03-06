@@ -11,7 +11,7 @@ import Records from "./components/records/Records";
 function App() {
   // states -------------------------------------------------------------------------------------------------------
   const [loginPrompt, setLoginPrompt] = useState(true);
-  const [loggedUser, setLoggedUser] = useState(null);
+  const [loggedUserData, setLoggedUserData] = useState(null);
 
   // render -------------------------------------------------------------------------------------------------------
   return (
@@ -24,6 +24,7 @@ function App() {
             <Account
               LoginPrompt={loginPrompt}
               setLoginPrompt={setLoginPrompt}
+              setLoggedUserData={setLoggedUserData}
             />
           }
         />

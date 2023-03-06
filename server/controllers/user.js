@@ -72,7 +72,17 @@ const loginUser = async (req, res) => {
       jwtid: payload.id,
     });
 
-    const response = { access, refresh };
+    const response = {
+      access,
+      refresh,
+      username: user.rows[0].username,
+      user_type: user.rows[0].user_type,
+      access_type: user.rows[0].access_type,
+      display_name: user.rows[0].display_name,
+      profession: user.rows[0].profession,
+      email: user.rows[0].email,
+      bio: user.rows[0].bio,
+    };
     console.log("tokens:", response);
     console.log("user:", user.rows[0]);
     res.json(response);
