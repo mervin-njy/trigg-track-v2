@@ -1,8 +1,28 @@
-1. check if req.body.tokens are readable on client
-2. complete user endpoints w/ authenticated ROUTES
-3. rest of endpoints
+--------------------------------------------------------------------------------------------------------------------------------
+|           SERVER            |
+--------------------------------------------------------------------------------------------------------------------------------
+    *****     FIX ISSUES    *****
+    1. check how to ON DELETE CASCADE record_entry (they currently don't hold primary keys) [FIXED]
+    2. SELECT WHERE condition 'col_val' does not exist i.e. SELECT * FROM "users" WHERE "user_type" != "Admin" (in /users/getUsers)
+    3. SERIAL ID conflict with data seeding
 
-FIX ERRORS:
-1. check how to ON DELETE CASCADE record_entry (they currently don't hold primary keys) [FIXED]
-2. SELECT WHERE condition 'col_val' does not exist i.e. SELECT * FROM "users" WHERE "user_type" != "Admin" (in /users/getUsers)
-3. SERIAL ID conflict with data seeding
+    *****       TODO        *****
+    1. complete user endpoints w/ authenticated ROUTES
+    2. common, admin & servicer endpoints
+
+--------------------------------------------------------------------------------------------------------------------------------
+|           CLIENT            |
+--------------------------------------------------------------------------------------------------------------------------------
+    *****     FIX ISSUES    *****
+
+
+    *****       TODO        *****
+    1. check if req.body.tokens are readable on client
+    2. AUTH tokens
+        a. /loginUser   login success + error
+        b. display color theme on user type`
+    3. USERS
+        a. signup page success + error
+    4. Home page
+        a. entry
+        b. /getRecords
