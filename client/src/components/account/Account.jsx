@@ -5,7 +5,7 @@ import ButtonSubmit from "../Interactions/ButtonSubmit";
 import FormInput from "../Interactions/FormInput";
 import LoadingSpinner from "../Loading/LoadingSpinner";
 
-const Account = ({ LoginPrompt, setLoginPrompt, setLoggedUserData }) => {
+const Account = ({ setLoggedUserData }) => {
   // variables ----------------------------------------------------------------------------------------------------
   const { action } = useParams(); // login or signup or settings
   const showLogin = action === "login" ? true : false;
@@ -13,9 +13,9 @@ const Account = ({ LoginPrompt, setLoginPrompt, setLoggedUserData }) => {
   const showSettings = action === "settings" ? true : false;
   const navigate = useNavigate();
   // Navigate to home
-  const navigateToHome = () => {
-    console.log("log in status:", "navigating to home.");
-    navigate("/home");
+  const navigateToPage = (page) => {
+    console.log(`log in status:", "navigating to ${page}.`);
+    navigate(`/${page}`);
   };
 
   // states -------------------------------------------------------------------------------------------------------
@@ -25,7 +25,6 @@ const Account = ({ LoginPrompt, setLoginPrompt, setLoggedUserData }) => {
     password: "",
   });
   const [checkStatus, setCheckStatus] = useState(false);
-  const [checkType, setCheckType] = useState(null); // "log in" || "sign up"
   const [requestTypes, setRequestTypes] = useState({
     accountEndpoint: "",
     fetchMethod: "",
@@ -66,7 +65,7 @@ const Account = ({ LoginPrompt, setLoginPrompt, setLoggedUserData }) => {
         accountEndpoint: "createUser",
         fetchMethod: "PUT",
       });
-    }
+    } else if (event.target.name === "Retry") navigateToPage("account/login");
   };
 
   // functions ----------------------------------------------------------------------------------------------------
@@ -93,12 +92,11 @@ const Account = ({ LoginPrompt, setLoginPrompt, setLoggedUserData }) => {
 
   // #2 - once data fetched => store in state
   useEffect(() => {
-    // a. check for the options that exist
+    // a. if data fetching is a success => set state for user info + navigate to home
     if (isObject(data)) {
-      // 1. set login status to true => disable: "show login prompt"
-      setLoginPrompt(false);
       // lift state: logged in user data
       setLoggedUserData(data);
+      navigateToPage("home");
       console.log("2nd useEffect", data);
     }
   }, [data]);
@@ -108,6 +106,7 @@ const Account = ({ LoginPrompt, setLoginPrompt, setLoggedUserData }) => {
     <>
       {showLogin && (
         <div className="w-4/12 mx-auto mt-10">
+          {/* FOR: "/account/login" */}
           <h1>Please fill in your log in details</h1>
           <div className="flex flex-wrap w-13/15 mx-auto mt-4">
             <h4 className="w-4/12">username:</h4>
@@ -153,13 +152,7 @@ const Account = ({ LoginPrompt, setLoginPrompt, setLoggedUserData }) => {
       {isObject(data) && (
         <section>
           {/* Display date's contents if fetched success and loaded */}
-          {!isLoading && data && (
-            <div>
-              {Object.values(data).map((info, index) => {
-                return <p key={index}>{info}</p>;
-              })}
-            </div>
-          )}
+          {!isLoading && data && <h1>LOG IN SUCCESS.</h1>}
           {/* While fetching, display load spinner */}
           {isLoading && (
             <div className="centered">
@@ -167,7 +160,21 @@ const Account = ({ LoginPrompt, setLoginPrompt, setLoggedUserData }) => {
             </div>
           )}
           {/* Display error message if fetch has an error */}
-          {!isLoading && error && <p>{error}</p>}
+          {!isLoading && error && (
+            <div>
+              <h2>{error}</h2>
+              <ButtonSubmit
+                displayName={"Retry"}
+                category={"account"}
+                width={"12rem"}
+                padding={"0.2rem"}
+                margin={"0.1rem 0.5rem"}
+                colourBackground={"yellowMain"}
+                colourText={"yellowAccent"}
+                onClick={handleClick}
+              />
+            </div>
+          )}
         </section>
       )}
     </>

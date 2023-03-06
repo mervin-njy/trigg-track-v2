@@ -22,10 +22,10 @@ const NavBar = () => {
           </li>
           <li>
             <NavLink
-              to="./track"
+              to="./records"
               className={(navData) => (navData.isActive ? styles.active : "")}
             >
-              Track
+              Records
             </NavLink>
           </li>
           <li>
@@ -33,7 +33,7 @@ const NavBar = () => {
               to="./triggers"
               className={(navData) => (navData.isActive ? styles.active : "")}
             >
-              Triggers
+              Connect
             </NavLink>
           </li>
           <li>

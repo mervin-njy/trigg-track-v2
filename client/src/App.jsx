@@ -10,43 +10,39 @@ import Records from "./components/records/Records";
 
 function App() {
   // states -------------------------------------------------------------------------------------------------------
-  const [loginPrompt, setLoginPrompt] = useState(true);
+  // const [loginPrompt, setLoginPrompt] = useState(true);
   const [loggedUserData, setLoggedUserData] = useState(null);
+
+  const landingEndPoint = loggedUserData ? "home" : "welcome";
 
   // render -------------------------------------------------------------------------------------------------------
   return (
     <>
-      {!loginPrompt && <NavBar />}
+      {loggedUserData && <NavBar />}
       <Routes>
         <Route
           path="/account/:action"
-          element={
-            <Account
-              LoginPrompt={loginPrompt}
-              setLoginPrompt={setLoginPrompt}
-              setLoggedUserData={setLoggedUserData}
-            />
-          }
+          element={<Account setLoggedUserData={setLoggedUserData} />}
         />
 
         {/* Navigate to welcome or home - according to login status ---------------------------------------------------------------- */}
         <Route
           path="/"
-          element={
-            loginPrompt ? (
-              <Navigate replace to="/welcome" />
-            ) : (
-              <Navigate replace to="/home" />
-            )
-          }
+          element={<Navigate replace to={`/${landingEndPoint}`} />}
         />
         {<Route path="/welcome" element={<LandingPage />} />}
-        <Route path="/home" element={<Home />} />
+        <Route
+          path="/home"
+          element={<Home loggedUserData={loggedUserData} />}
+        />
 
         {/* AFTER LOGGIN IN -------------------------------------------------------------------------------------------------------- */}
         {/* <Route path="/profile" element={<Profile />} /> */}
         {/* <Route path="/search" element={<Search />} /> */}
-        <Route path="/records" element={<Records />} />
+        <Route
+          path="/records"
+          element={<Records loggedUserData={loggedUserData} />}
+        />
         {/* <Route path="/connect" element={<Connect />} /> */}
         {/* <Route path="/about" element={<About />} /> */}
       </Routes>
