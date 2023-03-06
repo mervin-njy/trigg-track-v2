@@ -9,13 +9,24 @@ import Records from "./components/records/Records";
 // import custom hooks
 
 function App() {
+  // states -------------------------------------------------------------------------------------------------------
   const [loginPrompt, setLoginPrompt] = useState(true);
+  const [loggedUser, setLoggedUser] = useState(null);
 
+  // render -------------------------------------------------------------------------------------------------------
   return (
     <>
-      {loginPrompt && <NavBar />}
+      {!loginPrompt && <NavBar />}
       <Routes>
-        <Route path="/account/:action" element={<Account />} />
+        <Route
+          path="/account/:action"
+          element={
+            <Account
+              LoginPrompt={loginPrompt}
+              setLoginPrompt={setLoginPrompt}
+            />
+          }
+        />
 
         {/* Navigate to welcome or home - according to login status ---------------------------------------------------------------- */}
         <Route
@@ -28,12 +39,7 @@ function App() {
             )
           }
         />
-        {
-          <Route
-            path="/welcome"
-            element={<LandingPage setLoginPrompt={setLoginPrompt} />}
-          />
-        }
+        {<Route path="/welcome" element={<LandingPage />} />}
         <Route path="/home" element={<Home />} />
 
         {/* AFTER LOGGIN IN -------------------------------------------------------------------------------------------------------- */}

@@ -4,6 +4,10 @@ import { NavLink } from "react-router-dom";
 import ButtonSubmit from "../Interactions/ButtonSubmit";
 
 const LandingPage = ({ setLoginPrompt }) => {
+  const handleClick = (event) => {
+    console.log(`Going to ${event.target.name}.`);
+  };
+
   return (
     <div>
       <h1>Welcome to Trigg.Track.</h1>
@@ -14,7 +18,7 @@ const LandingPage = ({ setLoginPrompt }) => {
       <div>
         <div>
           <h2>Log in to resume your journey!</h2>
-          <NavLink to="./account/login">
+          <NavLink to="/account/login">
             <ButtonSubmit
               displayName={"Log in"}
               category={"account"}
@@ -23,13 +27,13 @@ const LandingPage = ({ setLoginPrompt }) => {
               margin={"0.1rem 0.5rem"}
               colourBackground={"yellowMain"}
               colourText={"yellowAccent"}
-              onClick={setLoginPrompt(true)}
+              onClick={handleClick}
             />
           </NavLink>
         </div>
         <div>
           <h2>Create a free account with us today!</h2>
-          <NavLink to="./account/signup">
+          <NavLink to="/account/signup">
             <ButtonSubmit
               displayName={"Sign up"}
               category={"account"}
@@ -38,7 +42,7 @@ const LandingPage = ({ setLoginPrompt }) => {
               margin={"0.1rem 0.5rem"}
               colourBackground={"yellowMain"}
               colourText={"yellowAccent"}
-              onClick={setLoginPrompt(true)}
+              onClick={handleClick}
             />
           </NavLink>
         </div>

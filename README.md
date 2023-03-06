@@ -55,6 +55,7 @@ There are two main types of users.
 1. npm i react-router-dom
 2. npm i -D tailwindcss
 3. npx tailwindcss init
+4. npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch
 
 ### Server:
 
