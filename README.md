@@ -53,8 +53,8 @@ There are two main types of users.
 ### Client:
 
 1. npm i react-router-dom
-2. npm i -D tailwindcss
-3. npx tailwindcss init
+2. npm install -D tailwindcss postcss autoprefixer
+3. npx tailwindcss init -p
 4. npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch
 
 ### Server:
