@@ -120,8 +120,6 @@ const refreshAccess = (req, res) => {
   }
 };
 
-// TODO: restrict info each user can get
-// FIX WHERE condition = ___ => "col_value" does not exist
 const getUsers = async (req, res) => {
   try {
     console.log("Decoded payload:", req.decoded);
@@ -133,11 +131,11 @@ const getUsers = async (req, res) => {
 
       res.json(users.rows);
     } else {
-      // don't show admin
+      // don't show admin - TO REMOVE
       const users = await pool.query(
-        `SELECT * FROM "user" WHERE "user_type" IS NOT NULL` // "user_type" != "Admin"
+        `SELECT "username", "user_type", "access_type", "display_name", "profile_picture", "profession", "email", "bio", "overall_rating" FROM "user" WHERE "user_type" != $1`,
+        ["Admin"]
       );
-      // "username", "user_type", "access_type", "display_name", "profile_picture", "profession", "email", "bio", "overall_rating"
       res.json(users.rows);
     }
   } catch (error) {

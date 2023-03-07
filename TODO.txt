@@ -3,7 +3,7 @@
 --------------------------------------------------------------------------------------------------------------------------------
     *****     FIX ISSUES    *****
     1. check how to ON DELETE CASCADE record_entry (they currently don't hold primary keys) [FIXED]
-    2. SELECT WHERE condition 'col_val' does not exist i.e. SELECT * FROM "users" WHERE "user_type" != "Admin" (in /users/getUsers)
+    2. SELECT WHERE condition 'col_val' does not exist i.e. SELECT * FROM "users" WHERE "user_type" != "Admin" (in /users/getUsers) [FIXED - $1]
     3. SERIAL ID conflict with data seeding
 
     *****       TODO        *****
