@@ -39,19 +39,17 @@ const LandingPage = ({ setLoggedUserData }) => {
           potential triggers to avoid.
         </h2>
         <div className="flex flex-wrap justify-between mx-auto">
-          <div className="w-5/12 py-10 px-20 border-solid border-2 rounded-2xl mx-10 my-20 motion-safe:animate-vibrateNormal shadow-xl hover:motion-safe:animate-vibrateSlow hover:shadow-3xl">
+          <div className="w-5/12 h-max py-16 px-16 border-solid border-2 rounded-2xl mx-10 my-20 motion-safe:animate-vibrateNormal shadow-xl hover:motion-safe:animate-vibrateSlow hover:shadow-3xl">
             {!showLogin && (
               <>
-                <h2 className="text-3xl font-400 mb-8">
-                  Log in to resume your journey!
-                </h2>
+                <h2 className="text-3xl font-400 mb-8">Existing user?</h2>
                 <ButtonGeneral
                   displayName={"Log in"}
                   category={"account"}
                   width={"12rem"}
                   fontSize={"1.2rem"}
                   padding={"0.4rem"}
-                  margin={"1rem 0.5rem"}
+                  margin={"1rem 0"}
                   onClick={handleClick}
                 />
               </>
@@ -61,7 +59,7 @@ const LandingPage = ({ setLoggedUserData }) => {
             )}
           </div>
 
-          <div className="w-5/12 py-10 px-20 border-solid border-2 rounded-2xl mx-10 my-20 motion-safe:animate-vibrateNormal shadow-xl hover:motion-safe:animate-vibrateSlow hover:shadow-3xl">
+          <div className="w-5/12 h-max py-16 px-16 border-solid border-2 rounded-2xl mx-10 my-20 motion-safe:animate-vibrateNormal shadow-xl hover:motion-safe:animate-vibrateSlow hover:shadow-3xl">
             {!showSignup && (
               <>
                 <h2 className="text-3xl font-400 mb-8">
@@ -73,7 +71,7 @@ const LandingPage = ({ setLoggedUserData }) => {
                   width={"12rem"}
                   fontSize={"1.2rem"}
                   padding={"0.4rem"}
-                  margin={"1rem 0.5rem"}
+                  margin={"1rem 0"}
                   onClick={handleClick}
                 />
               </>

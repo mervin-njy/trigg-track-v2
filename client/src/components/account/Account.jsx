@@ -2,13 +2,14 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import ButtonEmptyBg from "../Interactions/ButtonEmptyBg";
+import ButtonError from "../Interactions/ButtonError";
 import ButtonGeneral from "../Interactions/ButtonGeneral";
 import FormInput from "../Interactions/FormInput";
 import LoadingSpinner from "../Loading/LoadingSpinner";
 
 const Account = ({ setLoggedUserData, action }) => {
   // variables ----------------------------------------------------------------------------------------------------
-  const showLogin = action === "login" ? true : false;
+  const [showLogin, setShowLogin] = useState(action === "login" ? true : false);
   const showSignup = action === "signup" ? true : false;
   const showSettings = action === "settings" ? true : false;
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const Account = ({ setLoggedUserData, action }) => {
     username: "",
     password: "",
   });
-  const [checkStatus, setCheckStatus] = useState(false);
+  const [checkStatus, setCheckStatus] = useState(false); // toggle to try http request
   const [requestTypes, setRequestTypes] = useState({
     accountEndpoint: "",
     fetchMethod: "",
@@ -51,21 +52,27 @@ const Account = ({ setLoggedUserData, action }) => {
     // setFocus();
     console.log(`button clicked: ${event.target.name}`);
     console.log(accountInput);
-    setCheckStatus((prevCheckStatus) => {
-      return !prevCheckStatus;
-    });
+    if (event.target.name === "Retry") {
+      if (event.target.id === "login") setShowLogin(true);
+    } else {
+      // 1. toggle checkStatus state for http request
+      setCheckStatus((prevCheckStatus) => {
+        return !prevCheckStatus;
+      });
 
-    if (event.target.name === "Log in") {
-      setRequestTypes({
-        accountEndpoint: "loginUser",
-        fetchMethod: "POST",
-      });
-    } else if (event.target.name === "Sign up") {
-      setRequestTypes({
-        accountEndpoint: "createUser",
-        fetchMethod: "PUT",
-      });
-    } else if (event.target.name === "Retry") navigateToPage("account/login");
+      // 2. set http request type based on button type
+      if (event.target.name === "Log in") {
+        setRequestTypes({
+          accountEndpoint: "loginUser",
+          fetchMethod: "POST",
+        });
+      } else if (event.target.name === "Sign up") {
+        setRequestTypes({
+          accountEndpoint: "createUser",
+          fetchMethod: "PUT",
+        });
+      }
+    }
   };
 
   // functions ----------------------------------------------------------------------------------------------------
@@ -94,10 +101,15 @@ const Account = ({ setLoggedUserData, action }) => {
   useEffect(() => {
     // a. if data fetching is a success => set state for user info + navigate to home
     if (isObject(data)) {
-      // lift state: logged in user data
-      setLoggedUserData(data);
-      navigateToPage("home");
-      console.log("2nd useEffect", data);
+      console.log("error:", data.status);
+      if (data.status !== "error") {
+        // lift state: logged in user data
+        setLoggedUserData(data);
+        navigateToPage("home");
+        console.log("2nd useEffect", data);
+      } else {
+        setShowLogin(false);
+      }
     }
   }, [data]);
 
@@ -137,6 +149,7 @@ const Account = ({ setLoggedUserData, action }) => {
               displayName={"Forget password."}
               category={"account"}
               width={"10rem"}
+              textDecoration={"underline"}
               fontSize={"1rem"}
               padding={"0.4rem"}
               margin={"1rem 0"}
@@ -145,8 +158,8 @@ const Account = ({ setLoggedUserData, action }) => {
             <ButtonGeneral
               displayName={"Log in"}
               category={"account"}
-              width={"8rem"}
-              fontSize={"1.2rem"}
+              width={"10rem"}
+              fontSize={"1.3rem"}
               padding={"0.4rem"}
               margin={"1rem 0"}
               onClick={handleClick}
@@ -154,18 +167,36 @@ const Account = ({ setLoggedUserData, action }) => {
           </div>
         </div>
       )}
+
       {showSignup && <h1>SHOW SIGNUP CARD</h1>}
+
       {showSettings && <h1>SHOW SETTINGS CARD</h1>}
+
       {isObject(data) && (
         <section>
           {/* Display date's contents if fetched success and loaded */}
-          {!isLoading && data && <h1>LOG IN SUCCESS.</h1>}
+          {!isLoading && data && !showLogin && (
+            <div>
+              <h2 className="text-3xl mb-8">{data.message}</h2>
+              <ButtonError
+                displayName={"Retry"}
+                category={"login"}
+                width={"10rem"}
+                fontSize={"1.3rem"}
+                padding={"0.4rem"}
+                margin={"1rem 0"}
+                onClick={handleClick}
+              />
+            </div>
+          )}
+
           {/* While fetching, display load spinner */}
           {isLoading && (
             <div className="centered">
               <LoadingSpinner />
             </div>
           )}
+
           {/* Display error message if fetch has an error */}
           {!isLoading && error && (
             <div>

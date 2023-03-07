@@ -20,6 +20,8 @@ module.exports = {
       //   lg: "3.5rem",
       // },
       colors: {
+        redAccent: "#ECBFBF", // error
+        redMain: "#d63031",
         orangeAccent: "#fab1a0", // admin
         orangeMain: "#ff7675",
         yellowAccent: "#ffeaa7",
