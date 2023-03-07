@@ -103,27 +103,27 @@ const Signup = ({ setLoggedUserData }) => {
       {showSignup && (
         <div className="mx-auto">
           {/* FOR: userCreate" */}
-          <h1 className="text-3xl mb-14">Please fill in your account info</h1>
+          <h1 className="text-xl mb-14">Please fill in your account info</h1>
           <div className="flex flex-wrap justify-between mt-8">
-            <h4 className="w-3/12 text-2xl">username:</h4>
+            <h4 className="w-3/10 text-lg">username:</h4>
             <FormInput
               type="text"
               name="username"
               value={accountInput.username}
               reference={usernameRef}
-              width={"75%"}
+              width={"70%"}
               onChange={handleChange}
               required={true}
             />
           </div>
           <div className="flex flex-wrap justify-between mt-5">
-            <h4 className="w-3/12 text-2xl">password:</h4>
+            <h4 className="w-3/10 text-lg">password:</h4>
             <FormInput
               type="password"
               name="password"
               value={accountInput.password}
               reference={passwordRef}
-              width={"75%"}
+              width={"70%"}
               onChange={handleChange}
               required={true}
             />
