@@ -14,6 +14,12 @@ const Signup = ({ setLoggedUserData }) => {
   const [accountInput, setAccountInput] = useState({
     username: "",
     password: "",
+    userType: "",
+    accessType: "",
+    displayName: "",
+    profession: "",
+    email: "",
+    bio: "",
   });
   const [checkStatus, setCheckStatus] = useState(false); // toggle to try http request
   const [requestTypes, setRequestTypes] = useState({
@@ -25,6 +31,12 @@ const Signup = ({ setLoggedUserData }) => {
   // refs ---------------------------------------------------------------------------------------------------------
   const usernameRef = useRef();
   const passwordRef = useRef();
+  const userType = useRef();
+  const accessType = useRef();
+  const displayNameRef = useRef();
+  const professionRef = useRef();
+  const emailRef = useRef();
+  const bioRef = useRef();
 
   //   event handlers ---------------------------------------------------------------------------------------------
   const handleChange = (event) => {
@@ -105,7 +117,7 @@ const Signup = ({ setLoggedUserData }) => {
           {/* FOR: userCreate" */}
           <h1 className="text-xl mb-14">Please fill in your account info</h1>
           <div className="flex flex-wrap justify-between mt-8">
-            <h4 className="w-3/10 text-lg">username:</h4>
+            <h4 className="w-3/10 text-lg tracking-widest">username:</h4>
             <FormInput
               type="text"
               name="username"
@@ -116,8 +128,9 @@ const Signup = ({ setLoggedUserData }) => {
               required={true}
             />
           </div>
+
           <div className="flex flex-wrap justify-between mt-5">
-            <h4 className="w-3/10 text-lg">password:</h4>
+            <h4 className="w-3/10 text-lg tracking-widest">password:</h4>
             <FormInput
               type="password"
               name="password"
@@ -128,6 +141,72 @@ const Signup = ({ setLoggedUserData }) => {
               required={true}
             />
           </div>
+
+          {/* <div className="flex flex-wrap justify-between mt-5">
+            <h4 className="w-3/10 text-lg tracking-widest">user type:</h4>
+            <FormInput
+              type="radio"
+              name="logger"
+              value={accountInput.userType}
+              reference={displayNameRef}
+              width={"70%"}
+              onChange={handleChange}
+              required={true}
+            />
+          </div> */}
+
+          <div className="flex flex-wrap justify-between mt-5">
+            <h4 className="w-3/10 text-lg tracking-widest">display name:</h4>
+            <FormInput
+              type="text"
+              name="displayName"
+              value={accountInput.displayName}
+              reference={displayNameRef}
+              width={"70%"}
+              onChange={handleChange}
+              required={true}
+            />
+          </div>
+
+          <div className="flex flex-wrap justify-between mt-5">
+            <h4 className="w-3/10 text-lg tracking-widest">profession:</h4>
+            <FormInput
+              type="text"
+              name="profession"
+              value={accountInput.profession}
+              reference={professionRef}
+              width={"70%"}
+              onChange={handleChange}
+              required={true}
+            />
+          </div>
+
+          <div className="flex flex-wrap justify-between mt-5">
+            <h4 className="w-3/10 text-lg tracking-widest">email:</h4>
+            <FormInput
+              type="text"
+              name="email"
+              value={accountInput.email}
+              reference={emailRef}
+              width={"70%"}
+              onChange={handleChange}
+              required={true}
+            />
+          </div>
+
+          <div className="flex flex-wrap justify-between mt-5">
+            <h4 className="w-3/10 text-lg tracking-widest">bio:</h4>
+            <FormInput
+              type="text"
+              name="bio"
+              value={accountInput.bio}
+              reference={bioRef}
+              width={"70%"}
+              onChange={handleChange}
+              required={true}
+            />
+          </div>
+
           <div className="flex flex-wrap justify-between right-0 mt-8">
             <ButtonGeneral
               displayName={"Sign up"}
