@@ -40,7 +40,7 @@ const LandingPage = ({ setLoggedUserData }) => {
           potential triggers to avoid.
         </h2>
         <div className="flex flex-wrap justify-between mx-auto">
-          <div className="w-9/20 h-max py-12 px-12 border-solid border-2 rounded-2xl mx-2 my-20 motion-safe:animate-vibrateNormal shadow-xl hover:motion-safe:animate-vibrateSlow hover:shadow-3xl">
+          <div className="w-9/20 h-max py-12 px-12 border-solid border-2 rounded-2xl mx-2 my-20 motion-safe:animate-float shadow-xl hover:motion-safe:animate-pulsate hover:shadow-3xl">
             {!showLogin && (
               <>
                 <h2 className="text-xl font-400 mb-8">Existing user?</h2>
@@ -58,7 +58,7 @@ const LandingPage = ({ setLoggedUserData }) => {
             {showLogin && <Login setLoggedUserData={setLoggedUserData} />}
           </div>
 
-          <div className="w-9/20 h-max py-12 px-12 border-solid border-2 rounded-2xl mx-2 my-20 motion-safe:animate-vibrateNormal shadow-xl hover:motion-safe:animate-vibrateSlow hover:shadow-3xl">
+          <div className="w-9/20 h-max py-12 px-12 border-solid border-2 rounded-2xl mx-2 my-20 motion-safe:animate-float shadow-xl hover:motion-safe:animate-pulsate hover:shadow-3xl">
             {!showSignup && (
               <>
                 <h2 className="text-xl font-400 mb-8">

@@ -14,8 +14,8 @@ const Signup = ({ setLoggedUserData }) => {
   const [accountInput, setAccountInput] = useState({
     username: "",
     password: "",
-    userType: "",
-    accessType: "",
+    userType: "Health Logger",
+    accessType: "Public",
     displayName: "",
     profession: "",
     email: "",
@@ -31,8 +31,8 @@ const Signup = ({ setLoggedUserData }) => {
   // refs ---------------------------------------------------------------------------------------------------------
   const usernameRef = useRef();
   const passwordRef = useRef();
-  const userType = useRef();
-  const accessType = useRef();
+  const userTypeRef = useRef();
+  const accessTypeRef = useRef();
   const displayNameRef = useRef();
   const professionRef = useRef();
   const emailRef = useRef();
@@ -142,18 +142,40 @@ const Signup = ({ setLoggedUserData }) => {
             />
           </div>
 
-          {/* <div className="flex flex-wrap justify-between mt-5">
-            <h4 className="w-3/10 text-lg tracking-widest">user type:</h4>
-            <FormInput
-              type="radio"
-              name="logger"
-              value={accountInput.userType}
-              reference={displayNameRef}
-              width={"70%"}
-              onChange={handleChange}
-              required={true}
-            />
-          </div> */}
+          <div className="mt-5">
+            <div className="flex flex-wrap justify-between">
+              <h4 className="w-3/10 text-lg tracking-widest">user type:</h4>
+              <FormInput
+                type="radio"
+                name="Health Logger"
+                value={accountInput.userType}
+                reference={userTypeRef}
+                checked={accountInput.userType === "Health Logger"}
+                width={"3%"}
+                onChange={handleChange}
+                required={true}
+              />
+              <label className="w-9/15 text-lg tracking-wider">
+                Health Logger
+              </label>
+            </div>
+            <div className="flex flex-wrap justify-between mt-3">
+              <div className="w-3/10"></div>
+              <FormInput
+                type="radio"
+                name="Service Provider"
+                value={accountInput.userType}
+                reference={userTypeRef}
+                checked={accountInput.userType === "Service Provider"}
+                width={"3%"}
+                onChange={handleChange}
+                required={true}
+              />
+              <label className="w-9/15 text-lg tracking-wider">
+                Service Provider
+              </label>
+            </div>
+          </div>
 
           <div className="flex flex-wrap justify-between mt-5">
             <h4 className="w-3/10 text-lg tracking-widest">display name:</h4>
