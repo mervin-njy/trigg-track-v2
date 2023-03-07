@@ -66,7 +66,7 @@ module.exports = {
       animation: {
         fadeIn: "fadeIn 1s ease-in forwards",
         vibrateNormal: "vibrate 1.2s ease-in-out infinite",
-        vibrateSlow: "vibrate 2s ease-in-out infinite",
+        vibrateSlow: "vibrateLittle 2s ease-in-out infinite",
       },
       keyframes: {
         fadeIn: {
@@ -75,14 +75,22 @@ module.exports = {
         },
         vibrate: {
           "0%, 100%": {
-            transform: "translateY(-4%)",
+            transform: "translateY(-5%)",
             // transform: "scale(1.01)",
-            animationTimingFunction: "cubic-bezier(0, 0, 0, 0)",
+            // animationTimingFunction: "cubic-bezier(0, 0, 0, 0)",
           },
           "50%": {
             transform: "translateY(0)",
             // transform: "scale(1)",
-            animationTimingFunction: "cubic-bezier(0, 0, 0, 0)",
+            // animationTimingFunction: "cubic-bezier(0, 0, 0, 0)",
+          },
+        },
+        vibrateLittle: {
+          "0%, 100%": {
+            transform: "translateY(-2.5%)",
+          },
+          "50%": {
+            transform: "translateY(0)",
           },
         },
         wiggle: {

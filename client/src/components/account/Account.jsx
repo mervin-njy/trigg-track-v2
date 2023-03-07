@@ -52,6 +52,7 @@ const Account = ({ setLoggedUserData, action }) => {
     // setFocus();
     console.log(`button clicked: ${event.target.name}`);
     console.log(accountInput);
+
     if (event.target.name === "Retry") {
       if (event.target.id === "login") setShowLogin(true);
     } else {
@@ -118,7 +119,7 @@ const Account = ({ setLoggedUserData, action }) => {
     <>
       {showLogin && (
         <div className="mx-auto">
-          {/* FOR: "/account/login" */}
+          {/* FOR: userlogin" */}
           <h1 className="text-3xl mb-14">Please fill in your log in details</h1>
           <div className="flex flex-wrap justify-between mt-8">
             <h4 className="w-3/12 text-2xl">username:</h4>
@@ -168,14 +169,54 @@ const Account = ({ setLoggedUserData, action }) => {
         </div>
       )}
 
-      {showSignup && <h1>SHOW SIGNUP CARD</h1>}
+      {showSignup && (
+        <div className="mx-auto">
+          {/* FOR: userCreate" */}
+          <h1 className="text-3xl mb-14">Please fill in your account info</h1>
+          <div className="flex flex-wrap justify-between mt-8">
+            <h4 className="w-3/12 text-2xl">username:</h4>
+            <FormInput
+              type="text"
+              name="username"
+              value={accountInput.username}
+              reference={usernameRef}
+              width={"75%"}
+              onChange={handleChange}
+              required={true}
+            />
+          </div>
+          <div className="flex flex-wrap justify-between mt-5">
+            <h4 className="w-3/12 text-2xl">password:</h4>
+            <FormInput
+              type="password"
+              name="password"
+              value={accountInput.password}
+              reference={passwordRef}
+              width={"75%"}
+              onChange={handleChange}
+              required={true}
+            />
+          </div>
+          <div className="flex flex-wrap justify-between right-0 mt-8">
+            <ButtonGeneral
+              displayName={"Sign up"}
+              category={"account"}
+              width={"10rem"}
+              fontSize={"1.3rem"}
+              padding={"0.4rem"}
+              margin={"1rem 0"}
+              onClick={handleClick}
+            />
+          </div>
+        </div>
+      )}
 
       {showSettings && <h1>SHOW SETTINGS CARD</h1>}
 
-      {isObject(data) && (
+      {isObject(data) && !showLogin && (
         <section>
           {/* Display date's contents if fetched success and loaded */}
-          {!isLoading && data && !showLogin && (
+          {!isLoading && data && (
             <div>
               <h2 className="text-3xl mb-8">{data.message}</h2>
               <ButtonError
