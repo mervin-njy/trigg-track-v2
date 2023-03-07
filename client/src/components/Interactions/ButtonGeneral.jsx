@@ -11,7 +11,7 @@ const ButtonGeneral = ({
 }) => {
   return (
     <button
-      className="cursor-pointer font-oxygen font-normal tracking-wider text-2xl text-main9 bg-main3 w-28 md:w-32 lg:w-36 border-solid border-main6 border-2 rounded-2xl mx-auto hover:text-mainLightest hover:bg-main6 hover:border-mainLightest"
+      className="cursor-pointer font-oxygen font-normal tracking-wider text-2xl text-main9 bg-main3 w-28 md:w-32 lg:w-36 border-solid border-main6 border-2 rounded-2xl shadow-btnGeneral hover:text-mainLightest hover:bg-main6 hover:border-mainLightest"
       name={displayName}
       id={category}
       style={{

@@ -1,14 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import ButtonEmptyBg from "../Interactions/ButtonEmptyBg";
 import ButtonGeneral from "../Interactions/ButtonGeneral";
 import FormInput from "../Interactions/FormInput";
 import LoadingSpinner from "../Loading/LoadingSpinner";
 
-const Account = ({ setLoggedUserData }) => {
+const Account = ({ setLoggedUserData, action }) => {
   // variables ----------------------------------------------------------------------------------------------------
-  const { action } = useParams(); // login or signup or settings
   const showLogin = action === "login" ? true : false;
   const showSignup = action === "signup" ? true : false;
   const showSettings = action === "settings" ? true : false;
@@ -106,39 +105,41 @@ const Account = ({ setLoggedUserData }) => {
   return (
     <>
       {showLogin && (
-        <div className="w-4/12 mx-auto mt-40">
+        <div className="mx-auto">
           {/* FOR: "/account/login" */}
-          <h1 className="text-3xl">Please fill in your log in details</h1>
-          <div className="flex flex-wrap w-13/15 mt-8">
+          <h1 className="text-3xl mb-14">Please fill in your log in details</h1>
+          <div className="flex flex-wrap justify-between mt-8">
             <h4 className="w-3/12 text-2xl">username:</h4>
             <FormInput
               type="text"
               name="username"
               value={accountInput.username}
               reference={usernameRef}
+              width={"75%"}
               onChange={handleChange}
               required={true}
             />
           </div>
-          <div className="flex flex-wrap w-13/15 mt-5">
+          <div className="flex flex-wrap justify-between mt-5">
             <h4 className="w-3/12 text-2xl">password:</h4>
             <FormInput
               type="password"
               name="password"
               value={accountInput.password}
               reference={passwordRef}
+              width={"75%"}
               onChange={handleChange}
               required={true}
             />
           </div>
-          <div className="flex flex-wrap w-13/15 mx-auto mt-8">
+          <div className="flex flex-wrap justify-between mx-auto mt-8">
             <ButtonEmptyBg
               displayName={"Forget password."}
               category={"account"}
               width={"10rem"}
               fontSize={"1rem"}
               padding={"0.4rem"}
-              margin={"1rem 0.5rem"}
+              margin={"1rem 0"}
               onClick={handleClick}
             />
             <ButtonGeneral
@@ -147,7 +148,7 @@ const Account = ({ setLoggedUserData }) => {
               width={"8rem"}
               fontSize={"1.2rem"}
               padding={"0.4rem"}
-              margin={"1rem 0.5rem"}
+              margin={"1rem 0"}
               onClick={handleClick}
             />
           </div>

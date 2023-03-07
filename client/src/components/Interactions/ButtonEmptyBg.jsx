@@ -11,7 +11,7 @@ const ButtonEmptyBg = ({
 }) => {
   return (
     <button
-      className="cursor-pointer font-oxygen font-normal tracking-wider text-2xl text-greyLightest w-28 md:w-32 lg:w-36 mx-auto"
+      className="cursor-pointer font-oxygen font-normal tracking-wider text-2xl text-greyLightest w-28 md:w-32 lg:w-36"
       name={displayName}
       id={category}
       style={{

@@ -26,17 +26,22 @@ function App() {
       {loggedUserData && <NavBar userType={loggedUserData.userType} />}
 
       <Routes>
-        <Route
+        {/* REMOVE: <Route
           path="/account/:action"
           element={<Account setLoggedUserData={setLoggedUserData} />}
-        />
+        /> */}
 
         {/* Navigate to welcome or home - according to login status ---------------------------------------------------------------- */}
         <Route
           path="/"
           element={<Navigate replace to={`/${landingEndPoint}`} />}
         />
-        {<Route path="/welcome" element={<LandingPage />} />}
+        {
+          <Route
+            path="/welcome"
+            element={<LandingPage setLoggedUserData={setLoggedUserData} />}
+          />
+        }
         <Route
           path="/home"
           element={<Home loggedUserData={loggedUserData} />}
