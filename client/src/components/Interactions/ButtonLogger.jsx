@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ButtonNewField = () => {
+const ButtonLogger = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const ButtonNewField = () => {
     );
 };
 
-export default ButtonNewField;
+export default ButtonLogger;

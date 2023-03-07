@@ -1,7 +1,7 @@
 import React, { state } from "react";
 // import { useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
-import ButtonSubmit from "../Interactions/ButtonSubmit";
+import ButtonSubmit from "../Interactions/ButtonGeneral";
 // import LoadingSpinner from "../Loading/LoadingSpinner";
 
 const Home = ({ loggedUserData }) => {

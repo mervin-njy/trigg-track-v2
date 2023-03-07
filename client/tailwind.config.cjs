@@ -40,12 +40,12 @@ module.exports = {
         15: "0.938rem",
         22: "1.375rem",
       },
-      borderRadius: {
-        xs: "0.8rem",
-        sm: "1.5rem",
-        lg: "3rem",
-        xl: "8rem",
-      },
+      // borderRadius: {
+      //   xs: "0.8rem",
+      //   sm: "1.5rem",
+      //   lg: "3rem",
+      //   xl: "8rem",
+      // },
       margin: {
         superLargeNegative: "-350px",
         largeNegative: "-220px",

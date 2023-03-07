@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
-import ButtonSubmit from "../Interactions/ButtonSubmit";
+import ButtonGeneral from "../Interactions/ButtonGeneral";
 
 const LandingPage = () => {
   const handleClick = (event) => {
@@ -11,8 +11,10 @@ const LandingPage = () => {
   return (
     <>
       <div className="w-10/12 my-20 mx-auto">
-        <h1 className="text-6xl font-bold">Welcome to Trigg.Track.</h1>
-        <h2 className="text-xl font-400">
+        <h1 className="font-oxygen text-8xl font-bold my-10">
+          Welcome to Trigg.Track.
+        </h1>
+        <h2 className="font-oxygen text-2xl font-800">
           Record your daily conditions and variables to track, to filter out
           potential triggers to avoid.
         </h2>
@@ -20,14 +22,12 @@ const LandingPage = () => {
           <div>
             <h2 className="text-xs font-400">Log in to resume your journey!</h2>
             <NavLink to="/account/login">
-              <ButtonSubmit
+              <ButtonGeneral
                 displayName={"Log in"}
                 category={"account"}
                 width={"12rem"}
-                padding={"0.2rem"}
-                margin={"0.1rem 0.5rem"}
-                colourBackground={"yellowMain"}
-                colourText={"yellowAccent"}
+                padding={"0.4rem"}
+                margin={"1rem 0.5rem"}
                 onClick={handleClick}
               />
             </NavLink>
@@ -35,14 +35,12 @@ const LandingPage = () => {
           <div>
             <h2>Create a free account with us today!</h2>
             <NavLink to="/account/signup">
-              <ButtonSubmit
+              <ButtonGeneral
                 displayName={"Sign up"}
                 category={"account"}
                 width={"12rem"}
-                padding={"0.2rem"}
-                margin={"0.1rem 0.5rem"}
-                colourBackground={"yellowMain"}
-                colourText={"yellowAccent"}
+                padding={"0.4rem"}
+                margin={"1rem 0.5rem"}
                 onClick={handleClick}
               />
             </NavLink>
