@@ -7,17 +7,9 @@ import ButtonGeneral from "../Interactions/ButtonGeneral";
 import FormInput from "../Interactions/FormInput";
 import LoadingSpinner from "../Loading/LoadingSpinner";
 
-const Account = ({ setLoggedUserData, action }) => {
+const Signup = ({ setLoggedUserData, action }) => {
   // variables ----------------------------------------------------------------------------------------------------
-  const [showLogin, setShowLogin] = useState(action === "login" ? true : false);
-  const showSignup = action === "signup" ? true : false;
-  const showSettings = action === "settings" ? true : false;
-  const navigate = useNavigate();
-  // Navigate to home
-  const navigateToPage = (page) => {
-    console.log(`log in status:", "navigating to ${page}.`);
-    navigate(`/${page}`);
-  };
+  const [showSignup, setShowSignup] = useState(action.signup ? true : false);
 
   // states -------------------------------------------------------------------------------------------------------
   const { fetchData, isLoading, data, error } = useFetch();
@@ -259,4 +251,4 @@ const Account = ({ setLoggedUserData, action }) => {
   );
 };
 
-export default Account;
+export default Signup;

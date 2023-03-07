@@ -2,25 +2,25 @@ import React, { useState } from "react";
 // import { NavLink } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
 import ButtonGeneral from "../Interactions/ButtonGeneral";
-import Account from "./Account";
+import Login from "./Login";
 
 const LandingPage = ({ setLoggedUserData }) => {
   // states -------------------------------------------------------------------------------------------------------
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
-  const [action, setAction] = useState(null);
+  // const [action, setAction] = useState(null);
 
   //   event handlers ---------------------------------------------------------------------------------------------
   const handleClick = (event) => {
     console.log(`showing form: ${event.target.name}.`);
 
     if (event.target.name === "Log in") {
-      setAction("login");
+      // setAction("login");
       setShowLogin((prevShowLogin) => {
         return !prevShowLogin;
       });
     } else if (event.target.name === "Sign up") {
-      setAction("signup");
+      // setAction("signup");
       setShowSignup((prevShowSignup) => {
         return !prevShowSignup;
       });
@@ -54,9 +54,7 @@ const LandingPage = ({ setLoggedUserData }) => {
                 />
               </>
             )}
-            {showLogin && (
-              <Account setLoggedUserData={setLoggedUserData} action={action} />
-            )}
+            {showLogin && <Login setLoggedUserData={setLoggedUserData} />}
           </div>
 
           <div className="w-5/12 h-max py-16 px-16 border-solid border-2 rounded-2xl mx-10 my-20 motion-safe:animate-vibrateNormal shadow-xl hover:motion-safe:animate-vibrateSlow hover:shadow-3xl">
@@ -76,6 +74,7 @@ const LandingPage = ({ setLoggedUserData }) => {
                 />
               </>
             )}
+            {showSignup && <Account setLoggedUserData={setLoggedUserData} />}
           </div>
         </div>
       </div>
