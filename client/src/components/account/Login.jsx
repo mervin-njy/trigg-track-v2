@@ -9,7 +9,6 @@ import LoadingSpinner from "../Loading/LoadingSpinner";
 
 const Login = ({ setLoggedUserData }) => {
   // variables ----------------------------------------------------------------------------------------------------
-  const [showLogin, setShowLogin] = useState(true);
   const navigate = useNavigate();
   // Navigate to home
   const navigateToPage = (page) => {
@@ -18,6 +17,7 @@ const Login = ({ setLoggedUserData }) => {
   };
 
   // states -------------------------------------------------------------------------------------------------------
+  const [showLogin, setShowLogin] = useState(true);
   const { fetchData, isLoading, data, error } = useFetch();
   const [accountInput, setAccountInput] = useState({
     username: "",
@@ -100,7 +100,7 @@ const Login = ({ setLoggedUserData }) => {
         navigateToPage("home");
         console.log("2nd useEffect", data);
       } else {
-        setShowLogin(false);
+        setShowLogin(false); // & display retry button
       }
     }
   }, [data]);

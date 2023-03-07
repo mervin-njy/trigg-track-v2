@@ -3,6 +3,7 @@ import React, { useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import ButtonGeneral from "../Interactions/ButtonGeneral";
 import Login from "./Login";
+import Signup from "./Signup";
 
 const LandingPage = ({ setLoggedUserData }) => {
   // states -------------------------------------------------------------------------------------------------------
@@ -74,7 +75,7 @@ const LandingPage = ({ setLoggedUserData }) => {
                 />
               </>
             )}
-            {showSignup && <Account setLoggedUserData={setLoggedUserData} />}
+            {showSignup && <Signup setLoggedUserData={setLoggedUserData} />}
           </div>
         </div>
       </div>

@@ -7,11 +7,9 @@ import ButtonGeneral from "../Interactions/ButtonGeneral";
 import FormInput from "../Interactions/FormInput";
 import LoadingSpinner from "../Loading/LoadingSpinner";
 
-const Signup = ({ setLoggedUserData, action }) => {
-  // variables ----------------------------------------------------------------------------------------------------
-  const [showSignup, setShowSignup] = useState(action.signup ? true : false);
-
+const Signup = ({ setLoggedUserData }) => {
   // states -------------------------------------------------------------------------------------------------------
+  const [showSignup, setShowSignup] = useState(true);
   const { fetchData, isLoading, data, error } = useFetch();
   const [accountInput, setAccountInput] = useState({
     username: "",
@@ -22,6 +20,8 @@ const Signup = ({ setLoggedUserData, action }) => {
     accountEndpoint: "",
     fetchMethod: "",
   });
+
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   // refs ---------------------------------------------------------------------------------------------------------
   const usernameRef = useRef();
@@ -46,25 +46,18 @@ const Signup = ({ setLoggedUserData, action }) => {
     console.log(accountInput);
 
     if (event.target.name === "Retry") {
-      if (event.target.id === "login") setShowLogin(true);
-    } else {
+      setShowSignup(true);
+    } else if (event.target.name === "Sign up") {
       // 1. toggle checkStatus state for http request
       setCheckStatus((prevCheckStatus) => {
         return !prevCheckStatus;
       });
 
       // 2. set http request type based on button type
-      if (event.target.name === "Log in") {
-        setRequestTypes({
-          accountEndpoint: "loginUser",
-          fetchMethod: "POST",
-        });
-      } else if (event.target.name === "Sign up") {
-        setRequestTypes({
-          accountEndpoint: "createUser",
-          fetchMethod: "PUT",
-        });
-      }
+      setRequestTypes({
+        accountEndpoint: "createUser",
+        fetchMethod: "PUT",
+      });
     }
   };
 
@@ -97,11 +90,10 @@ const Signup = ({ setLoggedUserData, action }) => {
       console.log("error:", data.status);
       if (data.status !== "error") {
         // lift state: logged in user data
-        setLoggedUserData(data);
-        navigateToPage("home");
+        setShowSuccessMessage(true);
         console.log("2nd useEffect", data);
       } else {
-        setShowLogin(false);
+        setShowSignup(false); // & display retry button
       }
     }
   }, [data]);
@@ -109,58 +101,6 @@ const Signup = ({ setLoggedUserData, action }) => {
   // render component --------------------------------------------------------------------------------------------
   return (
     <>
-      {showLogin && (
-        <div className="mx-auto">
-          {/* FOR: userlogin" */}
-          <h1 className="text-3xl mb-14">Please fill in your log in details</h1>
-          <div className="flex flex-wrap justify-between mt-8">
-            <h4 className="w-3/12 text-2xl">username:</h4>
-            <FormInput
-              type="text"
-              name="username"
-              value={accountInput.username}
-              reference={usernameRef}
-              width={"75%"}
-              onChange={handleChange}
-              required={true}
-            />
-          </div>
-          <div className="flex flex-wrap justify-between mt-5">
-            <h4 className="w-3/12 text-2xl">password:</h4>
-            <FormInput
-              type="password"
-              name="password"
-              value={accountInput.password}
-              reference={passwordRef}
-              width={"75%"}
-              onChange={handleChange}
-              required={true}
-            />
-          </div>
-          <div className="flex flex-wrap justify-between mx-auto mt-8">
-            <ButtonEmptyBg
-              displayName={"Forget password."}
-              category={"account"}
-              width={"10rem"}
-              textDecoration={"underline"}
-              fontSize={"1rem"}
-              padding={"0.4rem"}
-              margin={"1rem 0"}
-              onClick={handleClick}
-            />
-            <ButtonGeneral
-              displayName={"Log in"}
-              category={"account"}
-              width={"10rem"}
-              fontSize={"1.3rem"}
-              padding={"0.4rem"}
-              margin={"1rem 0"}
-              onClick={handleClick}
-            />
-          </div>
-        </div>
-      )}
-
       {showSignup && (
         <div className="mx-auto">
           {/* FOR: userCreate" */}
@@ -203,25 +143,29 @@ const Signup = ({ setLoggedUserData, action }) => {
         </div>
       )}
 
-      {showSettings && <h1>SHOW SETTINGS CARD</h1>}
-
       {isObject(data) && !showLogin && (
         <section>
           {/* Display date's contents if fetched success and loaded */}
-          {!isLoading && data && (
-            <div>
-              <h2 className="text-3xl mb-8">{data.message}</h2>
-              <ButtonError
-                displayName={"Retry"}
-                category={"login"}
-                width={"10rem"}
-                fontSize={"1.3rem"}
-                padding={"0.4rem"}
-                margin={"1rem 0"}
-                onClick={handleClick}
-              />
-            </div>
-          )}
+          {!isLoading &&
+            data &&
+            (showSuccessMessage ? (
+              <div>
+                <h2 className="text-3xl mb-8">Account creation successful.</h2>
+              </div>
+            ) : (
+              <div>
+                <h2 className="text-3xl mb-8">{data.message}</h2>
+                <ButtonError
+                  displayName={"Retry"}
+                  category={"login"}
+                  width={"10rem"}
+                  fontSize={"1.3rem"}
+                  padding={"0.4rem"}
+                  margin={"1rem 0"}
+                  onClick={handleClick}
+                />
+              </div>
+            ))}
 
           {/* While fetching, display load spinner */}
           {isLoading && (
