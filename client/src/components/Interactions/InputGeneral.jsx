@@ -1,6 +1,6 @@
 import React from "react";
 
-const FormInput = ({
+const InputGeneral = ({
   type,
   name,
   value,
@@ -14,7 +14,7 @@ const FormInput = ({
     <>
       <input
         className={
-          "bg-main9 px-4 py-1 accent-main4 border-solid border-2 border-mainLightest rounded-md required:invalid"
+          "overflow-auto bg-main9 px-4 py-1 text-main2 tracking-widest accent-main4 border-solid border-2 border-main2 rounded-md"
         }
         type={type}
         name={name}
@@ -29,4 +29,4 @@ const FormInput = ({
   );
 };
 
-export default FormInput;
+export default InputGeneral;

@@ -1,10 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
-import ButtonEmptyBg from "../Interactions/ButtonEmptyBg";
 import ButtonError from "../Interactions/ButtonError";
 import ButtonGeneral from "../Interactions/ButtonGeneral";
-import FormInput from "../Interactions/FormInput";
+import InputGeneral from "../Interactions/InputGeneral";
 import LoadingSpinner from "../Loading/LoadingSpinner";
 
 const Signup = ({ setLoggedUserData }) => {
@@ -76,6 +74,15 @@ const Signup = ({ setLoggedUserData }) => {
     return typeof value === "object" && value !== null && !Array.isArray(value);
   }
 
+  function toPascalCase(str) {
+    const splitStr = str.toLowerCase().split(" ");
+    let newStr = "";
+    for (const word of splitStr) {
+      newStr += word[0].toUpperCase() + word.slice(1) + " ";
+    }
+    return newStr;
+  }
+
   // effects ------------------------------------------------------------------------------------------------------
   // #1 - http request
   useEffect(() => {
@@ -98,7 +105,7 @@ const Signup = ({ setLoggedUserData }) => {
     // a. if data fetching is a success => set state for user info + navigate to home
     if (isObject(data)) {
       console.log("error:", data.status);
-      if (data.status !== "error") {
+      if (data.status !== "okay") {
         // lift state: logged in user data
         setShowSuccessMessage(true);
         console.log("2nd useEffect", data);
@@ -114,10 +121,12 @@ const Signup = ({ setLoggedUserData }) => {
       {showSignup && (
         <div className="mx-auto">
           {/* FOR: userCreate" */}
-          <h1 className="text-xl mb-14">Please fill in your account info</h1>
+          <h1 className="text-2xl tracking-wider mb-14">
+            Let's set up your account info
+          </h1>
           <div className="flex flex-wrap justify-between mt-8">
             <h4 className="w-3/10 text-lg tracking-widest">username:</h4>
-            <FormInput
+            <InputGeneral
               type="text"
               name="username"
               value={accountInput.username}
@@ -130,7 +139,7 @@ const Signup = ({ setLoggedUserData }) => {
 
           <div className="flex flex-wrap justify-between mt-5">
             <h4 className="w-3/10 text-lg tracking-widest">password:</h4>
-            <FormInput
+            <InputGeneral
               type="password"
               name="password"
               value={accountInput.password}
@@ -141,10 +150,11 @@ const Signup = ({ setLoggedUserData }) => {
             />
           </div>
 
+          {/* Choose userType */}
           <div className="mt-5">
             <div className="flex flex-wrap justify-between">
               <h4 className="w-3/10 text-lg tracking-widest">user type:</h4>
-              <FormInput
+              <InputGeneral
                 type="radio"
                 name="userType"
                 value="Health Logger"
@@ -152,15 +162,14 @@ const Signup = ({ setLoggedUserData }) => {
                 checked={accountInput.userType === "Health Logger"}
                 width={"3%"}
                 onChange={handleChange}
-                required={true}
               />
               <label className="w-9/15 text-lg tracking-wider">
                 Health Logger
               </label>
             </div>
-            <div className="flex flex-wrap justify-between mt-3">
+            <div className="flex flex-wrap justify-between mt-1">
               <div className="w-3/10"></div>
-              <FormInput
+              <InputGeneral
                 type="radio"
                 name="userType"
                 value="Service Provider"
@@ -168,7 +177,6 @@ const Signup = ({ setLoggedUserData }) => {
                 checked={accountInput.userType === "Service Provider"}
                 width={"3%"}
                 onChange={handleChange}
-                required={true}
               />
               <label className="w-9/15 text-lg tracking-wider">
                 Service Provider
@@ -176,9 +184,39 @@ const Signup = ({ setLoggedUserData }) => {
             </div>
           </div>
 
+          {/* Choose accessType */}
+          <div className="mt-5">
+            <div className="flex flex-wrap justify-between">
+              <h4 className="w-3/10 text-lg tracking-widest">access type:</h4>
+              <InputGeneral
+                type="radio"
+                name="accessType"
+                value="Public"
+                reference={accessTypeRef}
+                checked={accountInput.accessType === "Public"}
+                width={"3%"}
+                onChange={handleChange}
+              />
+              <label className="w-9/15 text-lg tracking-wider">Public</label>
+            </div>
+            <div className="flex flex-wrap justify-between mt-1">
+              <div className="w-3/10"></div>
+              <InputGeneral
+                type="radio"
+                name="accessType"
+                value="Private"
+                reference={accessTypeRef}
+                checked={accountInput.accessType === "Private"}
+                width={"3%"}
+                onChange={handleChange}
+              />
+              <label className="w-9/15 text-lg tracking-wider">Private</label>
+            </div>
+          </div>
+
           <div className="flex flex-wrap justify-between mt-5">
             <h4 className="w-3/10 text-lg tracking-widest">display name:</h4>
-            <FormInput
+            <InputGeneral
               type="text"
               name="displayName"
               value={accountInput.displayName}
@@ -191,7 +229,7 @@ const Signup = ({ setLoggedUserData }) => {
 
           <div className="flex flex-wrap justify-between mt-5">
             <h4 className="w-3/10 text-lg tracking-widest">profession:</h4>
-            <FormInput
+            <InputGeneral
               type="text"
               name="profession"
               value={accountInput.profession}
@@ -204,7 +242,7 @@ const Signup = ({ setLoggedUserData }) => {
 
           <div className="flex flex-wrap justify-between mt-5">
             <h4 className="w-3/10 text-lg tracking-widest">email:</h4>
-            <FormInput
+            <InputGeneral
               type="text"
               name="email"
               value={accountInput.email}
@@ -217,7 +255,7 @@ const Signup = ({ setLoggedUserData }) => {
 
           <div className="flex flex-wrap justify-between mt-5">
             <h4 className="w-3/10 text-lg tracking-widest">bio:</h4>
-            <FormInput
+            <InputGeneral
               type="text"
               name="bio"
               value={accountInput.bio}
@@ -242,18 +280,21 @@ const Signup = ({ setLoggedUserData }) => {
         </div>
       )}
 
-      {isObject(data) && !showLogin && (
+      {isObject(data) && !showSignup && (
         <section>
           {/* Display date's contents if fetched success and loaded */}
           {!isLoading &&
             data &&
             (showSuccessMessage ? (
               <div>
-                <h2 className="text-3xl mb-8">Account creation successful.</h2>
+                <h2 className="text-2xl mb-8">Account creation successful.</h2>
+                <h2 className="text-2xl mb-8">You may log in now.</h2>
               </div>
             ) : (
               <div>
-                <h2 className="text-3xl mb-8">{data.message}</h2>
+                <h2 className="text-2xl tracking-widest text-redAccent font-bold mb-8">
+                  {toPascalCase(data.message)}
+                </h2>
                 <ButtonError
                   displayName={"Retry"}
                   category={"login"}

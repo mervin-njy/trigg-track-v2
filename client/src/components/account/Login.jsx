@@ -4,7 +4,7 @@ import useFetch from "../../hooks/useFetch";
 import ButtonEmptyBg from "../Interactions/ButtonEmptyBg";
 import ButtonError from "../Interactions/ButtonError";
 import ButtonGeneral from "../Interactions/ButtonGeneral";
-import FormInput from "../Interactions/FormInput";
+import InputGeneral from "../Interactions/InputGeneral";
 import LoadingSpinner from "../Loading/LoadingSpinner";
 
 const Login = ({ setLoggedUserData }) => {
@@ -33,7 +33,7 @@ const Login = ({ setLoggedUserData }) => {
   const usernameRef = useRef();
   const passwordRef = useRef();
 
-  //   event handlers ---------------------------------------------------------------------------------------------
+  // event handlers -----------------------------------------------------------------------------------------------
   const handleChange = (event) => {
     event.preventDefault();
     console.log(accountInput);
@@ -70,6 +70,15 @@ const Login = ({ setLoggedUserData }) => {
   // functions ----------------------------------------------------------------------------------------------------
   function isObject(value) {
     return typeof value === "object" && value !== null && !Array.isArray(value);
+  }
+
+  function toPascalCase(str) {
+    const splitStr = str.toLowerCase().split(" ");
+    let newStr = "";
+    for (const word of splitStr) {
+      newStr += word[0].toUpperCase() + word.slice(1) + " ";
+    }
+    return newStr;
   }
 
   // effects ------------------------------------------------------------------------------------------------------
@@ -111,10 +120,12 @@ const Login = ({ setLoggedUserData }) => {
       {showLogin && (
         <div className="mx-auto">
           {/* FOR: userlogin" */}
-          <h1 className="text-xl mb-14">Please fill in your log in details</h1>
+          <h1 className="text-2xl tracking-wider mb-14">
+            Please fill in your details
+          </h1>
           <div className="flex flex-wrap justify-between mt-8">
             <h4 className="w-3/10 text-lg tracking-widest">username:</h4>
-            <FormInput
+            <InputGeneral
               type="text"
               name="username"
               value={accountInput.username}
@@ -126,7 +137,7 @@ const Login = ({ setLoggedUserData }) => {
           </div>
           <div className="flex flex-wrap justify-between mt-5">
             <h4 className="w-3/10 text-lg tracking-widest">password:</h4>
-            <FormInput
+            <InputGeneral
               type="password"
               name="password"
               value={accountInput.password}
@@ -143,7 +154,7 @@ const Login = ({ setLoggedUserData }) => {
               width={"10rem"}
               textDecoration={"underline"}
               fontSize={"1rem"}
-              padding={"0.4rem"}
+              padding={"0.4rem 0"}
               margin={"1rem 0"}
               onClick={handleClick}
             />
@@ -165,7 +176,9 @@ const Login = ({ setLoggedUserData }) => {
           {/* Display date's contents if fetched success and loaded */}
           {!isLoading && data && (
             <div>
-              <h2 className="text-xl mb-8">{data.message}</h2>
+              <h2 className="text-2xl tracking-widest text-redAccent font-bold mb-8">
+                {toPascalCase(data.message)}
+              </h2>
               <ButtonError
                 displayName={"Retry"}
                 category={"login"}
