@@ -20,7 +20,6 @@ const Signup = ({ setLoggedUserData }) => {
     accountEndpoint: "",
     fetchMethod: "",
   });
-
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   // refs ---------------------------------------------------------------------------------------------------------
