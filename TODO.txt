@@ -36,4 +36,4 @@
     7. Profile
         a. display profile /getProfile
         b. update profile settings /updateUser
-    8. 
+    8. main font

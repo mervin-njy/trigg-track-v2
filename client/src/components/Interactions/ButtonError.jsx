@@ -11,7 +11,7 @@ const ButtonError = ({
 }) => {
   return (
     <button
-      className="cursor-pointer font-oxygen font-normal tracking-wider text-2xl text-redAccent bg-redMain w-28 md:w-32 lg:w-36 border-solid border-redMain border-2 rounded-2xl shadow-btnGeneral hover:text-redMain hover:bg-redAccent hover:border-redMain"
+      className="cursor-pointer font-bold tracking-wider text-2xl text-redAccent bg-redMain w-28 md:w-32 lg:w-36 border-solid border-redMain border-2 rounded-2xl shadow-btnGeneral hover:text-redMain hover:bg-redAccent hover:border-redMain"
       name={displayName}
       id={category}
       style={{

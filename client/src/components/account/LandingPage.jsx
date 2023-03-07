@@ -32,15 +32,15 @@ const LandingPage = ({ setLoggedUserData }) => {
   return (
     <>
       <div className="w-9/12 mt-40 mx-auto">
-        <h1 className="font-oxygen tracking-wider text-6xl font-bold my-8">
+        <h1 className="tracking-wider text-6xl font-bold my-8">
           Welcome to Trigg.Track.
         </h1>
-        <h2 className="font-oxygen tracking-wider text-2xl font-800 mb-8">
+        <h2 className="tracking-wider text-2xl font-800 mb-8">
           Record your daily conditions and variables to track, to filter out
           potential triggers to avoid.
         </h2>
         <div className="flex flex-wrap justify-between mx-auto">
-          <div className="w-9/20 h-max py-12 px-12 border-solid border-2 rounded-2xl mx-2 my-20 motion-safe:animate-float shadow-xl hover:motion-safe:animate-pulsate hover:shadow-3xl">
+          <div className="w-9/20 h-max py-12 px-12 border-solid border-2 rounded-2xl mx-2 my-20 motion-safe:animate-float shadow-xl hover:motion-safe:animate-floatStop hover:shadow-3xl">
             {!showLogin && (
               <>
                 <h2 className="text-xl font-400 mb-8">Existing user?</h2>
@@ -58,7 +58,7 @@ const LandingPage = ({ setLoggedUserData }) => {
             {showLogin && <Login setLoggedUserData={setLoggedUserData} />}
           </div>
 
-          <div className="w-9/20 h-max py-12 px-12 border-solid border-2 rounded-2xl mx-2 my-20 motion-safe:animate-float shadow-xl hover:motion-safe:animate-pulsate hover:shadow-3xl">
+          <div className="w-9/20 h-max py-12 px-12 border-solid border-2 rounded-2xl mx-2 my-20 motion-safe:animate-float shadow-xl hover:motion-safe:animate-floatStop hover:shadow-3xl">
             {!showSignup && (
               <>
                 <h2 className="text-xl font-400 mb-8">

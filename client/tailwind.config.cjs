@@ -9,8 +9,10 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        oxygen: ['"Oxygen"'],
+        karla: ['"Karla"'],
         montserrat: ['"Montserrat"'],
+        oxygen: ['"Oxygen"'],
+        tilt: ['"Tilt Neon'],
       },
       // fontSize: {
       //   xxxs: "0.75rem",
@@ -32,7 +34,7 @@ module.exports = {
         // blueMain: "#0984e3",
         purpleAccent: "#a29bfe", // health logger
         purpleMain: "#6c5ce7",
-        mainLightest: "#F1FDFF",
+        mainLightest: "#F1FDFF", // teal-emerald-turquoise
         main2: "#A8CAD0",
         main3: "#7EAAB3",
         main4: "#49777F",
@@ -65,8 +67,11 @@ module.exports = {
       },
       animation: {
         fadeIn: "fadeIn 1s ease-in forwards",
-        float: "float 1.2s ease-in-out infinite",
-        pulsate: "pulseLittle 1.5s ease-in-out infinite",
+        float: "float 2s ease-in-out infinite",
+        floatStop: "float 4s forwards",
+        pulsate: "pulsate 1.2s ease-in-out infinite",
+        pulsateLittle: "pulsate 2s ease-in-out infinite",
+        pulsateStop: "pulsate 3s ease-in-out forwards",
       },
       keyframes: {
         fadeIn: {
@@ -75,7 +80,7 @@ module.exports = {
         },
         float: {
           "0%, 100%": {
-            transform: "translateY(-2%)",
+            transform: "translateY(-0.5rem)",
             // transform: "scale(1.01)",
             // animationTimingFunction: "cubic-bezier(0, 0, 0, 0)",
           },
@@ -85,7 +90,7 @@ module.exports = {
             // animationTimingFunction: "cubic-bezier(0, 0, 0, 0)",
           },
         },
-        pulseLittle: {
+        pulsate: {
           "0%, 100%": {
             transform: "scale(1.01)",
           },

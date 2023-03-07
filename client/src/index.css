@@ -1,8 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Permanent+Marker&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200;0,400;0,600;0,800;1,200;1,400;1,600;1,800&family=Montserrat:ital,wght@0,100;0,200;0,400;0,600;0,700;0,800;1,100;1,200;1,400;1,600;1,700;1,800&family=Tilt+Neon&display=swap");
 
 html {
+  font-family: "Karla", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-family: "Oxygen", sans-serif;
+  font-family: "Tilt Neon", cursive;
 }
 
 body {
@@ -44,3 +48,9 @@ body {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    font-family: "Karla", sans-serif;
+  }
+}

@@ -40,9 +40,8 @@ const Signup = ({ setLoggedUserData }) => {
 
   //   event handlers ---------------------------------------------------------------------------------------------
   const handleChange = (event) => {
-    event.preventDefault();
-    console.log(accountInput);
     setAccountInput((prevAccountInput) => {
+      console.log("handleChange, before:", accountInput);
       return {
         ...prevAccountInput,
         [event.target.name]: event.target.value,
@@ -147,8 +146,8 @@ const Signup = ({ setLoggedUserData }) => {
               <h4 className="w-3/10 text-lg tracking-widest">user type:</h4>
               <FormInput
                 type="radio"
-                name="Health Logger"
-                value={accountInput.userType}
+                name="userType"
+                value="Health Logger"
                 reference={userTypeRef}
                 checked={accountInput.userType === "Health Logger"}
                 width={"3%"}
@@ -163,8 +162,8 @@ const Signup = ({ setLoggedUserData }) => {
               <div className="w-3/10"></div>
               <FormInput
                 type="radio"
-                name="Service Provider"
-                value={accountInput.userType}
+                name="userType"
+                value="Service Provider"
                 reference={userTypeRef}
                 checked={accountInput.userType === "Service Provider"}
                 width={"3%"}

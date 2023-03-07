@@ -14,7 +14,7 @@ const FormInput = ({
     <>
       <input
         className={
-          "bg-main9 px-4 py-1 border-solid border-2 border-mainLightest rounded-md required:invalid"
+          "bg-main9 px-4 py-1 accent-main4 border-solid border-2 border-mainLightest rounded-md required:invalid"
         }
         type={type}
         name={name}
