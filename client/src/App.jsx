@@ -5,20 +5,26 @@ import NavBar from "./components/NavBar/NavBar";
 import Account from "./components/account/Account";
 import LandingPage from "./components/account/LandingPage";
 import Home from "./components/home/Home";
+import AccountManager from "./components/admin/AccountManager";
 import Records from "./components/records/Records";
-// import custom hooks
+import Profile from "./components/profile/Profile";
 
+// main app begins . . .
 function App() {
   // states -------------------------------------------------------------------------------------------------------
   // const [loginPrompt, setLoginPrompt] = useState(true);
   const [loggedUserData, setLoggedUserData] = useState(null);
+  const [userConnections, setUserConnections] = useState(null);
 
+  // variables ----------------------------------------------------------------------------------------------------
   const landingEndPoint = loggedUserData ? "home" : "welcome";
 
   // render -------------------------------------------------------------------------------------------------------
   return (
     <>
-      {loggedUserData && <NavBar />}
+      {/* Navigation bar showing available routes for each user type --------------------------------------------------------------- */}
+      {loggedUserData && <NavBar userType={loggedUserData.userType} />}
+
       <Routes>
         <Route
           path="/account/:action"
@@ -37,14 +43,23 @@ function App() {
         />
 
         {/* AFTER LOGGIN IN -------------------------------------------------------------------------------------------------------- */}
-        {/* <Route path="/profile" element={<Profile />} /> */}
-        {/* <Route path="/search" element={<Search />} /> */}
+        {/* ADMIN: CENTER ---------------------------------------------------------------------------------------- */}
+        <Route path="/AccountManager" element={<AccountManager />} />
+
+        {/* USERS: CENTER ---------------------------------------------------------------------------------------- */}
         <Route
           path="/records"
           element={<Records loggedUserData={loggedUserData} />}
         />
+        {/* <Route path="/triggers" element={<Triggers />} /> */}
         {/* <Route path="/connect" element={<Connect />} /> */}
         {/* <Route path="/about" element={<About />} /> */}
+
+        {/* COMMON: CORNER --------------------------------------------------------------------------------------- */}
+        <Route
+          path="/profile"
+          element={<Profile loggedUserData={loggedUserData} />}
+        />
       </Routes>
     </>
   );

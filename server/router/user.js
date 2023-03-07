@@ -4,13 +4,13 @@ const router = express.Router();
 const auth = require("../middleware/auth");
 
 const {
-  createUser,
-  loginUser,
-  refreshAccess,
-  getUsers,
+  createUser, // DONE
+  loginUser, // DONE
+  refreshAccess, // DONE
+  getUsers, // DONE
   getUser,
-  updateUser,
-  deleteUser,
+  updateUser, // DONE
+  deleteUser, // DONE
 } = require("../controllers/user");
 
 const {
@@ -22,10 +22,10 @@ const {
 } = require("../controllers/profile");
 
 const {
-  getRecordDate,
-  createRecord,
-  createEntry,
-  getRecordEntriesOnDate,
+  getRecordDate, // DONE
+  createRecord, // DONE
+  createEntry, // DONE
+  getRecordEntriesOnDate, // DONE
   updateRecord,
   updateEntry,
   deleteRecord,

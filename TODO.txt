@@ -19,10 +19,20 @@
     *****       TODO        *****
     1. check if req.body.tokens are readable on client
     2. AUTH tokens
-        a. /loginUser   login success + error
-        b. display color theme on user type`
+        a. /loginUser   login success + error [ALMOST]
+        b. display color theme on userType
     3. USERS
         a. signup page success + error
     4. Home page
         a. entry
         b. /getRecords
+    5. Navbar
+        a. color theme on userType
+        b. Admin vs other users
+    6. Account Manager - admin
+        a. endpoint /deleteUser
+        b. endpoint /updateUser
+    7. Profile
+        a. display profile /getProfile
+        b. update profile settings /updateUser
+    8. 
