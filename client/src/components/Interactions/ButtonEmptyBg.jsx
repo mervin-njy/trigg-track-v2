@@ -1,6 +1,6 @@
 import React from "react";
 
-const ButtonGeneral = ({
+const ButtonEmptyBg = ({
   displayName,
   category,
   width,
@@ -11,7 +11,7 @@ const ButtonGeneral = ({
 }) => {
   return (
     <button
-      className="cursor-pointer font-oxygen font-normal tracking-wider text-2xl text-white bg-yellowMain w-28 md:w-32 lg:w-36 border-solid border-white border-2 rounded-2xl mx-auto hover:text-yellowMain hover:bg-yellowAccent hover:border-yellowMain"
+      className="cursor-pointer font-oxygen font-normal tracking-wider text-2xl text-greyLightest w-28 md:w-32 lg:w-36 mx-auto"
       name={displayName}
       id={category}
       style={{
@@ -27,4 +27,4 @@ const ButtonGeneral = ({
   );
 };
 
-export default ButtonGeneral;
+export default ButtonEmptyBg;

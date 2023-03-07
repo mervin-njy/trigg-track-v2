@@ -26,6 +26,7 @@ const LandingPage = () => {
                 displayName={"Log in"}
                 category={"account"}
                 width={"12rem"}
+                fontSize={"1.2rem"}
                 padding={"0.4rem"}
                 margin={"1rem 0.5rem"}
                 onClick={handleClick}
@@ -39,6 +40,7 @@ const LandingPage = () => {
                 displayName={"Sign up"}
                 category={"account"}
                 width={"12rem"}
+                fontSize={"1.2rem"}
                 padding={"0.4rem"}
                 margin={"1rem 0.5rem"}
                 onClick={handleClick}

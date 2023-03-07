@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
+import ButtonEmptyBg from "../Interactions/ButtonEmptyBg";
 import ButtonGeneral from "../Interactions/ButtonGeneral";
 import FormInput from "../Interactions/FormInput";
 import LoadingSpinner from "../Loading/LoadingSpinner";
@@ -133,11 +134,20 @@ const Account = ({ setLoggedUserData }) => {
             />
           </div>
           <div className="flex flex-wrap w-13/15 mx-auto mt-8">
-            <h3>Forget password.</h3>
+            <ButtonEmptyBg
+              displayName={"Forget password."}
+              category={"account"}
+              width={"10rem"}
+              fontSize={"1rem"}
+              padding={"0.4rem"}
+              margin={"1rem 0.5rem"}
+              onClick={handleClick}
+            />
             <ButtonGeneral
               displayName={"Log in"}
               category={"account"}
-              width={"12rem"}
+              width={"8rem"}
+              fontSize={"1.2rem"}
               padding={"0.4rem"}
               margin={"1rem 0.5rem"}
               onClick={handleClick}
@@ -164,6 +174,7 @@ const Account = ({ setLoggedUserData }) => {
               <ButtonGeneral
                 displayName={"Retry"}
                 category={"account"}
+                fontSize={"1.2rem"}
                 width={"12rem"}
                 padding={"0.4rem"}
                 margin={"1rem 0.5rem"}
