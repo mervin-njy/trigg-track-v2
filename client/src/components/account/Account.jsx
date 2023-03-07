@@ -106,13 +106,12 @@ const Account = ({ setLoggedUserData }) => {
   return (
     <>
       {showLogin && (
-        <div className="w-4/12 mx-auto mt-10">
+        <div className="w-4/12 mx-auto mt-40">
           {/* FOR: "/account/login" */}
-          <h1>Please fill in your log in details</h1>
-          <div className="flex flex-wrap w-13/15 mx-auto mt-4">
-            <h4 className="w-4/12">username:</h4>
+          <h1 className="text-3xl">Please fill in your log in details</h1>
+          <div className="flex flex-wrap w-13/15 mt-8">
+            <h4 className="w-3/12 text-2xl">username:</h4>
             <FormInput
-              className={"w-8/12"}
               type="text"
               name="username"
               value={accountInput.username}
@@ -121,10 +120,9 @@ const Account = ({ setLoggedUserData }) => {
               required={true}
             />
           </div>
-          <div className="flex flex-wrap w-13/15 mx-auto mt-4">
-            <h4 className="w-4/12">password:</h4>
+          <div className="flex flex-wrap w-13/15 mt-5">
+            <h4 className="w-3/12 text-2xl">password:</h4>
             <FormInput
-              className={"w-8/12"}
               type="password"
               name="password"
               value={accountInput.password}

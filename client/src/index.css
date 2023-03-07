@@ -1,6 +1,46 @@
 @import url("https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Permanent+Marker&display=swap");
 
+html {
+  font-family: "Oxygen", sans-serif;
+}
+
+body {
+  margin: 0;
+  background-color: #222425;
+  color: aliceblue;
+}
+
+.buttonUrgent {
+  animation: glowing 1.4s infinite;
+}
+
+.buttonUrgent:hover {
+  animation: glowing 0.7s infinite;
+}
+
+@keyframes glowing {
+  0% {
+    background-color: #474368;
+    box-shadow: 0 0 0 #474368;
+    color: #a29bfe;
+  }
+  50% {
+    background-color: #a29bfe;
+    box-shadow: 0 0 1.2rem #a29bfe;
+    color: #474368;
+  }
+  100% {
+    background-color: #474368;
+    box-shadow: 0 0 0.5rem #474368;
+    color: #a29bfe;
+  }
+}
+
+::selection {
+  background-color: rgba(162, 155, 254, 0.8);
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
