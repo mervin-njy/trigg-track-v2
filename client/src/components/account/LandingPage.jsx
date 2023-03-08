@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-// import { NavLink } from "react-router-dom";
-// import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import ButtonGeneral from "../Interactions/ButtonGeneral";
 import Login from "./Login";
 import Signup from "./Signup";

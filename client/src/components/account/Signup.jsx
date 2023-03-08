@@ -1,4 +1,21 @@
 import React, { useState, useRef, useEffect } from "react";
+import {
+  FaUser,
+  FaKey,
+  FaUserTag,
+  FaHouseUser,
+  FaUserTie,
+} from "react-icons/fa";
+import {
+  MdAccessibility,
+  MdPublic,
+  MdPrivateConnectivity,
+  MdDriveFileRenameOutline,
+  MdWork,
+  MdEmail,
+  MdDescription,
+} from "react-icons/md";
+
 import useFetch from "../../hooks/useFetch";
 import ButtonError from "../Interactions/ButtonError";
 import ButtonGeneral from "../Interactions/ButtonGeneral";
@@ -126,9 +143,10 @@ const Signup = ({ setNewUser }) => {
             Let's set up your account info
           </h1>
           <div className="flex flex-wrap justify-between mt-8">
-            <h4 className="w-3/10 text-lg tracking-widest my-auto">
-              username:
-            </h4>
+            <div className="flex flex-wrap justify-start w-3/12">
+              <FaUser size={18} className="my-auto mr-3" />
+              <h4 className="text-md tracking-widest my-auto">username:</h4>
+            </div>
             <InputGeneral
               type="text"
               name="username"
@@ -141,9 +159,10 @@ const Signup = ({ setNewUser }) => {
           </div>
 
           <div className="flex flex-wrap justify-between mt-5">
-            <h4 className="w-3/10 text-lg tracking-widest my-auto">
-              password:
-            </h4>
+            <div className="flex flex-wrap justify-start w-3/12">
+              <FaKey size={18} className="my-auto mr-3" />
+              <h4 className="text-md tracking-widest my-auto">password:</h4>
+            </div>
             <InputGeneral
               type="password"
               name="password"
@@ -158,9 +177,12 @@ const Signup = ({ setNewUser }) => {
           {/* Choose userType */}
           <div className="mt-5">
             <div className="flex flex-wrap justify-between">
-              <h4 className="w-3/10 text-lg tracking-widest my-auto">
-                user type:
-              </h4>
+              {/* label */}
+              <div className="flex flex-wrap justify-start w-3/12">
+                <FaUserTag size={18} className="my-auto mr-3" />
+                <h4 className="text-md tracking-widest my-auto">user type:</h4>
+              </div>
+              {/* selection 1.*/}
               <InputGeneral
                 type="radio"
                 name="userType"
@@ -170,12 +192,18 @@ const Signup = ({ setNewUser }) => {
                 width={"3%"}
                 onChange={handleChange}
               />
-              <label className="w-9/15 text-lg tracking-wider my-auto">
-                Health Logger
-              </label>
+              <div className="flex flex-wrap justify-start w-9/15">
+                <FaHouseUser size={24} className="my-auto mr-3" />
+                <label className="text-md tracking-wider my-auto">
+                  Health Logger
+                </label>
+              </div>
             </div>
-            <div className="flex flex-wrap justify-between mt-1">
-              <div className="w-3/10"></div>
+
+            <div className="flex flex-wrap justify-between mt-2">
+              {/* label placeholder */}
+              <div className="w-3/12"></div>
+              {/* selection 2.*/}
               <InputGeneral
                 type="radio"
                 name="userType"
@@ -185,18 +213,24 @@ const Signup = ({ setNewUser }) => {
                 width={"3%"}
                 onChange={handleChange}
               />
-              <label className="w-9/15 text-lg tracking-wider my-auto">
-                Service Provider
-              </label>
+              <div className="flex flex-wrap justify-start w-9/15">
+                <FaUserTie size={24} className="my-auto mr-3" />
+                <label className="text-md tracking-wider my-auto">
+                  Service Provider
+                </label>
+              </div>
             </div>
           </div>
 
           {/* Choose accessType */}
           <div className="mt-5">
             <div className="flex flex-wrap justify-between">
-              <h4 className="w-3/10 text-lg tracking-widest my-auto">
-                access type:
-              </h4>
+              {/* label */}
+              <div className="flex flex-wrap justify-start w-3/12">
+                <MdAccessibility size={18} className="my-auto mr-3" />
+                <h4 className="text-md tracking-widest my-auto">access:</h4>
+              </div>
+              {/* selection 1.*/}
               <InputGeneral
                 type="radio"
                 name="accessType"
@@ -206,12 +240,17 @@ const Signup = ({ setNewUser }) => {
                 width={"3%"}
                 onChange={handleChange}
               />
-              <label className="w-9/15 text-lg tracking-wider my-auto">
-                Public
-              </label>
+              <div className="flex flex-wrap justify-start w-9/15">
+                <MdPublic size={24} className="my-auto mr-3" />
+                <label className="w-9/15 text-md tracking-wider my-auto">
+                  Public
+                </label>
+              </div>
             </div>
-            <div className="flex flex-wrap justify-between mt-1">
-              <div className="w-3/10"></div>
+            <div className="flex flex-wrap justify-between mt-2">
+              {/* label placeholder */}
+              <div className="w-3/12"></div>
+              {/* selection 2.*/}
               <InputGeneral
                 type="radio"
                 name="accessType"
@@ -221,16 +260,22 @@ const Signup = ({ setNewUser }) => {
                 width={"3%"}
                 onChange={handleChange}
               />
-              <label className="w-9/15 text-lg tracking-wider my-auto">
-                Private
-              </label>
+              <div className="flex flex-wrap justify-start w-9/15">
+                <MdPrivateConnectivity size={24} className="my-auto mr-3" />
+                <label className="w-9/15 text-md tracking-wider my-auto">
+                  Private
+                </label>
+              </div>
             </div>
           </div>
 
+          {/* MdDriveFileRenameOutline */}
           <div className="flex flex-wrap justify-between mt-5">
-            <h4 className="w-3/10 text-lg tracking-widest my-auto">
-              display name:
-            </h4>
+            {/* label */}
+            <div className="flex flex-wrap justify-start w-3/12">
+              <MdDriveFileRenameOutline size={18} className="my-auto mr-3" />
+              <h4 className="text-md tracking-widest my-auto">alias:</h4>
+            </div>
             <InputGeneral
               type="text"
               name="displayName"
@@ -243,9 +288,11 @@ const Signup = ({ setNewUser }) => {
           </div>
 
           <div className="flex flex-wrap justify-between mt-5">
-            <h4 className="w-3/10 text-lg tracking-widest my-auto">
-              profession:
-            </h4>
+            {/* label */}
+            <div className="flex flex-wrap justify-start w-3/12">
+              <MdWork size={18} className="my-auto mr-3" />
+              <h4 className="text-md tracking-widest my-auto">profession:</h4>
+            </div>
             <InputGeneral
               type="text"
               name="profession"
@@ -258,7 +305,11 @@ const Signup = ({ setNewUser }) => {
           </div>
 
           <div className="flex flex-wrap justify-between mt-5">
-            <h4 className="w-3/10 text-lg tracking-widest my-auto">email:</h4>
+            {/* label */}
+            <div className="flex flex-wrap justify-start w-3/12">
+              <MdEmail size={18} className="my-auto mr-3" />
+              <h4 className="text-md tracking-widest my-auto">email:</h4>
+            </div>
             <InputGeneral
               type="text"
               name="email"
@@ -271,7 +322,11 @@ const Signup = ({ setNewUser }) => {
           </div>
 
           <div className="flex flex-wrap justify-between mt-5">
-            <h4 className="w-3/10 text-lg tracking-widest my-auto">bio:</h4>
+            {/* label */}
+            <div className="flex flex-wrap justify-start w-3/12">
+              <MdDescription size={18} className="my-auto mr-3" />
+              <h4 className="text-md tracking-widest my-auto">bio:</h4>
+            </div>
             <InputGeneral
               type="text"
               name="bio"
