@@ -1,11 +1,52 @@
 import React, { useState, useEffect } from "react";
-import { FaCaretDown, FaCaretUp, FaUserEdit } from "react-icons/fa";
+import {
+  FaUserSecret,
+  FaHouseUser,
+  FaUserTie,
+  FaCaretDown,
+  FaCaretUp,
+  FaUserEdit,
+} from "react-icons/fa";
 import { MdPersonRemove, MdRemoveModerator } from "react-icons/md";
 import ButtonAdmin from "../Interactions/ButtonAdmin";
 import useFetch from "../../hooks/useFetch";
 import LoadingSpinner from "../Loading/LoadingSpinner";
 
 const AccountManager = ({ adminInfo }) => {
+  // variables ----------------------------------------------------------------------------------------------------
+  const textColours = {
+    Admin: "text-orangeMain text-2xl font-bold tracking-widest w-6/12 mr-auto",
+    "Health Logger":
+      "text-purpleAccent text-2xl font-bold tracking-widest w-6/12 mr-auto",
+    "Service Provider":
+      "text-greenAccent text-2xl font-bold tracking-widest w-6/12 mr-auto",
+  };
+
+  // functions ----------------------------------------------------------------------------------------------------
+  function userIcon(userType) {
+    if (userType === "Admin") {
+      return (
+        <FaUserSecret
+          size={30}
+          className="cursor-pointer my-auto mr-auto text-orangeMain"
+        />
+      );
+    } else if (userType === "Health Logger") {
+      return (
+        <FaHouseUser
+          size={30}
+          className="cursor-pointer my-auto mr-auto text-purpleAccent"
+        />
+      );
+    } else if (userType === "Service Provider") {
+      return (
+        <FaUserTie
+          size={30}
+          className="cursor-pointer my-auto mr-auto text-greenAccent"
+        />
+      );
+    }
+  }
   // states -------------------------------------------------------------------------------------------------------
   const [showDetails, setshowDetails] = useState({});
   const { fetchData, isLoading, data, error } = useFetch();
@@ -72,10 +113,11 @@ const AccountManager = ({ adminInfo }) => {
                 {/* show main header  */}
                 <div className="flex flex-wrap justify-between">
                   <div className="flex flex-wrap justify-start w-9/12">
-                    <h2 className="text-2xl font-bold tracking-widest w-3/10">
+                    {userIcon(user.user_type)}
+                    <h2 className={textColours[user.user_type]}>
                       {user.user_type}
                     </h2>
-                    <h2 className="text-2xl font-bold tracking-widest w-3/10">
+                    <h2 className="text-2xl font-bold tracking-widest w-5/12">
                       {user.username}
                     </h2>
                   </div>
@@ -84,7 +126,7 @@ const AccountManager = ({ adminInfo }) => {
                   {!showDetails[id] && (
                     <FaCaretDown
                       size={30}
-                      className="cursor-pointer my-auto ml-auto hover:font-bold hover:text-main2"
+                      className="cursor-pointer my-auto ml-auto hover:font-bold hover:text-yellowMain"
                       id={id}
                       onClick={handleShow}
                     />
@@ -94,19 +136,19 @@ const AccountManager = ({ adminInfo }) => {
                     <div className="flex flex-wrap w-1/12 justify-between">
                       <FaUserEdit
                         size={30}
-                        className="cursor-pointer my-auto hover:font-bold hover:text-main2"
+                        className="cursor-pointer my-auto hover:font-bold hover:text-blueAccent"
                         id={id}
                         onClick={handleShow}
                       />
                       <MdRemoveModerator
                         size={30}
-                        className="cursor-pointer my-auto hover:font-bold hover:text-main2"
+                        className="cursor-pointer my-auto hover:font-bold hover:text-orangeMain"
                         id={id}
                         onClick={handleShow}
                       />
                       <FaCaretUp
                         size={30}
-                        className="cursor-pointer my-auto hover:font-bold hover:text-main2"
+                        className="cursor-pointer my-auto hover:font-bold hover:text-yellowMain"
                         id={id}
                         onClick={handleShow}
                       />

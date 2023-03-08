@@ -22,16 +22,16 @@ module.exports = {
       //   lg: "3.5rem",
       // },
       colors: {
-        redAccent: "#ECBFBF", // error
+        redAccent: "#ECBFBF", // error / delete
         redMain: "#d63031",
         orangeAccent: "#fab1a0", // admin
         orangeMain: "#ff7675",
-        yellowAccent: "#ffeaa7",
+        yellowAccent: "#ffeaa7", // action
         yellowMain: "#fdcb6e",
         greenAccent: "#55efc4", // service provider
         greenMain: "#00b894",
-        // blueAccent: "#74b9ff",
-        // blueMain: "#0984e3",
+        blueAccent: "#74b9ff", // profile / edits
+        blueMain: "#0984e3",
         purpleAccent: "#a29bfe", // health logger
         purpleMain: "#6c5ce7",
         mainLightest: "#F1FDFF", // teal-emerald-turquoise

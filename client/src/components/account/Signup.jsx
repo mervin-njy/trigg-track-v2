@@ -55,7 +55,7 @@ const Signup = ({ setNewUser, setShowSignup }) => {
   const emailRef = useRef();
   const bioRef = useRef();
 
-  //   event handlers ---------------------------------------------------------------------------------------------
+  // event handlers -----------------------------------------------------------------------------------------------
   const handleChange = (event) => {
     setAccountInput((prevAccountInput) => {
       console.log("Signup -", "handleChange, before:", accountInput);

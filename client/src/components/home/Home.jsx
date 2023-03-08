@@ -10,7 +10,7 @@ const Home = ({ loggedUserData }) => {
   let colText = "text-purpleAccent"; // default: health logger
 
   if (loggedUserData.userType === "Admin") {
-    colText = "text-orangeAccent";
+    colText = "text-orangeMain";
   }
 
   if (loggedUserData.userType === "Service Provider") {
