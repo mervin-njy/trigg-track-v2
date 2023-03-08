@@ -92,7 +92,7 @@ module.exports = {
         },
         pulsate: {
           "0%, 100%": {
-            transform: "scale(1.01)",
+            transform: "scale(1.005)",
           },
           "50%": {
             transform: "scale(1)",
@@ -126,6 +126,7 @@ module.exports = {
       boxShadow: {
         xl: "0 0.5rem 3rem -0.5rem rgba(241, 253, 255, 0.2)",
         "3xl": "0 1.5rem 5rem -1.5rem rgba(241, 253, 255, 0.4)",
+        "4xl": "0 0.5rem 5rem -1.5rem rgba(241, 253, 255, 0.8)",
         btnGeneral: "0 0.5rem 2rem -0.5rem rgba(126, 170, 179, 0.5)",
         btnAdmin: "0 0.5rem 3rem -0.5rem rgba(250, 177, 160, 0.5)",
         btnLogger: "0 0.5rem 3rem -0.5rem rgba(162, 155, 254, 0.5)",

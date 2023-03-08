@@ -1,44 +1,64 @@
-import React, { state } from "react";
+import React, { useState, useEffect } from "react";
 // import { useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
+import AccountManager from "../admin/AccountManager";
 import ButtonSubmit from "../Interactions/ButtonGeneral";
 // import LoadingSpinner from "../Loading/LoadingSpinner";
 
 const Home = ({ loggedUserData }) => {
-  //   // states -------------------------------------------------------------------------------------------------------
-  //   const { fetchData, isLoading, data, error } = useFetch();
-  //   const [checkStatus, setCheckStatus] = useState(false);
-  //   const [requestTypes, setRequestTypes] = useState({
-  //     accountEndpoint: "",
-  //     fetchMethod: "",
-  //   });
+  // variables ----------------------------------------------------------------------------------------------------
+  let colText = "text-purpleAccent"; // default: health logger
 
-  //   // functions ----------------------------------------------------------------------------------------------------
-  //   function isObject(value) {
-  //     return typeof value === "object" && value !== null && !Array.isArray(value);
-  //   }
+  if (loggedUserData.userType === "Admin") {
+    colText = "text-orangeAccent";
+  }
 
-  //   // effects ------------------------------------------------------------------------------------------------------
-  //   // #1 - http request
-  //   useEffect(() => {
-  //     const controller = new AbortController();
-  //     const fetchURL = `http://127.0.0.1:5001/${requestTypes.accountEndpoint}`;
-  //     const fetchOptions = {
-  //       method: requestTypes.fetchMethod, // "POST" => loginUser | "PUT" => createUser
-  //       headers: {
-  //         "Content-type": "application/json",
-  //       },
-  //       body: JSON.stringify(accountInput),
-  //       signal: controller.signal,
-  //     };
-  //     console.log("1st useEffect triggered:", requestTypes);
-  //     fetchData(fetchURL, fetchOptions);
-  //   }, [checkStatus]);
+  if (loggedUserData.userType === "Service Provider") {
+    colText = "text-greenAccent";
+  }
+  // states -------------------------------------------------------------------------------------------------------
+  const { fetchData, isLoading, data, error } = useFetch();
+  const [checkStatus, setCheckStatus] = useState(false);
+  const [requestTypes, setRequestTypes] = useState({
+    accountEndpoint: "",
+    fetchMethod: "",
+  });
+
+  // functions ----------------------------------------------------------------------------------------------------
+  function isObject(value) {
+    return typeof value === "object" && value !== null && !Array.isArray(value);
+  }
+
+  // effects ------------------------------------------------------------------------------------------------------
+  // #1 - http request
+  useEffect(() => {
+    // const controller = new AbortController();
+    // const fetchURL = `http://127.0.0.1:5001/${requestTypes.accountEndpoint}`;
+    // const fetchOptions = {
+    //   method: requestTypes.fetchMethod, // "POST" => loginUser | "PUT" => createUser
+    //   headers: {
+    //     "Content-type": "application/json",
+    //   },
+    //   body: JSON.stringify(getUserInput),
+    //   signal: controller.signal,
+    // };
+    // console.log("1st useEffect triggered:", requestTypes);
+    // fetchData(fetchURL, fetchOptions);
+  }, []);
 
   // render component --------------------------------------------------------------------------------------------
   return (
     <>
-      <h1>Welcome {loggedUserData.displayName}</h1>
+      <div className="w-9/12 mt-40 mx-auto">
+        <h1 className="tracking-wider text-6xl font-bold my-8">
+          Welcome, <span className={colText}>{loggedUserData.displayName}</span>
+          .
+        </h1>
+
+        {loggedUserData.userType === "Admin" && (
+          <AccountManager adminInfo={loggedUserData} />
+        )}
+      </div>
     </>
   );
 };

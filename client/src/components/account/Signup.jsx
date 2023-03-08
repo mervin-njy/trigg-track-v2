@@ -122,7 +122,7 @@ const Signup = ({ setNewUser }) => {
     // a. if data fetching is a success => set state for user info + navigate to home
     if (isObject(data)) {
       console.log("Signup -", "error:", data.status);
-      if (data.status !== "okay") {
+      if (data.status === "okay") {
         // lift state: logged in user data
         setNewUser(true);
         setShowSuccessMessage(true);

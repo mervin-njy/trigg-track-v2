@@ -6,6 +6,7 @@ function useFetch(url, requestOptions) {
   const [error, setError] = useState(null);
 
   const fetchData = async (url, requestOptions) => {
+    console.log("fetching data");
     setIsLoading(true);
     setError(null);
     setData(null);

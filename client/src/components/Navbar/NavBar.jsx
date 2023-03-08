@@ -5,7 +5,7 @@ import { FaUser } from "react-icons/fa";
 const NavBar = ({ userType }) => {
   // event handlers -----------------------------------------------------------------------------------------------
   const handleClick = (event) => {
-    console.log(event.target.id);
+    console.log("NavBar -", "clicked: ", event.target.id);
   };
 
   const showAll = userType !== "Admin" ? true : false;
@@ -25,8 +25,8 @@ const NavBar = ({ userType }) => {
                 to="./home"
                 className={(navData) =>
                   navData.isActive
-                    ? "w-1/5 pb-2 border-b-2 tracking-widest hover:shadow-xl"
-                    : "hover:shadow-xl"
+                    ? "w-1/5 pb-2 border-b-2 tracking-widest hover:font-bold"
+                    : "hover:font-bold"
                 }
               >
                 Home
@@ -37,8 +37,8 @@ const NavBar = ({ userType }) => {
                 to="./records"
                 className={(navData) =>
                   navData.isActive
-                    ? "w-1/5 pb-2 border-b-2 tracking-widest hover:shadow-xl"
-                    : "hover:shadow-xl"
+                    ? "w-1/5 pb-2 border-b-2 tracking-widest hover:font-bold"
+                    : "hover:font-bold"
                 }
               >
                 Records
@@ -49,8 +49,8 @@ const NavBar = ({ userType }) => {
                 to="./connect"
                 className={(navData) =>
                   navData.isActive
-                    ? "w-1/5 pb-2 border-b-2 tracking-widest hover:shadow-xl"
-                    : "hover:shadow-xl"
+                    ? "w-1/5 pb-2 border-b-2 tracking-widest hover:font-bold"
+                    : "hover:font-bold"
                 }
               >
                 Connect
@@ -61,8 +61,8 @@ const NavBar = ({ userType }) => {
                 to="./about"
                 className={(navData) =>
                   navData.isActive
-                    ? "w-1/5 pb-2 border-b-2 tracking-widest hover:shadow-xl"
-                    : "hover:shadow-xl"
+                    ? "w-1/5 pb-2 border-b-2 tracking-widest hover:font-bold"
+                    : "hover:font-boldl"
                 }
               >
                 About
@@ -78,7 +78,13 @@ const NavBar = ({ userType }) => {
           className="cursor-pointer my-auto mr-12"
           onClick={handleClick}
         />
-        <h4 className="text-xl my-auto">sign out</h4>
+        <h4
+          id="signout"
+          className="cursor-pointer text-xl my-auto"
+          onClick={handleClick}
+        >
+          sign out
+        </h4>
       </div>
       {/* <Profile /> */}
     </header>
