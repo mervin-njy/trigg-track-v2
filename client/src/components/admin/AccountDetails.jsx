@@ -19,6 +19,7 @@ const AccountDetails = ({
   updateUser,
   deleteUser,
   setUpdateUser,
+  setRefreshAccounts,
 }) => {
   // variables ----------------------------------------------------------------------------------------------------
   const textColours = {
@@ -38,6 +39,10 @@ const AccountDetails = ({
         />
       );
     }
+  }
+
+  function isObject(value) {
+    return typeof value === "object" && value !== null && !Array.isArray(value);
   }
 
   // states -------------------------------------------------------------------------------------------------------
@@ -114,6 +119,30 @@ const AccountDetails = ({
       fetchData(fetchURL, fetchOptions);
     }
   }, [confirmUpdate]);
+
+  // #2 - upon http request success
+  useEffect(() => {
+    if (isObject(data)) {
+      if (data.message.includes("update")) {
+        setUpdateUser((prevUpdateUser) => {
+          console.log("AccountDetails - ", "update user successful:");
+          return {
+            ...prevUpdateUser,
+            [userId]: !prevUpdateUser[userId],
+          };
+        });
+      }
+
+      setRefreshAccounts((prevRefreshAccounts) => {
+        console.log(
+          "AccountDetails - ",
+          "toggle refreshAccounts for change:",
+          data.message
+        );
+        return !prevRefreshAccounts;
+      });
+    }
+  }, [data]);
 
   // render component --------------------------------------------------------------------------------------------
   return (
@@ -219,7 +248,7 @@ const AccountDetails = ({
       </div>
 
       {!isLoading && data && (
-        <div className="mt-2">
+        <div className="my-12">
           <h2 className="text-2xl text-center">{data.message}</h2>
         </div>
       )}
@@ -232,7 +261,7 @@ const AccountDetails = ({
       )}
       {/* Display error message if fetch has an error */}
       {!isLoading && error && (
-        <div>
+        <div className="my-12">
           <h2 className="text-2xl text-center">{error}</h2>
         </div>
       )}

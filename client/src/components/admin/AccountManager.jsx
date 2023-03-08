@@ -43,6 +43,7 @@ const AccountManager = ({ adminInfo }) => {
   const [showDetails, setshowDetails] = useState({});
   const [updateUser, setUpdateUser] = useState({});
   const [deleteUser, setDeleteUser] = useState({});
+  const [refreshAccounts, setRefreshAccounts] = useState(false);
   const [usersData, setUsersData] = useState(null);
   const { fetchData, isLoading, data, error } = useFetch();
 
@@ -82,7 +83,7 @@ const AccountManager = ({ adminInfo }) => {
   };
 
   // effects ------------------------------------------------------------------------------------------------------
-  // #1 - http request - on mount, confirmUpdate & confirmDelete
+  // #1 - http request - on mount, refreshAccounts
   useEffect(() => {
     const controller = new AbortController();
     const fetchURL = `http://127.0.0.1:5001/getUsers`;
@@ -100,7 +101,7 @@ const AccountManager = ({ adminInfo }) => {
       "ADMIN - GET /getUsers"
     );
     fetchData(fetchURL, fetchOptions);
-  }, []); // updateUser, deleteUser => confirmUpdate, confirmDelete
+  }, [refreshAccounts]); // triggered upon confirmUpdate / confirmDelete in child component
 
   // #2 - once data is populated, set state (showDetails) of each data item to false
   useEffect(() => {
@@ -194,6 +195,7 @@ const AccountManager = ({ adminInfo }) => {
                     updateUser={updateUser[id]}
                     deleteUser={deleteUser[id]}
                     setUpdateUser={setUpdateUser}
+                    setRefreshAccounts={setRefreshAccounts}
                   />
                 )}
               </div>
