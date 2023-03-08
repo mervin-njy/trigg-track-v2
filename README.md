@@ -55,6 +55,7 @@ There are two main types of users.
 1. npm i react-router-dom
 2. npm install -D tailwindcss postcss autoprefixer
 3. npx tailwindcss init -p
+4. npm install react-icons --save
 
 ### Server:
 

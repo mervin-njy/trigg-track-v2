@@ -5,7 +5,7 @@ import ButtonGeneral from "../Interactions/ButtonGeneral";
 import Login from "./Login";
 import Signup from "./Signup";
 
-const LandingPage = ({ setLoggedUserData }) => {
+const LandingPage = ({ setLoggedUserData, setUserConnections, setNewUser }) => {
   // states -------------------------------------------------------------------------------------------------------
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
@@ -57,7 +57,12 @@ const LandingPage = ({ setLoggedUserData }) => {
                 />
               </>
             )}
-            {showLogin && <Login setLoggedUserData={setLoggedUserData} />}
+            {showLogin && (
+              <Login
+                setLoggedUserData={setLoggedUserData}
+                setUserConnections={setUserConnections}
+              />
+            )}
           </div>
 
           <div className="w-9/20 h-max py-12 px-12 border-solid border-2 rounded-2xl mx-2 my-10 motion-safe:animate-float shadow-xl hover:motion-safe:animate-floatStop hover:shadow-3xl">
@@ -77,7 +82,7 @@ const LandingPage = ({ setLoggedUserData }) => {
                 />
               </>
             )}
-            {showSignup && <Signup setLoggedUserData={setLoggedUserData} />}
+            {showSignup && <Signup setNewUser={setNewUser} />}
           </div>
         </div>
       </div>

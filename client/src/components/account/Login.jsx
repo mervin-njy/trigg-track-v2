@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
+// import { BsKey } from "react-icons/bs";
+import { FaUser, FaKey } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import ButtonEmptyBg from "../Interactions/ButtonEmptyBg";
@@ -7,7 +9,7 @@ import ButtonGeneral from "../Interactions/ButtonGeneral";
 import InputGeneral from "../Interactions/InputGeneral";
 import LoadingSpinner from "../Loading/LoadingSpinner";
 
-const Login = ({ setLoggedUserData }) => {
+const Login = ({ setLoggedUserData, setUserConnections }) => {
   // variables ----------------------------------------------------------------------------------------------------
   const navigate = useNavigate();
   // Navigate to home
@@ -35,9 +37,9 @@ const Login = ({ setLoggedUserData }) => {
 
   // event handlers -----------------------------------------------------------------------------------------------
   const handleChange = (event) => {
-    event.preventDefault();
-    console.log(accountInput);
+    // event.preventDefault();
     setAccountInput((prevAccountInput) => {
+      console.log("handleChange, before:", accountInput);
       return {
         ...prevAccountInput,
         [event.target.name]: event.target.value,
@@ -104,8 +106,14 @@ const Login = ({ setLoggedUserData }) => {
     if (isObject(data)) {
       console.log("error:", data.status);
       if (data.status !== "error") {
-        // lift state: logged in user data
+        // lift states:
+
+        // 1. logged in user data
         setLoggedUserData(data);
+
+        // 2.
+        // setUserConnections()
+
         navigateToPage("home");
         console.log("2nd useEffect", data);
       } else {
@@ -124,7 +132,10 @@ const Login = ({ setLoggedUserData }) => {
             Please fill in your details
           </h1>
           <div className="flex flex-wrap justify-between mt-8">
-            <h4 className="w-3/10 text-lg tracking-widest">username:</h4>
+            <div className="flex flex-wrap justify-start w-3/12">
+              <FaUser size={18} className="my-auto mr-3" />
+              <h4 className="text-lg tracking-widest my-auto">username:</h4>
+            </div>
             <InputGeneral
               type="text"
               name="username"
@@ -136,7 +147,10 @@ const Login = ({ setLoggedUserData }) => {
             />
           </div>
           <div className="flex flex-wrap justify-between mt-5">
-            <h4 className="w-3/10 text-lg tracking-widest">password:</h4>
+            <div className="flex flex-wrap justify-start w-3/12">
+              <FaKey size={18} className="my-auto mr-3" />
+              <h4 className="text-lg tracking-widest my-auto">password:</h4>
+            </div>
             <InputGeneral
               type="password"
               name="password"
@@ -176,7 +190,7 @@ const Login = ({ setLoggedUserData }) => {
           {/* Display date's contents if fetched success and loaded */}
           {!isLoading && data && (
             <div>
-              <h2 className="text-2xl tracking-widest text-redAccent font-bold mb-8">
+              <h2 className="text-2xl tracking-widest text-redAccent font-bold my-auto mb-8">
                 {toPascalCase(data.message)}
               </h2>
               <ButtonError

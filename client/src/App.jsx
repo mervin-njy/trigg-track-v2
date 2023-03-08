@@ -14,6 +14,7 @@ function App() {
   // states -------------------------------------------------------------------------------------------------------
   // const [loginPrompt, setLoginPrompt] = useState(true);
   const [loggedUserData, setLoggedUserData] = useState(null);
+  const [newUser, setNewUser] = useState(false);
   const [userConnections, setUserConnections] = useState(null);
 
   // variables ----------------------------------------------------------------------------------------------------
@@ -39,7 +40,13 @@ function App() {
         {
           <Route
             path="/welcome"
-            element={<LandingPage setLoggedUserData={setLoggedUserData} />}
+            element={
+              <LandingPage
+                setLoggedUserData={setLoggedUserData}
+                setUserConnections={setUserConnections}
+                setNewUser={setNewUser}
+              />
+            }
           />
         }
         <Route

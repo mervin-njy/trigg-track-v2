@@ -5,7 +5,7 @@ import ButtonGeneral from "../Interactions/ButtonGeneral";
 import InputGeneral from "../Interactions/InputGeneral";
 import LoadingSpinner from "../Loading/LoadingSpinner";
 
-const Signup = ({ setLoggedUserData }) => {
+const Signup = ({ setNewUser }) => {
   // states -------------------------------------------------------------------------------------------------------
   const [showSignup, setShowSignup] = useState(true);
   const { fetchData, isLoading, data, error } = useFetch();
@@ -51,7 +51,7 @@ const Signup = ({ setLoggedUserData }) => {
     event.preventDefault();
     // setFocus();
     console.log(`button clicked: ${event.target.name}`);
-    console.log(accountInput);
+    console.log("submitted details:", accountInput);
 
     if (event.target.name === "Retry") {
       setShowSignup(true);
@@ -107,6 +107,7 @@ const Signup = ({ setLoggedUserData }) => {
       console.log("error:", data.status);
       if (data.status !== "okay") {
         // lift state: logged in user data
+        setNewUser(true);
         setShowSuccessMessage(true);
         console.log("2nd useEffect", data);
       } else {
@@ -125,7 +126,9 @@ const Signup = ({ setLoggedUserData }) => {
             Let's set up your account info
           </h1>
           <div className="flex flex-wrap justify-between mt-8">
-            <h4 className="w-3/10 text-lg tracking-widest">username:</h4>
+            <h4 className="w-3/10 text-lg tracking-widest my-auto">
+              username:
+            </h4>
             <InputGeneral
               type="text"
               name="username"
@@ -138,7 +141,9 @@ const Signup = ({ setLoggedUserData }) => {
           </div>
 
           <div className="flex flex-wrap justify-between mt-5">
-            <h4 className="w-3/10 text-lg tracking-widest">password:</h4>
+            <h4 className="w-3/10 text-lg tracking-widest my-auto">
+              password:
+            </h4>
             <InputGeneral
               type="password"
               name="password"
@@ -153,7 +158,9 @@ const Signup = ({ setLoggedUserData }) => {
           {/* Choose userType */}
           <div className="mt-5">
             <div className="flex flex-wrap justify-between">
-              <h4 className="w-3/10 text-lg tracking-widest">user type:</h4>
+              <h4 className="w-3/10 text-lg tracking-widest my-auto">
+                user type:
+              </h4>
               <InputGeneral
                 type="radio"
                 name="userType"
@@ -163,7 +170,7 @@ const Signup = ({ setLoggedUserData }) => {
                 width={"3%"}
                 onChange={handleChange}
               />
-              <label className="w-9/15 text-lg tracking-wider">
+              <label className="w-9/15 text-lg tracking-wider my-auto">
                 Health Logger
               </label>
             </div>
@@ -178,7 +185,7 @@ const Signup = ({ setLoggedUserData }) => {
                 width={"3%"}
                 onChange={handleChange}
               />
-              <label className="w-9/15 text-lg tracking-wider">
+              <label className="w-9/15 text-lg tracking-wider my-auto">
                 Service Provider
               </label>
             </div>
@@ -187,7 +194,9 @@ const Signup = ({ setLoggedUserData }) => {
           {/* Choose accessType */}
           <div className="mt-5">
             <div className="flex flex-wrap justify-between">
-              <h4 className="w-3/10 text-lg tracking-widest">access type:</h4>
+              <h4 className="w-3/10 text-lg tracking-widest my-auto">
+                access type:
+              </h4>
               <InputGeneral
                 type="radio"
                 name="accessType"
@@ -197,7 +206,9 @@ const Signup = ({ setLoggedUserData }) => {
                 width={"3%"}
                 onChange={handleChange}
               />
-              <label className="w-9/15 text-lg tracking-wider">Public</label>
+              <label className="w-9/15 text-lg tracking-wider my-auto">
+                Public
+              </label>
             </div>
             <div className="flex flex-wrap justify-between mt-1">
               <div className="w-3/10"></div>
@@ -210,12 +221,16 @@ const Signup = ({ setLoggedUserData }) => {
                 width={"3%"}
                 onChange={handleChange}
               />
-              <label className="w-9/15 text-lg tracking-wider">Private</label>
+              <label className="w-9/15 text-lg tracking-wider my-auto">
+                Private
+              </label>
             </div>
           </div>
 
           <div className="flex flex-wrap justify-between mt-5">
-            <h4 className="w-3/10 text-lg tracking-widest">display name:</h4>
+            <h4 className="w-3/10 text-lg tracking-widest my-auto">
+              display name:
+            </h4>
             <InputGeneral
               type="text"
               name="displayName"
@@ -228,7 +243,9 @@ const Signup = ({ setLoggedUserData }) => {
           </div>
 
           <div className="flex flex-wrap justify-between mt-5">
-            <h4 className="w-3/10 text-lg tracking-widest">profession:</h4>
+            <h4 className="w-3/10 text-lg tracking-widest my-auto">
+              profession:
+            </h4>
             <InputGeneral
               type="text"
               name="profession"
@@ -241,7 +258,7 @@ const Signup = ({ setLoggedUserData }) => {
           </div>
 
           <div className="flex flex-wrap justify-between mt-5">
-            <h4 className="w-3/10 text-lg tracking-widest">email:</h4>
+            <h4 className="w-3/10 text-lg tracking-widest my-auto">email:</h4>
             <InputGeneral
               type="text"
               name="email"
@@ -254,7 +271,7 @@ const Signup = ({ setLoggedUserData }) => {
           </div>
 
           <div className="flex flex-wrap justify-between mt-5">
-            <h4 className="w-3/10 text-lg tracking-widest">bio:</h4>
+            <h4 className="w-3/10 text-lg tracking-widest my-auto">bio:</h4>
             <InputGeneral
               type="text"
               name="bio"
@@ -287,12 +304,14 @@ const Signup = ({ setLoggedUserData }) => {
             data &&
             (showSuccessMessage ? (
               <div>
-                <h2 className="text-2xl mb-8">Account creation successful.</h2>
-                <h2 className="text-2xl mb-8">You may log in now.</h2>
+                <h2 className="text-2xl mb-8 my-auto">
+                  Account creation successful.
+                </h2>
+                <h2 className="text-2xl mb-8 my-auto">You may log in now.</h2>
               </div>
             ) : (
               <div>
-                <h2 className="text-2xl tracking-widest text-redAccent font-bold mb-8">
+                <h2 className="text-2xl tracking-widest text-redAccent font-bold my-auto mb-8">
                   {toPascalCase(data.message)}
                 </h2>
                 <ButtonError
