@@ -7,52 +7,48 @@ import {
   FaCaretUp,
   FaUserEdit,
 } from "react-icons/fa";
-import { MdPersonRemove, MdRemoveModerator } from "react-icons/md";
-import ButtonAdmin from "../Interactions/ButtonAdmin";
+import { MdRemoveModerator } from "react-icons/md";
+// import ButtonAdmin from "../Interactions/ButtonAdmin";
 import useFetch from "../../hooks/useFetch";
 import LoadingSpinner from "../Loading/LoadingSpinner";
+import AccountDetails from "./AccountDetails";
 
 const AccountManager = ({ adminInfo }) => {
   // variables ----------------------------------------------------------------------------------------------------
   const textColours = {
-    Admin: "text-orangeMain text-2xl font-bold tracking-widest w-6/12 mr-auto",
+    Admin: "text-orangeMain text-2xl font-bold tracking-widest w-4/12 mr-auto",
     "Health Logger":
-      "text-purpleAccent text-2xl font-bold tracking-widest w-6/12 mr-auto",
+      "text-purpleAccent text-2xl font-bold tracking-widest w-4/12 mr-auto",
     "Service Provider":
-      "text-greenAccent text-2xl font-bold tracking-widest w-6/12 mr-auto",
+      "text-greenAccent text-2xl font-bold tracking-widest w-4/12 mr-auto",
   };
 
   // functions ----------------------------------------------------------------------------------------------------
   function userIcon(userType) {
     if (userType === "Admin") {
       return (
-        <FaUserSecret
-          size={30}
-          className="cursor-pointer my-auto mr-auto text-orangeMain"
-        />
+        <FaUserSecret size={30} className="my-auto mr-auto text-orangeMain" />
       );
     } else if (userType === "Health Logger") {
       return (
-        <FaHouseUser
-          size={30}
-          className="cursor-pointer my-auto mr-auto text-purpleAccent"
-        />
+        <FaHouseUser size={30} className="my-auto mr-auto text-purpleAccent" />
       );
     } else if (userType === "Service Provider") {
       return (
-        <FaUserTie
-          size={30}
-          className="cursor-pointer my-auto mr-auto text-greenAccent"
-        />
+        <FaUserTie size={30} className="my-auto mr-auto text-greenAccent" />
       );
     }
   }
   // states -------------------------------------------------------------------------------------------------------
   const [showDetails, setshowDetails] = useState({});
+  const [usersData, setUsersData] = useState(null);
+  const [updateUser, setUpdateUser] = useState(false);
+  const [deleteUser, setDeleteUser] = useState(false);
   const { fetchData, isLoading, data, error } = useFetch();
 
   //   event handlers ---------------------------------------------------------------------------------------------
   const handleShow = (event) => {
+    event.preventDefault();
     console.log("AccountManager -", `showing details: ${event.target.id}.`);
     console.log("AccountManage -", "current details:", showDetails);
     setshowDetails((prevShowDetails) => {
@@ -61,6 +57,16 @@ const AccountManager = ({ adminInfo }) => {
         [event.target.id]: !prevShowDetails[event.target.id],
       };
     });
+  };
+
+  const handleEdit = (event) => {
+    event.preventDefault();
+    setUpdateUser(true);
+  };
+
+  const handleDelete = (event) => {
+    event.preventDefault();
+    setDeleteUser(true);
   };
 
   // effects ------------------------------------------------------------------------------------------------------
@@ -87,8 +93,9 @@ const AccountManager = ({ adminInfo }) => {
   // #2 - once data is populated, set state (showDetails) of each data item to false
   useEffect(() => {
     // a. if data fetching is a success => set state for user info + navigate to home
-    console.log("AccountManager -", "setting state:", data);
+    console.log("AccountManager -", "2nd useEffect: ", "setting states");
     if (data) {
+      setUsersData(data);
       data.map((user, id) => {
         return setshowDetails((prevShowDetails) => {
           console.log("showDetails false for user:", user);
@@ -102,9 +109,9 @@ const AccountManager = ({ adminInfo }) => {
   return (
     <div>
       {/* Display date's contents if fetched success and loaded */}
-      {!isLoading && data && (
+      {!isLoading && usersData && (
         <div>
-          {data.map((user, id) => {
+          {usersData.map((user, id) => {
             return (
               <div
                 key={id}
@@ -117,7 +124,7 @@ const AccountManager = ({ adminInfo }) => {
                     <h2 className={textColours[user.user_type]}>
                       {user.user_type}
                     </h2>
-                    <h2 className="text-2xl font-bold tracking-widest w-5/12">
+                    <h2 className="text-2xl font-bold tracking-widest w-7/12">
                       {user.username}
                     </h2>
                   </div>
@@ -138,13 +145,13 @@ const AccountManager = ({ adminInfo }) => {
                         size={30}
                         className="cursor-pointer my-auto hover:font-bold hover:text-blueAccent"
                         id={id}
-                        onClick={handleShow}
+                        onClick={handleEdit}
                       />
                       <MdRemoveModerator
                         size={30}
                         className="cursor-pointer my-auto hover:font-bold hover:text-orangeMain"
                         id={id}
-                        onClick={handleShow}
+                        onClick={handleDelete}
                       />
                       <FaCaretUp
                         size={30}
@@ -158,9 +165,12 @@ const AccountManager = ({ adminInfo }) => {
 
                 {/* show details if id is true */}
                 {showDetails[id] && (
-                  <div className="mt-12 motion-safe:animate-fadeIn">
-                    <h2 className="text-xl italic w-3/10">{user.bio}</h2>
-                  </div>
+                  <AccountDetails
+                    access={adminInfo.access}
+                    userInfo={user}
+                    updateUse={updateUser}
+                    deleteUser={deleteUser}
+                  />
                 )}
               </div>
             );

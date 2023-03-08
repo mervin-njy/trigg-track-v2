@@ -170,7 +170,7 @@ const updateUser = async (req, res) => {
 
     // 2. pass all other info (whether changed or not) EXCEPT for username
     const updatedUser = await pool.query(
-      `UPDATE "user" SET (hash, display_name, profile_picture, profession, email, bio) = ($1, $2, $3, $4, $5, $6) WHERE id = $7 RETURNING *`,
+      `UPDATE "user" SET (hash, display_name, profile_picture, profession, email, bio) = ($1, $2, $3, $4, $5, $6) WHERE "username" = $7 RETURNING *`,
       [
         hash,
         req.body.displayName,
@@ -178,7 +178,7 @@ const updateUser = async (req, res) => {
         req.body.profession,
         req.body.email,
         req.body.bio,
-        req.decoded.id,
+        req.body.username,
       ]
     );
 
