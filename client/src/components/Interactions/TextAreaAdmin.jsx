@@ -15,7 +15,7 @@ const TextAreaAdmin = ({
     <>
       <textarea
         className={
-          "overflow-auto bg-main9 px-4 py-1 text-orangeMain tracking-widest accent-orangeMain border-solid border-2 border-orangeMain rounded-md"
+          "overflow-auto bg-main9 px-4 py-1 text-orangeMain tracking-widest accent-orangeMain border-solid border-2 border-orangeMain rounded-md hover:border-4"
         }
         type={type}
         name={name}

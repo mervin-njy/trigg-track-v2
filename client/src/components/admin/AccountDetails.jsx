@@ -1,9 +1,22 @@
 import React, { useState, useEffect, useRef } from "react";
 import useFetch from "../../hooks/useFetch";
-import { MdPublic, MdPrivateConnectivity } from "react-icons/md";
+import {
+  MdPublic,
+  MdPrivateConnectivity,
+  MdLibraryAddCheck,
+  MdClose,
+  MdCheck,
+} from "react-icons/md";
 import TextAreaAdmin from "../Interactions/TextAreaAdmin";
 
-const AccountDetails = ({ access, userInfo, updateUser, deleteUser }) => {
+const AccountDetails = ({
+  access,
+  userInfo,
+  userId,
+  updateUser,
+  deleteUser,
+  setUpdateUser,
+}) => {
   // variables ----------------------------------------------------------------------------------------------------
   const textColours = {
     Public: "text-main2 text-2xl font-bold tracking-widest w-4/12 mr-auto",
@@ -48,6 +61,21 @@ const AccountDetails = ({ access, userInfo, updateUser, deleteUser }) => {
     });
   };
 
+  const handleClose = (event) => {
+    event.preventDefault();
+    setUpdateUser((prevUpdateUser) => {
+      console.log("AccountDetails - ", "toggle updateUser for:", userId);
+      return {
+        ...prevUpdateUser,
+        [userId]: !prevUpdateUser[userId],
+      };
+    });
+  };
+  const handleConfirm = (event) => {
+    event.preventDefault();
+    console.log("AccountDetails - ", "confirming change for:", userId);
+  };
+
   // effects ------------------------------------------------------------------------------------------------------
   // #1 - http request - updateUser dependent on updateUser truthy
   useEffect(() => {
@@ -74,7 +102,7 @@ const AccountDetails = ({ access, userInfo, updateUser, deleteUser }) => {
   }, [confirmUpdate]);
 
   return (
-    <>
+    <div className="flex flex-wrap">
       <div className="mt-12 flex flex-wrap motion-safe:animate-fadeIn w-9/12">
         {accessIcon(userInfo.access_type)}
         <h2 className={textColours[userInfo.access_type]}>
@@ -96,7 +124,7 @@ const AccountDetails = ({ access, userInfo, updateUser, deleteUser }) => {
                 required={true}
               />
             ) : (
-              <h2 className="mb-4 text-2xl italic">{info.displayName}</h2>
+              <h2 className="my-auto text-2xl italic">{info.displayName}</h2>
             )}
           </div>
 
@@ -114,7 +142,7 @@ const AccountDetails = ({ access, userInfo, updateUser, deleteUser }) => {
                 required={true}
               />
             ) : (
-              <h2 className="mb-4 text-2xl italic">{info.profession}</h2>
+              <h2 className="my-auto text-2xl italic">{info.profession}</h2>
             )}
           </div>
 
@@ -132,7 +160,7 @@ const AccountDetails = ({ access, userInfo, updateUser, deleteUser }) => {
                 required={true}
               />
             ) : (
-              <h2 className="mb-4 text-2xl italic">{info.email}</h2>
+              <h2 className="my-auto text-2xl italic">{info.email}</h2>
             )}
           </div>
 
@@ -150,12 +178,28 @@ const AccountDetails = ({ access, userInfo, updateUser, deleteUser }) => {
                 required={true}
               />
             ) : (
-              <h2 className="mb-4 text-2xl italic">{info.bio}</h2>
+              <h2 className="my-auto text-2xl italic">{info.bio}</h2>
             )}
           </div>
         </div>
       </div>
-    </>
+
+      {/* confirmation icons */}
+      <div className="flex flex-wrap justify-end mt-auto ml-auto">
+        <MdClose
+          size={30}
+          className="mr-4 cursor-pointer text-main2 hover:text-orangeMain hover:shadow-xl"
+          id="Close"
+          onClick={handleClose}
+        />
+        <MdLibraryAddCheck
+          size={30}
+          className="cursor-pointer text-main2 hover:text-greenAccent hover:shadow-xl"
+          id="Confirm"
+          onClick={handleConfirm}
+        />
+      </div>
+    </div>
   );
 };
 

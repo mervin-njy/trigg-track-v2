@@ -190,8 +190,10 @@ const AccountManager = ({ adminInfo }) => {
                   <AccountDetails
                     access={adminInfo.access}
                     userInfo={user}
+                    userId={id}
                     updateUser={updateUser[id]}
                     deleteUser={deleteUser[id]}
+                    setUpdateUser={setUpdateUser}
                   />
                 )}
               </div>
