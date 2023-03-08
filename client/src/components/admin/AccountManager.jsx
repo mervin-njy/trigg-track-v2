@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { FaCaretDown } from "react-icons/fa";
+import { FaCaretDown, FaCaretUp, FaUserEdit } from "react-icons/fa";
+import { MdPersonRemove, MdRemoveModerator } from "react-icons/md";
 import ButtonAdmin from "../Interactions/ButtonAdmin";
 import useFetch from "../../hooks/useFetch";
 import LoadingSpinner from "../Loading/LoadingSpinner";
@@ -70,7 +71,7 @@ const AccountManager = ({ adminInfo }) => {
               >
                 {/* show main header  */}
                 <div className="flex flex-wrap justify-between">
-                  <div className="flex flex-wrap justify-start w-11/12">
+                  <div className="flex flex-wrap justify-start w-9/12">
                     <h2 className="text-2xl font-bold tracking-widest w-3/10">
                       {user.user_type}
                     </h2>
@@ -79,18 +80,43 @@ const AccountManager = ({ adminInfo }) => {
                     </h2>
                   </div>
 
-                  {/* w/ options to view details */}
-                  <FaCaretDown
-                    size={24}
-                    className="cursor-pointer my-auto w-1/12 mb-14 hover:font-bold hover:text-main2"
-                    id={id}
-                    onClick={handleShow}
-                  />
+                  {/* w/ options to view details (when false / not being shown) */}
+                  {!showDetails[id] && (
+                    <FaCaretDown
+                      size={30}
+                      className="cursor-pointer my-auto ml-auto hover:font-bold hover:text-main2"
+                      id={id}
+                      onClick={handleShow}
+                    />
+                  )}
+                  {/* show more options when viewing details */}
+                  {showDetails[id] && (
+                    <div className="flex flex-wrap w-1/12 justify-between">
+                      <FaUserEdit
+                        size={30}
+                        className="cursor-pointer my-auto hover:font-bold hover:text-main2"
+                        id={id}
+                        onClick={handleShow}
+                      />
+                      <MdRemoveModerator
+                        size={30}
+                        className="cursor-pointer my-auto hover:font-bold hover:text-main2"
+                        id={id}
+                        onClick={handleShow}
+                      />
+                      <FaCaretUp
+                        size={30}
+                        className="cursor-pointer my-auto hover:font-bold hover:text-main2"
+                        id={id}
+                        onClick={handleShow}
+                      />
+                    </div>
+                  )}
                 </div>
 
                 {/* show details if id is true */}
                 {showDetails[id] && (
-                  <div>
+                  <div className="mt-12 motion-safe:animate-fadeIn">
                     <h2 className="text-xl italic w-3/10">{user.bio}</h2>
                   </div>
                 )}
