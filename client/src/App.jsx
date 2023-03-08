@@ -37,7 +37,12 @@ function App() {
   return (
     <>
       {/* Navigation bar showing available routes for each user type --------------------------------------------------------------- */}
-      {loggedUserData && <NavBar userType={loggedUserData.userType} />}
+      {loggedUserData && (
+        <NavBar
+          userType={loggedUserData.userType}
+          setLoggedUserData={setLoggedUserData}
+        />
+      )}
 
       <Routes>
         {/* REMOVE: <Route

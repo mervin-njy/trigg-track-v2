@@ -6,6 +6,7 @@ const NavBar = ({ userType }) => {
   // event handlers -----------------------------------------------------------------------------------------------
   const handleClick = (event) => {
     console.log("NavBar -", "clicked: ", event.target.id);
+    if (event.target.id === "signout") setLoggedUserData(null);
   };
 
   const showAll = userType !== "Admin" ? true : false;
@@ -25,8 +26,8 @@ const NavBar = ({ userType }) => {
                 to="./home"
                 className={(navData) =>
                   navData.isActive
-                    ? "w-1/5 pb-2 border-b-2 tracking-widest hover:font-bold"
-                    : "hover:font-bold"
+                    ? "w-1/5 pb-2 border-b-2 tracking-widest hover:text-main2"
+                    : "hover:text-main2"
                 }
               >
                 Home
@@ -37,8 +38,8 @@ const NavBar = ({ userType }) => {
                 to="./records"
                 className={(navData) =>
                   navData.isActive
-                    ? "w-1/5 pb-2 border-b-2 tracking-widest hover:font-bold"
-                    : "hover:font-bold"
+                    ? "w-1/5 pb-2 border-b-2 tracking-widest hover:text-main2"
+                    : "hover:text-main2"
                 }
               >
                 Records
@@ -49,8 +50,8 @@ const NavBar = ({ userType }) => {
                 to="./connect"
                 className={(navData) =>
                   navData.isActive
-                    ? "w-1/5 pb-2 border-b-2 tracking-widest hover:font-bold"
-                    : "hover:font-bold"
+                    ? "w-1/5 pb-2 border-b-2 tracking-widest hover:text-main2"
+                    : "hover:text-main2"
                 }
               >
                 Connect
@@ -61,8 +62,8 @@ const NavBar = ({ userType }) => {
                 to="./about"
                 className={(navData) =>
                   navData.isActive
-                    ? "w-1/5 pb-2 border-b-2 tracking-widest hover:font-bold"
-                    : "hover:font-boldl"
+                    ? "w-1/5 pb-2 border-b-2 tracking-widest hover:text-main2"
+                    : "hover:text-main2"
                 }
               >
                 About
@@ -78,13 +79,14 @@ const NavBar = ({ userType }) => {
           className="cursor-pointer my-auto mr-12"
           onClick={handleClick}
         />
-        <h4
+        <NavLink
+          to="./welcome"
+          className="cursor-pointer text-xl my-auto tracking-widest w-1/5 hover:text-main2 hover:motion-safe:animate-pulsateLittle"
           id="signout"
-          className="cursor-pointer text-xl my-auto"
           onClick={handleClick}
         >
           sign out
-        </h4>
+        </NavLink>
       </div>
       {/* <Profile /> */}
     </header>
