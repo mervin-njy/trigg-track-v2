@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
+import useFetch from "../../hooks/useFetch";
 import { MdPublic, MdPrivateConnectivity } from "react-icons/md";
+import TextAreaAdmin from "../Interactions/TextAreaAdmin";
 
 const AccountDetails = ({ access, userInfo, updateUser, deleteUser }) => {
   // variables ----------------------------------------------------------------------------------------------------
@@ -32,6 +34,8 @@ const AccountDetails = ({ access, userInfo, updateUser, deleteUser }) => {
     email: userInfo.email,
     bio: userInfo.bio,
   });
+  const [confirmUpdate, setConfirmUpdate] = useState(false);
+  const { fetchData, isLoading, data, error } = useFetch();
 
   // effects ------------------------------------------------------------------------------------------------------
   // #1 - http request - updateUser dependent on updateUser truthy
@@ -48,7 +52,7 @@ const AccountDetails = ({ access, userInfo, updateUser, deleteUser }) => {
       signal: controller.signal,
     };
 
-    if (updateUser) {
+    if (confirmUpdate) {
       console.log(
         "AccountDetails - ",
         "updateUser useEffect triggered:",
@@ -56,7 +60,7 @@ const AccountDetails = ({ access, userInfo, updateUser, deleteUser }) => {
       );
       fetchData(fetchURL, fetchOptions);
     }
-  }, [updateUser]);
+  }, [confirmUpdate]);
 
   return (
     <>
@@ -74,12 +78,23 @@ const AccountDetails = ({ access, userInfo, updateUser, deleteUser }) => {
           <h2 className="mb-4 text-2xl italic">bio:</h2>
         </div>
 
-        <div className="w-5/12">
-          <h2 className="mb-4 text-2xl italic">{userInfo.display_name}</h2>
-          <h2 className="mb-4 text-2xl italic">{userInfo.profession}</h2>
-          <h2 className="mb-4 text-2xl italic">{userInfo.email}</h2>
-          <h2 className="mb-4 text-2xl italic">{userInfo.bio}</h2>
-        </div>
+        {!updateUser && (
+          <div className="w-5/12">
+            <h2 className="mb-4 text-2xl italic">{userInfo.display_name}</h2>
+            <h2 className="mb-4 text-2xl italic">{userInfo.profession}</h2>
+            <h2 className="mb-4 text-2xl italic">{userInfo.email}</h2>
+            <h2 className="mb-4 text-2xl italic">{userInfo.bio}</h2>
+          </div>
+        )}
+        {/* change to textArea form input */}
+        {updateUser && (
+          <div className="w-5/12">
+            <h2 className="mb-4 text-2xl italic">{userInfo.display_name}</h2>
+            <h2 className="mb-4 text-2xl italic">{userInfo.profession}</h2>
+            <h2 className="mb-4 text-2xl italic">{userInfo.email}</h2>
+            <h2 className="mb-4 text-2xl italic">{userInfo.bio}</h2>
+          </div>
+        )}
       </div>
     </>
   );
