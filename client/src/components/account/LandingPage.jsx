@@ -11,7 +11,7 @@ const LandingPage = ({ setLoggedUserData, setUserConnections, setNewUser }) => {
 
   //   event handlers ---------------------------------------------------------------------------------------------
   const handleClick = (event) => {
-    console.log(`showing form: ${event.target.name}.`);
+    console.log("LandingPage -", `showing form: ${event.target.name}.`);
 
     if (event.target.name === "Log in") {
       // setAction("login");

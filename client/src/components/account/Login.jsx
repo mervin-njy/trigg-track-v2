@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-// import { BsKey } from "react-icons/bs";
 import { FaUser, FaKey } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
@@ -39,7 +38,7 @@ const Login = ({ setLoggedUserData }) => {
   const handleChange = (event) => {
     // event.preventDefault();
     setAccountInput((prevAccountInput) => {
-      console.log("handleChange, before:", accountInput);
+      console.log("Login -", "handleChange, before:", accountInput);
       return {
         ...prevAccountInput,
         [event.target.name]: event.target.value,
@@ -50,8 +49,8 @@ const Login = ({ setLoggedUserData }) => {
   const handleClick = (event) => {
     event.preventDefault();
     // setFocus();
-    console.log(`button clicked: ${event.target.name}`);
-    console.log(accountInput);
+    console.log("Login -", `button clicked: ${event.target.name}`);
+    console.log("Login -", "submitting:", accountInput);
 
     if (event.target.name === "Retry") {
       setShowLogin(true);
@@ -96,7 +95,7 @@ const Login = ({ setLoggedUserData }) => {
       body: JSON.stringify(accountInput),
       signal: controller.signal,
     };
-    console.log("1st useEffect triggered:", requestTypes);
+    console.log("Login -", "1st useEffect triggered:", requestTypes);
     fetchData(fetchURL, fetchOptions);
   }, [checkStatus]);
 
@@ -104,13 +103,13 @@ const Login = ({ setLoggedUserData }) => {
   useEffect(() => {
     // a. if data fetching is a success => set state for user info + navigate to home
     if (isObject(data)) {
-      console.log("error:", data.status);
+      console.log("Login -", "error:", data.status);
       if (data.status !== "error") {
         // lift states: logged in user data
         setLoggedUserData(data);
 
         navigateToPage("home");
-        console.log("2nd useEffect", data);
+        console.log("Login -", "2nd useEffect", data);
       } else {
         setShowLogin(false); // & display retry button
       }

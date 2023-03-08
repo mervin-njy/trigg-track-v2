@@ -118,6 +118,9 @@ mervin_njy,$2b$12$oG6NpAAT8BfBxFskPQyUkOJsTqFDhR1.2niMMDSuEqU7vAmO1/YpO,Health L
 gavin_low,$2b$12$VBkGVF0t1AEDOp3gaSqbwew2y5HSMHiXcoK0xNa5LnR5UGvAHj0Du,Health Logger,Private,Gavin Low,Student,gavin_low@outlook.com,"Here for the LOLs."
 amir,$2b$12$HREihvzaneLUJe4Ibg//Ce.ZoKDI5bCxfJwOkfboFW5EJl9hpuyaO,Service Provider,Public,Amir,Dietitian,amir@gmail.com,"Inspired by a personal history of poor eating habits\, I draw motivational factors to personalize good habits in your eating patterns."
 izhar,$2b$12$A2Ye59uQbf6Hevwxs9mYguRg2sZFjZDoml1Sj13hNj8Ueb4a1ak.q,Service Provider,Public,Izhar,Dietitian,izhar@gmail.com,"Inspired scholar that fixes all problems."
+admin,$2b$12$FYMO8D9ARMuzLMdpkHtuUOIfS/P01M3NE6lRUFRG9.mZrBW.lCBO2,Admin,Private,-,-,-,"Administrator."
+ltest,$2b$12$hyJm0CzQF3EmS3PhmHe2OuIwy44bU9JN7FMFWI5AXZKKAm.i4v0ze,Health Logger,Public,-,-,-,"Logger test."
+stest,$2b$12$Kl4l5gqX1XghzteiykAil.nkRPrBL/iP15DVu6zJoZEkhjCs5x8Vu,Service Provider,Public,-,-,-,"Servicer test."
 \.
 
 COPY "record" ("id", "logger_username", "date") FROM stdin (DELIMITER ',');

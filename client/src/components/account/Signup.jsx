@@ -56,7 +56,7 @@ const Signup = ({ setNewUser }) => {
   //   event handlers ---------------------------------------------------------------------------------------------
   const handleChange = (event) => {
     setAccountInput((prevAccountInput) => {
-      console.log("handleChange, before:", accountInput);
+      console.log("Signup -", "handleChange, before:", accountInput);
       return {
         ...prevAccountInput,
         [event.target.name]: event.target.value,
@@ -67,8 +67,8 @@ const Signup = ({ setNewUser }) => {
   const handleClick = (event) => {
     event.preventDefault();
     // setFocus();
-    console.log(`button clicked: ${event.target.name}`);
-    console.log("submitted details:", accountInput);
+    console.log("Signup -", `button clicked: ${event.target.name}`);
+    console.log("Signup -", "submitted details:", accountInput);
 
     if (event.target.name === "Retry") {
       setShowSignup(true);
@@ -113,7 +113,7 @@ const Signup = ({ setNewUser }) => {
       body: JSON.stringify(accountInput),
       signal: controller.signal,
     };
-    console.log("1st useEffect triggered:", requestTypes);
+    console.log("Signup -", "1st useEffect triggered:", requestTypes);
     fetchData(fetchURL, fetchOptions);
   }, [checkStatus]);
 
@@ -121,12 +121,12 @@ const Signup = ({ setNewUser }) => {
   useEffect(() => {
     // a. if data fetching is a success => set state for user info + navigate to home
     if (isObject(data)) {
-      console.log("error:", data.status);
+      console.log("Signup -", "error:", data.status);
       if (data.status !== "okay") {
         // lift state: logged in user data
         setNewUser(true);
         setShowSuccessMessage(true);
-        console.log("2nd useEffect", data);
+        console.log("Signup -", "2nd useEffect", data);
       } else {
         setShowSignup(false); // & display retry button
       }

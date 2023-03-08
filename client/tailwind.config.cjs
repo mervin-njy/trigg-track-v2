@@ -120,6 +120,9 @@ module.exports = {
         "13/15": "86.67%",
         "14/15": "93.33%",
       },
+      minHeight: {
+        "1/20": "5%",
+      },
       boxShadow: {
         xl: "0 0.5rem 3rem -0.5rem rgba(241, 253, 255, 0.2)",
         "3xl": "0 1.5rem 5rem -1.5rem rgba(241, 253, 255, 0.4)",
