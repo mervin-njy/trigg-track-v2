@@ -185,20 +185,22 @@ const AccountDetails = ({
       </div>
 
       {/* confirmation icons */}
-      <div className="flex flex-wrap justify-end mt-auto ml-auto">
-        <MdClose
-          size={30}
-          className="mr-4 cursor-pointer text-main2 hover:text-orangeMain hover:shadow-xl"
-          id="Close"
-          onClick={handleClose}
-        />
-        <MdLibraryAddCheck
-          size={30}
-          className="cursor-pointer text-main2 hover:text-greenAccent hover:shadow-xl"
-          id="Confirm"
-          onClick={handleConfirm}
-        />
-      </div>
+      {updateUser && (
+        <div className="flex flex-wrap justify-end mt-auto ml-auto">
+          <MdClose
+            size={30}
+            className="mr-4 cursor-pointer text-main2 hover:text-orangeMain hover:shadow-xl"
+            id="Close"
+            onClick={handleClose}
+          />
+          <MdLibraryAddCheck
+            size={30}
+            className="cursor-pointer text-main2 hover:text-greenAccent hover:shadow-xl"
+            id="Confirm"
+            onClick={handleConfirm}
+          />
+        </div>
+      )}
     </div>
   );
 };
