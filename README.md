@@ -56,6 +56,7 @@ There are two main types of users.
 2. npm install -D tailwindcss postcss autoprefixer
 3. npx tailwindcss init -p
 4. npm install react-icons --save
+5. npm install --save react-toastify
 
 ### Server:
 

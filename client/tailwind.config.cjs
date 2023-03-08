@@ -44,6 +44,7 @@ module.exports = {
         main8: "#2D3436",
         main9: "#222425",
         mainDarkest: "#141516",
+        modalBg: "rgba(66, 79, 82, 0.4)",
       },
       textUnderlineOffset: {
         12: "0.75rem",

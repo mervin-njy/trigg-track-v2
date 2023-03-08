@@ -11,9 +11,9 @@
   height: 8rem;
   margin: 0.8rem;
   border-radius: 50%;
-  border: 0.6rem solid #a29bfeed;
-  border-color: #a29bfe transparent #a29bfe transparent;
-  animation: spinner 1s linear infinite;
+  border: 0.6rem solid #7eaab3;
+  border-color: #7eaab3 transparent #7eaab3 transparent;
+  animation: spinner 1.2s linear infinite;
 }
 
 @keyframes spinner {
