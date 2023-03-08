@@ -114,19 +114,23 @@ CREATE TABLE "comment" (
 -- SEEDING SAMPLE INITIAL DATA ----------------------------------------------------------------------------------------------------------
 
 COPY "user" ("username", "hash", "user_type", "access_type", "display_name", "profession", "email", "bio") FROM stdin (DELIMITER ',');
-mervin_njy,$2b$12$oG6NpAAT8BfBxFskPQyUkOJsTqFDhR1.2niMMDSuEqU7vAmO1/YpO,Health Logger,Public,Mervin Ng,Student,mervin.njy@outlook.com,"Long time victim of eczema flares on a daily basis\, gets triggered easily by sweat\, stress\, lack of sleep and probably diet - here to find out! Tries to exercise 1-3 times a week and cook if possible."
-gavin_low,$2b$12$VBkGVF0t1AEDOp3gaSqbwew2y5HSMHiXcoK0xNa5LnR5UGvAHj0Du,Health Logger,Private,Gavin Low,Student,gavin_low@outlook.com,"Here for the LOLs."
+mervin,$2b$12$oG6NpAAT8BfBxFskPQyUkOJsTqFDhR1.2niMMDSuEqU7vAmO1/YpO,Health Logger,Public,Mervin Ng,Student,mervin.njy@outlook.com,"Long time victim of eczema flares on a daily basis\, gets triggered easily by sweat\, stress\, lack of sleep and probably diet - here to find out! Tries to exercise 1-3 times a week and cook if possible."
+glow,$2b$12$VBkGVF0t1AEDOp3gaSqbwew2y5HSMHiXcoK0xNa5LnR5UGvAHj0Du,Health Logger,Private,Gavin Low,Student,gavin_low@outlook.com,"Here for the LOLs."
 amir,$2b$12$HREihvzaneLUJe4Ibg//Ce.ZoKDI5bCxfJwOkfboFW5EJl9hpuyaO,Service Provider,Public,Amir,Dietitian,amir@gmail.com,"Inspired by a personal history of poor eating habits\, I draw motivational factors to personalize good habits in your eating patterns."
 izhar,$2b$12$A2Ye59uQbf6Hevwxs9mYguRg2sZFjZDoml1Sj13hNj8Ueb4a1ak.q,Service Provider,Public,Izhar,Dietitian,izhar@gmail.com,"Inspired scholar that fixes all problems."
 admin,$2b$12$FYMO8D9ARMuzLMdpkHtuUOIfS/P01M3NE6lRUFRG9.mZrBW.lCBO2,Admin,Private,Admin,-,-,"Administrator."
-ltest,$2b$12$hyJm0CzQF3EmS3PhmHe2OuIwy44bU9JN7FMFWI5AXZKKAm.i4v0ze,Health Logger,Public,Test user - Logger,-,-,"Logger test."
-stest,$2b$12$Kl4l5gqX1XghzteiykAil.nkRPrBL/iP15DVu6zJoZEkhjCs5x8Vu,Service Provider,Public,Test user - Servicer,-,-,"Servicer test."
+logtest,$2b$12$hyJm0CzQF3EmS3PhmHe2OuIwy44bU9JN7FMFWI5AXZKKAm.i4v0ze,Health Logger,Public,Test user - Logger,-,-,"Logger."
+servtest,$2b$12$Kl4l5gqX1XghzteiykAil.nkRPrBL/iP15DVu6zJoZEkhjCs5x8Vu,Service Provider,Public,Test user - Servicer,-,-,"Servicer."
 \.
 
 COPY "record" ("id", "logger_username", "date") FROM stdin (DELIMITER ',');
-441234001,mervin_njy,2023-03-02
-441234002,mervin_njy,2023-03-03
-441234003,mervin_njy,2023-03-04
+441234001,mervin_njy,2023-03-01
+441234002,mervin_njy,2023-03-02
+441234003,mervin_njy,2023-03-03
+441234004,mervin_njy,2023-03-04
+441234005,mervin_njy,2023-03-05
+441234006,mervin_njy,2023-03-06
+441234007,mervin_njy,2023-03-07
 \.
 
 -- TODO: add image once working

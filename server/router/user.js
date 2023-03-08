@@ -56,7 +56,7 @@ router.post("/refresh", refreshAccess); // DONE
 // R -
 router.get("/getUsers", auth, getUsers); // DONE
 // R - search for user
-router.post("/getUser", auth, getUser); // NET
+router.post("/getUser", auth, getUser); // NEXT
 // U
 router.patch("/updateUser", auth, updateUser); // DONE
 // D - Admin: any acc, Others: own acc
@@ -67,7 +67,7 @@ router.delete("/deleteUser", auth, deleteUser); // DONE
 // C
 router.put("/user/createConnection/:assoc_user", auth, connectService);
 // R
-router.post("/user/viewProfile/:username", auth, viewProfile); // DONE - not tested
+router.post("/user/viewProfile/:username", auth, viewProfile); // DONE
 // R
 router.post("/user/serviceInfo/:assoc_user", auth, serviceInfo);
 // R
