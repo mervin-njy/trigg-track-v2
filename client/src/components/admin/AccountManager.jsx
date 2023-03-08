@@ -110,20 +110,26 @@ const AccountManager = ({ adminInfo }) => {
     if (data) {
       setUsersData(data);
       data.map((user, id) => {
-        setshowDetails((prevShowDetails) => {
-          console.log("showDetails false for user:", user);
-          return { ...prevShowDetails, [id]: false };
-        });
+        if (Object.keys(showDetails).length === 0) {
+          setshowDetails((prevShowDetails) => {
+            console.log("showDetails false for user:", user);
+            return { ...prevShowDetails, [id]: false };
+          });
+        }
 
-        setUpdateUser((prevUpdateUser) => {
-          console.log("updateUser false for user:", user);
-          return { ...prevUpdateUser, [id]: false };
-        });
+        if (Object.keys(updateUser).length === 0) {
+          setUpdateUser((prevUpdateUser) => {
+            console.log("updateUser false for user:", user);
+            return { ...prevUpdateUser, [id]: false };
+          });
+        }
 
-        setDeleteUser((prevDeleteUser) => {
-          console.log("deleteUser false for user:", user);
-          return { ...prevDeleteUser, [id]: false };
-        });
+        if (Object.keys(deleteUser).length === 0) {
+          setDeleteUser((prevDeleteUser) => {
+            console.log("deleteUser false for user:", user);
+            return { ...prevDeleteUser, [id]: false };
+          });
+        }
       });
     }
   }, [data]);

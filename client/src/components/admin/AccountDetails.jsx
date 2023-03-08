@@ -27,6 +27,12 @@ const AccountDetails = ({
     Private: "text-main4 text-2xl font-bold tracking-widest w-4/12 mr-auto",
   };
 
+  const introTheme = {
+    onExpand: "mt-12 flex flex-wrap motion-safe:animate-fadeIn w-9/12",
+    onChange:
+      "mt-12 flex flex-wrap motion-safe:animate-successfulChange w-9/12",
+  };
+
   // functions ----------------------------------------------------------------------------------------------------
   function accessIcon(accessType) {
     if (accessType === "Public") {
@@ -148,7 +154,9 @@ const AccountDetails = ({
   return (
     <>
       <div className="flex flex-wrap">
-        <div className="mt-12 flex flex-wrap motion-safe:animate-fadeIn w-9/12">
+        <div
+          className={isObject(data) ? introTheme.onChange : introTheme.onExpand}
+        >
           {accessIcon(userInfo.access_type)}
           <h2 className={textColours[userInfo.access_type]}>
             {userInfo.access_type}
@@ -169,7 +177,9 @@ const AccountDetails = ({
                   required={true}
                 />
               ) : (
-                <h2 className="my-auto text-2xl italic">{info.displayName}</h2>
+                <h2 className="w-7/10 my-auto text-2xl italic">
+                  {info.displayName}
+                </h2>
               )}
             </div>
 
@@ -187,7 +197,9 @@ const AccountDetails = ({
                   required={true}
                 />
               ) : (
-                <h2 className="my-auto text-2xl italic">{info.profession}</h2>
+                <h2 className="w-7/10 my-auto text-2xl italic">
+                  {info.profession}
+                </h2>
               )}
             </div>
 
@@ -205,7 +217,7 @@ const AccountDetails = ({
                   required={true}
                 />
               ) : (
-                <h2 className="my-auto text-2xl italic">{info.email}</h2>
+                <h2 className="w-7/10 my-auto text-2xl italic">{info.email}</h2>
               )}
             </div>
 
@@ -223,7 +235,7 @@ const AccountDetails = ({
                   required={true}
                 />
               ) : (
-                <h2 className="my-auto text-2xl italic">{info.bio}</h2>
+                <h2 className="w-7/10 my-auto text-2xl italic">{info.bio}</h2>
               )}
             </div>
           </div>

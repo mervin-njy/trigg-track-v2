@@ -73,6 +73,7 @@ module.exports = {
         pulsate: "pulsate 1.2s ease-in-out infinite",
         pulsateLittle: "pulsate 2s ease-in-out infinite",
         pulsateStop: "pulsate 3s ease-in-out forwards",
+        successfulChange: "greenFade 5s ease-in forwards",
       },
       keyframes: {
         fadeIn: {
@@ -102,6 +103,11 @@ module.exports = {
         wiggle: {
           "0%, 100%": { transform: "rotate(-3deg)" },
           "50%": { transform: "rotate(3deg)" },
+        },
+        greenFade: {
+          "0%": { opacity: 0, color: "#55efc4" },
+          "50%": { opacity: 1, color: "#00b894" },
+          "100%": { opacity: 1, color: "#F1FDFF" },
         },
         // glowing {
         //   "0%": { backgroundColor: "#474368", boxShadow: "0 0 0 #474368", color: "#a29bfe"},
