@@ -25,7 +25,7 @@ const AccountDetails = ({ access, userInfo, updateUser, deleteUser }) => {
   }
 
   // states -------------------------------------------------------------------------------------------------------
-  const [newInfo, setNewInfo] = useState({
+  const [info, setInfo] = useState({
     username: userInfo.username,
     password: userInfo.hash,
     displayName: userInfo.display_name,
@@ -36,6 +36,17 @@ const AccountDetails = ({ access, userInfo, updateUser, deleteUser }) => {
   });
   const [confirmUpdate, setConfirmUpdate] = useState(false);
   const { fetchData, isLoading, data, error } = useFetch();
+
+  // event handlers -----------------------------------------------------------------------------------------------
+  const handleChange = (event) => {
+    setInfo((prevInfo) => {
+      console.log("AccountDetails -", "handleChange, before:", prevInfo);
+      return {
+        ...prevInfo,
+        [event.target.name]: event.target.value,
+      };
+    });
+  };
 
   // effects ------------------------------------------------------------------------------------------------------
   // #1 - http request - updateUser dependent on updateUser truthy
@@ -48,7 +59,7 @@ const AccountDetails = ({ access, userInfo, updateUser, deleteUser }) => {
         "Content-type": "application/json",
         Authorization: `Bearer ${access}`,
       },
-      body: newInfo,
+      body: info,
       signal: controller.signal,
     };
 
@@ -71,30 +82,78 @@ const AccountDetails = ({ access, userInfo, updateUser, deleteUser }) => {
         </h2>
         {/* <h2 className="mt-4 text-2xl italic w-3/10">{userInfo.access_type}</h2> */}
 
-        <div className="w-2/12">
-          <h2 className="mb-4 text-2xl italic">alias:</h2>
-          <h2 className="mb-4 text-2xl italic">profession:</h2>
-          <h2 className="mb-4 text-2xl italic">email:</h2>
-          <h2 className="mb-4 text-2xl italic">bio:</h2>
-        </div>
+        <div className="w-7/12">
+          {/* field 1: alias */}
+          <div className="flex flex-wrap mb-4">
+            <h2 className="w-3/10 my-auto text-2xl italic">alias:</h2>
+            {updateUser ? (
+              <TextAreaAdmin
+                type="text"
+                name="displayName"
+                value={info.displayName}
+                width={"70%"}
+                onChange={handleChange}
+                required={true}
+              />
+            ) : (
+              <h2 className="mb-4 text-2xl italic">{info.displayName}</h2>
+            )}
+          </div>
 
-        {!updateUser && (
-          <div className="w-5/12">
-            <h2 className="mb-4 text-2xl italic">{userInfo.display_name}</h2>
-            <h2 className="mb-4 text-2xl italic">{userInfo.profession}</h2>
-            <h2 className="mb-4 text-2xl italic">{userInfo.email}</h2>
-            <h2 className="mb-4 text-2xl italic">{userInfo.bio}</h2>
+          {/* field 2: alias */}
+          <div className="flex flex-wrap mb-4">
+            <h2 className="w-3/10 my-auto text-2xl italic">profession:</h2>
+            {updateUser ? (
+              <TextAreaAdmin
+                type="text"
+                name="profession"
+                value={info.profession}
+                margin={"0.2rem 0"}
+                width={"70%"}
+                onChange={handleChange}
+                required={true}
+              />
+            ) : (
+              <h2 className="mb-4 text-2xl italic">{info.profession}</h2>
+            )}
           </div>
-        )}
-        {/* change to textArea form input */}
-        {updateUser && (
-          <div className="w-5/12">
-            <h2 className="mb-4 text-2xl italic">{userInfo.display_name}</h2>
-            <h2 className="mb-4 text-2xl italic">{userInfo.profession}</h2>
-            <h2 className="mb-4 text-2xl italic">{userInfo.email}</h2>
-            <h2 className="mb-4 text-2xl italic">{userInfo.bio}</h2>
+
+          {/* field 3: email */}
+          <div className="flex flex-wrap mb-4">
+            <h2 className="w-3/10 my-auto text-2xl italic">email:</h2>
+            {updateUser ? (
+              <TextAreaAdmin
+                type="text"
+                name="email"
+                value={info.email}
+                margin={"0.2rem 0"}
+                width={"70%"}
+                onChange={handleChange}
+                required={true}
+              />
+            ) : (
+              <h2 className="mb-4 text-2xl italic">{info.email}</h2>
+            )}
           </div>
-        )}
+
+          {/* field 4: bio */}
+          <div className="flex flex-wrap mb-4">
+            <h2 className="w-3/10 my-auto text-2xl italic">bio:</h2>
+            {updateUser ? (
+              <TextAreaAdmin
+                type="text"
+                name="bio"
+                value={info.bio}
+                margin={"0.2rem 0"}
+                width={"70%"}
+                onChange={handleChange}
+                required={true}
+              />
+            ) : (
+              <h2 className="mb-4 text-2xl italic">{info.bio}</h2>
+            )}
+          </div>
+        </div>
       </div>
     </>
   );

@@ -5,6 +5,7 @@ const TextAreaAdmin = ({
   name,
   value,
   reference,
+  margin,
   width,
   onChange,
   checked,
@@ -20,7 +21,7 @@ const TextAreaAdmin = ({
         name={name}
         value={value}
         ref={reference}
-        style={{ width: width }}
+        style={{ margin: margin, width: width }}
         onChange={(event) => onChange(event)}
         checked={checked}
         required={required}

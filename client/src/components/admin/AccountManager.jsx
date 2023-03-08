@@ -70,7 +70,7 @@ const AccountManager = ({ adminInfo }) => {
   };
 
   // effects ------------------------------------------------------------------------------------------------------
-  // #1 - http request - on mount
+  // #1 - http request - on mount, updateUser & deleteUser
   useEffect(() => {
     const controller = new AbortController();
     const fetchURL = `http://127.0.0.1:5001/getUsers`;
@@ -88,7 +88,7 @@ const AccountManager = ({ adminInfo }) => {
       "ADMIN - GET /getUsers"
     );
     fetchData(fetchURL, fetchOptions);
-  }, []);
+  }, [updateUser, deleteUser]);
 
   // #2 - once data is populated, set state (showDetails) of each data item to false
   useEffect(() => {
@@ -168,7 +168,7 @@ const AccountManager = ({ adminInfo }) => {
                   <AccountDetails
                     access={adminInfo.access}
                     userInfo={user}
-                    updateUse={updateUser}
+                    updateUser={updateUser}
                     deleteUser={deleteUser}
                   />
                 )}
