@@ -28,6 +28,30 @@ const LandingPage = ({ setLoggedUserData, setUserConnections, setNewUser }) => {
     }
   };
 
+  // effects ------------------------------------------------------------------------------------------------------
+  // #1 - http request
+  useEffect(() => {
+    console.log(
+      "LandingPage - ",
+      "1st useEffect triggered:",
+      "user has logged in"
+    );
+    // setUserConnections
+
+    // const controller = new AbortController();
+    // const fetchURL = `http://127.0.0.1:5001/${requestTypes.accountEndpoint}`;
+    // const fetchOptions = {
+    //   method: requestTypes.fetchMethod, // "POST" => loginUser | "PUT" => createUser
+    //   headers: {
+    //     "Content-type": "application/json",
+    //   },
+    //   body: JSON.stringify(accountInput),
+    //   signal: controller.signal,
+    // };
+    // console.log("1st useEffect triggered:", requestTypes);
+    // fetchData(fetchURL, fetchOptions);
+  }, [setLoggedUserData]);
+
   // render component --------------------------------------------------------------------------------------------
   return (
     <>
@@ -57,12 +81,7 @@ const LandingPage = ({ setLoggedUserData, setUserConnections, setNewUser }) => {
                 />
               </>
             )}
-            {showLogin && (
-              <Login
-                setLoggedUserData={setLoggedUserData}
-                setUserConnections={setUserConnections}
-              />
-            )}
+            {showLogin && <Login setLoggedUserData={setLoggedUserData} />}
           </div>
 
           <div className="w-9/20 h-max py-12 px-12 border-solid border-2 rounded-2xl mx-2 my-10 motion-safe:animate-float shadow-xl hover:motion-safe:animate-floatStop hover:shadow-3xl">

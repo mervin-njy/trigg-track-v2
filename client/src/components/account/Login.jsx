@@ -9,7 +9,7 @@ import ButtonGeneral from "../Interactions/ButtonGeneral";
 import InputGeneral from "../Interactions/InputGeneral";
 import LoadingSpinner from "../Loading/LoadingSpinner";
 
-const Login = ({ setLoggedUserData, setUserConnections }) => {
+const Login = ({ setLoggedUserData }) => {
   // variables ----------------------------------------------------------------------------------------------------
   const navigate = useNavigate();
   // Navigate to home
@@ -106,13 +106,8 @@ const Login = ({ setLoggedUserData, setUserConnections }) => {
     if (isObject(data)) {
       console.log("error:", data.status);
       if (data.status !== "error") {
-        // lift states:
-
-        // 1. logged in user data
+        // lift states: logged in user data
         setLoggedUserData(data);
-
-        // 2.
-        // setUserConnections()
 
         navigateToPage("home");
         console.log("2nd useEffect", data);
