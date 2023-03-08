@@ -41,16 +41,16 @@ const AccountManager = ({ adminInfo }) => {
   }
   // states -------------------------------------------------------------------------------------------------------
   const [showDetails, setshowDetails] = useState({});
+  const [updateUser, setUpdateUser] = useState({});
+  const [deleteUser, setDeleteUser] = useState({});
   const [usersData, setUsersData] = useState(null);
-  const [updateUser, setUpdateUser] = useState(false);
-  const [deleteUser, setDeleteUser] = useState(false);
   const { fetchData, isLoading, data, error } = useFetch();
 
   //   event handlers ---------------------------------------------------------------------------------------------
   const handleShow = (event) => {
     event.preventDefault();
     console.log("AccountManager -", `showing details: ${event.target.id}.`);
-    console.log("AccountManage -", "current details:", showDetails);
+    console.log("AccountManager -", "current details:", showDetails);
     setshowDetails((prevShowDetails) => {
       return {
         ...prevShowDetails,
@@ -61,16 +61,28 @@ const AccountManager = ({ adminInfo }) => {
 
   const handleEdit = (event) => {
     event.preventDefault();
-    setUpdateUser(true);
+    setUpdateUser((prevUpdateUser) => {
+      console.log("set updateUser true for:", event.target.id);
+      return {
+        ...prevUpdateUser,
+        [event.target.id]: !prevUpdateUser[event.target.id],
+      };
+    });
   };
 
   const handleDelete = (event) => {
     event.preventDefault();
-    setDeleteUser(true);
+    setDeleteUser((prevDeleteUser) => {
+      console.log("set deleteUser true for :", event.target.id);
+      return {
+        ...prevDeleteUser,
+        [event.target.id]: !prevDeleteUser[event.target.id],
+      };
+    });
   };
 
   // effects ------------------------------------------------------------------------------------------------------
-  // #1 - http request - on mount, updateUser & deleteUser
+  // #1 - http request - on mount, confirmUpdate & confirmDelete
   useEffect(() => {
     const controller = new AbortController();
     const fetchURL = `http://127.0.0.1:5001/getUsers`;
@@ -88,7 +100,7 @@ const AccountManager = ({ adminInfo }) => {
       "ADMIN - GET /getUsers"
     );
     fetchData(fetchURL, fetchOptions);
-  }, [updateUser, deleteUser]);
+  }, []); // updateUser, deleteUser => confirmUpdate, confirmDelete
 
   // #2 - once data is populated, set state (showDetails) of each data item to false
   useEffect(() => {
@@ -97,9 +109,19 @@ const AccountManager = ({ adminInfo }) => {
     if (data) {
       setUsersData(data);
       data.map((user, id) => {
-        return setshowDetails((prevShowDetails) => {
+        setshowDetails((prevShowDetails) => {
           console.log("showDetails false for user:", user);
           return { ...prevShowDetails, [id]: false };
+        });
+
+        setUpdateUser((prevUpdateUser) => {
+          console.log("updateUser false for user:", user);
+          return { ...prevUpdateUser, [id]: false };
+        });
+
+        setDeleteUser((prevDeleteUser) => {
+          console.log("deleteUser false for user:", user);
+          return { ...prevDeleteUser, [id]: false };
         });
       });
     }
@@ -168,8 +190,8 @@ const AccountManager = ({ adminInfo }) => {
                   <AccountDetails
                     access={adminInfo.access}
                     userInfo={user}
-                    updateUser={updateUser}
-                    deleteUser={deleteUser}
+                    updateUser={updateUser[id]}
+                    deleteUser={deleteUser[id]}
                   />
                 )}
               </div>
