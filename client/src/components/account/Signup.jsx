@@ -7,6 +7,7 @@ import {
   FaUserTie,
 } from "react-icons/fa";
 import {
+  MdClose,
   MdAccessibility,
   MdPublic,
   MdPrivateConnectivity,
@@ -22,9 +23,10 @@ import ButtonGeneral from "../Interactions/ButtonGeneral";
 import InputGeneral from "../Interactions/InputGeneral";
 import LoadingSpinner from "../Loading/LoadingSpinner";
 
-const Signup = ({ setNewUser }) => {
+// FOR: userCreate
+const Signup = ({ setNewUser, setShowSignup }) => {
   // states -------------------------------------------------------------------------------------------------------
-  const [showSignup, setShowSignup] = useState(true);
+  const [showFields, setshowFields] = useState(true);
   const { fetchData, isLoading, data, error } = useFetch();
   const [accountInput, setAccountInput] = useState({
     username: "",
@@ -66,13 +68,11 @@ const Signup = ({ setNewUser }) => {
 
   const handleClick = (event) => {
     event.preventDefault();
-    // setFocus();
     console.log("Signup -", `button clicked: ${event.target.name}`);
-    console.log("Signup -", "submitted details:", accountInput);
 
-    if (event.target.name === "Retry") {
-      setShowSignup(true);
-    } else if (event.target.name === "Sign up") {
+    if (event.target.name === "Sign up") {
+      console.log("Signup -", "submitted details:", accountInput);
+
       // 1. toggle checkStatus state for http request
       setCheckStatus((prevCheckStatus) => {
         return !prevCheckStatus;
@@ -84,6 +84,18 @@ const Signup = ({ setNewUser }) => {
         fetchMethod: "PUT",
       });
     }
+
+    if (event.target.name === "Retry") {
+      setshowFields(true);
+    }
+  };
+
+  const handleClose = (event) => {
+    event.preventDefault();
+    console.log("Signup -", "Closing");
+    setShowSignup((prevShowSignup) => {
+      return !prevShowSignup;
+    });
   };
 
   // functions ----------------------------------------------------------------------------------------------------
@@ -128,7 +140,7 @@ const Signup = ({ setNewUser }) => {
         setShowSuccessMessage(true);
         console.log("Signup -", "2nd useEffect", data);
       } else {
-        setShowSignup(false); // & display retry button
+        setshowFields(false); // & display retry button
       }
     }
   }, [data]);
@@ -136,12 +148,20 @@ const Signup = ({ setNewUser }) => {
   // render component --------------------------------------------------------------------------------------------
   return (
     <>
-      {showSignup && (
+      {showFields && (
         <div className="mx-auto">
-          {/* FOR: userCreate" */}
-          <h1 className="text-2xl tracking-wider mb-14">
-            Let's set up your account info
-          </h1>
+          <div className="flex flex-wrap justify-between">
+            <h1 className="text-2xl tracking-wider mb-14">
+              Let's set up your account info
+            </h1>
+            <MdClose
+              size={24}
+              className="cursor-pointer my-auto w-1/12 mb-14 hover:font-bold hover:text-main2 hover:motion-safe:animate-pulsateLittle"
+              id="Close"
+              onClick={handleClose}
+            />
+          </div>
+
           <div className="flex flex-wrap justify-between mt-8">
             <div className="flex flex-wrap justify-start w-3/12">
               <FaUser size={18} className="my-auto mr-3" />
@@ -352,7 +372,7 @@ const Signup = ({ setNewUser }) => {
         </div>
       )}
 
-      {isObject(data) && !showSignup && (
+      {isObject(data) && !showFields && (
         <section>
           {/* Display date's contents if fetched success and loaded */}
           {!isLoading &&

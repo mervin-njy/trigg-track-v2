@@ -1,12 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
+import { RiLogoutBoxFill } from "react-icons/ri";
 
 const NavBar = ({ userType }) => {
   // event handlers -----------------------------------------------------------------------------------------------
   const handleClick = (event) => {
     console.log("NavBar -", "clicked: ", event.target.id);
-    if (event.target.id === "signout") setLoggedUserData(null);
+    if (event.target.id === "logout") setLoggedUserData(null);
   };
 
   const showAll = userType !== "Admin" ? true : false;
@@ -73,19 +74,23 @@ const NavBar = ({ userType }) => {
         </nav>
       )}
       <div className="flex flex-wrap justify-center w-3/12">
-        <FaUser
-          size={24}
-          id="profile"
-          className="cursor-pointer my-auto mr-12"
-          onClick={handleClick}
-        />
         <NavLink
-          to="./welcome"
-          className="cursor-pointer text-xl my-auto tracking-widest w-1/5 hover:text-main2 hover:motion-safe:animate-pulsateLittle"
-          id="signout"
+          to="./profile"
+          className="mr-4 cursor-pointer flex flex-wrap my-auto w-1/5 hover:text-main2 hover:motion-safe:animate-pulsateLittle"
+          id="profile"
           onClick={handleClick}
         >
-          sign out
+          <FaUser size={24} className="my-auto mr-2" />
+          <h3 className="text-sm tracking-wide my-auto">profile</h3>
+        </NavLink>
+        <NavLink
+          to="./welcome"
+          className="cursor-pointer flex flex-wrap my-auto w-1/5 hover:text-main2 hover:motion-safe:animate-pulsateLittle"
+          id="logout"
+          onClick={handleClick}
+        >
+          <RiLogoutBoxFill size={24} className="my-auto mr-2" />
+          <h3 className="text-sm tracking-wide my-auto">log out</h3>
         </NavLink>
       </div>
       {/* <Profile /> */}

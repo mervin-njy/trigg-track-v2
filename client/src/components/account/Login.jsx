@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FaUser, FaKey } from "react-icons/fa";
+import { MdClose } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import ButtonEmptyBg from "../Interactions/ButtonEmptyBg";
@@ -8,7 +9,8 @@ import ButtonGeneral from "../Interactions/ButtonGeneral";
 import InputGeneral from "../Interactions/InputGeneral";
 import LoadingSpinner from "../Loading/LoadingSpinner";
 
-const Login = ({ setLoggedUserData }) => {
+// FOR: userLogin
+const Login = ({ setLoggedUserData, setShowLogin }) => {
   // variables ----------------------------------------------------------------------------------------------------
   const navigate = useNavigate();
   // Navigate to home
@@ -18,7 +20,7 @@ const Login = ({ setLoggedUserData }) => {
   };
 
   // states -------------------------------------------------------------------------------------------------------
-  const [showLogin, setShowLogin] = useState(true);
+  const [showFields, setshowFields] = useState(true);
   const { fetchData, isLoading, data, error } = useFetch();
   const [accountInput, setAccountInput] = useState({
     username: "",
@@ -50,11 +52,10 @@ const Login = ({ setLoggedUserData }) => {
     event.preventDefault();
     // setFocus();
     console.log("Login -", `button clicked: ${event.target.name}`);
-    console.log("Login -", "submitting:", accountInput);
 
-    if (event.target.name === "Retry") {
-      setShowLogin(true);
-    } else if (event.target.name === "Log in") {
+    if (event.target.name === "Log in") {
+      console.log("Login -", "submitting:", accountInput);
+
       // 1. toggle checkStatus state for http request
       setCheckStatus((prevCheckStatus) => {
         return !prevCheckStatus;
@@ -66,6 +67,18 @@ const Login = ({ setLoggedUserData }) => {
         fetchMethod: "POST",
       });
     }
+
+    if (event.target.name === "Retry") {
+      setshowFields(true);
+    }
+  };
+
+  const handleClose = (event) => {
+    event.preventDefault();
+    console.log("Signup -", "Closing");
+    setShowLogin((prevShowLogin) => {
+      return !prevShowLogin;
+    });
   };
 
   // functions ----------------------------------------------------------------------------------------------------
@@ -111,7 +124,7 @@ const Login = ({ setLoggedUserData }) => {
         navigateToPage("home");
         console.log("Login -", "2nd useEffect", data);
       } else {
-        setShowLogin(false); // & display retry button
+        setshowFields(false); // & display retry button
       }
     }
   }, [data]);
@@ -119,12 +132,19 @@ const Login = ({ setLoggedUserData }) => {
   // render component --------------------------------------------------------------------------------------------
   return (
     <>
-      {showLogin && (
+      {showFields && (
         <div className="mx-auto">
-          {/* FOR: userlogin" */}
-          <h1 className="text-2xl tracking-wider mb-14">
-            Please fill in your details
-          </h1>
+          <div className="flex flex-wrap justify-between">
+            <h1 className="text-2xl tracking-wider mb-14">
+              Please fill in your details
+            </h1>
+            <MdClose
+              size={24}
+              className="cursor-pointer my-auto w-1/12 mb-14 hover:font-bold hover:text-main2 hover:motion-safe:animate-pulsateLittle"
+              id="Close"
+              onClick={handleClose}
+            />
+          </div>
           <div className="flex flex-wrap justify-between mt-8">
             <div className="flex flex-wrap justify-start w-3/12">
               <FaUser size={18} className="my-auto mr-3" />
@@ -179,7 +199,7 @@ const Login = ({ setLoggedUserData }) => {
         </div>
       )}
 
-      {isObject(data) && !showLogin && (
+      {isObject(data) && !showFields && (
         <section>
           {/* Display date's contents if fetched success and loaded */}
           {!isLoading && data && (

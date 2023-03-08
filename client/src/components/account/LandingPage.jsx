@@ -79,7 +79,12 @@ const LandingPage = ({ setLoggedUserData, setUserConnections, setNewUser }) => {
                 />
               </>
             )}
-            {showLogin && <Login setLoggedUserData={setLoggedUserData} />}
+            {showLogin && (
+              <Login
+                setLoggedUserData={setLoggedUserData}
+                setShowLogin={setShowLogin}
+              />
+            )}
           </div>
 
           <div className="w-9/20 h-max py-12 px-12 border-solid border-2 rounded-2xl mx-2 my-10 motion-safe:animate-float shadow-xl hover:motion-safe:animate-floatStop hover:shadow-3xl">
@@ -99,7 +104,9 @@ const LandingPage = ({ setLoggedUserData, setUserConnections, setNewUser }) => {
                 />
               </>
             )}
-            {showSignup && <Signup setNewUser={setNewUser} />}
+            {showSignup && (
+              <Signup setNewUser={setNewUser} setShowSignup={setShowSignup} />
+            )}
           </div>
         </div>
       </div>
