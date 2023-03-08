@@ -140,7 +140,7 @@ const Login = ({ setLoggedUserData, setShowLogin }) => {
             </h1>
             <MdClose
               size={24}
-              className="cursor-pointer my-auto w-1/12 mb-14 hover:font-bold hover:text-main2 hover:motion-safe:animate-pulsateLittle"
+              className="cursor-pointer my-auto w-1/12 mb-14 hover:font-bold hover:text-main2"
               id="Close"
               onClick={handleClose}
             />

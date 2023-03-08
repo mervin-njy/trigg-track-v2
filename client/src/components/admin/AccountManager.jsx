@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { FaCaretDown } from "react-icons/fa";
 import ButtonAdmin from "../Interactions/ButtonAdmin";
 import useFetch from "../../hooks/useFetch";
 import LoadingSpinner from "../Loading/LoadingSpinner";
@@ -6,39 +7,18 @@ import LoadingSpinner from "../Loading/LoadingSpinner";
 const AccountManager = ({ adminInfo }) => {
   // states -------------------------------------------------------------------------------------------------------
   const [showDetails, setshowDetails] = useState({});
-  // const [showResult, setShowResult] = useState(false);
-  //   const [checkStatus, setCheckStatus] = useState(false); // toggle to try http request
   const { fetchData, isLoading, data, error } = useFetch();
 
-  // functions ----------------------------------------------------------------------------------------------------
-  // function isObject(value) {
-  //   return typeof value === "object" && value !== null && !Array.isArray(value);
-  // }
-
-  //   function toPascalCase(str) {
-  //     const splitStr = str.toLowerCase().split(" ");
-  //     let newStr = "";
-  //     for (const word of splitStr) {
-  //       newStr += word[0].toUpperCase() + word.slice(1) + " ";
-  //     }
-  //     return newStr;
-  //   }
-
   //   event handlers ---------------------------------------------------------------------------------------------
-  const handleClick = (event) => {
-    console.log("AccountManager -", `showing details: ${event.target.name}.`);
-
-    if (event.target.name === "Log in") {
-      // setAction("login");
-      setShowLogin((prevShowLogin) => {
-        return !prevShowLogin;
-      });
-    } else if (event.target.name === "Sign up") {
-      // setAction("signup");
-      setShowSignup((prevShowSignup) => {
-        return !prevShowSignup;
-      });
-    }
+  const handleShow = (event) => {
+    console.log("AccountManager -", `showing details: ${event.target.id}.`);
+    console.log("AccountManage -", "current details:", showDetails);
+    setshowDetails((prevShowDetails) => {
+      return {
+        ...prevShowDetails,
+        [event.target.id]: !prevShowDetails[event.target.id],
+      };
+    });
   };
 
   // effects ------------------------------------------------------------------------------------------------------
@@ -60,23 +40,21 @@ const AccountManager = ({ adminInfo }) => {
       "ADMIN - GET /getUsers"
     );
     fetchData(fetchURL, fetchOptions);
-    setShowResult(true);
   }, []);
 
-  //   // #2 - once data fetched => store in state
-  //   useEffect(() => {
-  //     // a. if data fetching is a success => set state for user info + navigate to home
-  //     if (isObject(data)) {
-  //       console.log("AccountManager -", "error:", data.status);
-  //       if (data.status === "okay") {
-  //         // lift state: logged in user data
-  //         setShowUsers(true);
-  //         console.log("AccountManager - ", "2nd useEffect", data);
-  //       } else {
-  //         setShowSignup(false); // & display retry button
-  //       }
-  //     }
-  //   }, [data]);
+  // #2 - once data is populated, set state (showDetails) of each data item to false
+  useEffect(() => {
+    // a. if data fetching is a success => set state for user info + navigate to home
+    console.log("AccountManager -", "setting state:", data);
+    if (data) {
+      data.map((user, id) => {
+        return setshowDetails((prevShowDetails) => {
+          console.log("showDetails false for user:", user);
+          return { ...prevShowDetails, [id]: false };
+        });
+      });
+    }
+  }, [data]);
 
   // render component --------------------------------------------------------------------------------------------
   return (
@@ -88,10 +66,34 @@ const AccountManager = ({ adminInfo }) => {
             return (
               <div
                 key={id}
-                className="h-max py-12 px-12 border-solid border-2 rounded-xl mx-2 my-10 hover:motion-safe:animate-pulsateLittle hover:shadow-3xl"
-                onClick={handleClick}
+                className="h-max py-8 px-12 border-solid border-2 rounded-xl mx-2 my-10 hover:motion-safe:animate-pulsateLittle hover:border-4 hover:shadow-3xl"
               >
-                <div className="flex flex-wrap">{user.username}</div>
+                {/* show main header  */}
+                <div className="flex flex-wrap justify-between">
+                  <div className="flex flex-wrap justify-start w-11/12">
+                    <h2 className="text-2xl font-bold tracking-widest w-3/10">
+                      {user.user_type}
+                    </h2>
+                    <h2 className="text-2xl font-bold tracking-widest w-3/10">
+                      {user.username}
+                    </h2>
+                  </div>
+
+                  {/* w/ options to view details */}
+                  <FaCaretDown
+                    size={24}
+                    className="cursor-pointer my-auto w-1/12 mb-14 hover:font-bold hover:text-main2"
+                    id={id}
+                    onClick={handleShow}
+                  />
+                </div>
+
+                {/* show details if id is true */}
+                {showDetails[id] && (
+                  <div>
+                    <h2 className="text-xl italic w-3/10">{user.bio}</h2>
+                  </div>
+                )}
               </div>
             );
           })}

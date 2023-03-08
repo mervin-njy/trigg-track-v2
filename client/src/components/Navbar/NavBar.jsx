@@ -76,7 +76,7 @@ const NavBar = ({ userType }) => {
       <div className="flex flex-wrap justify-center w-3/12">
         <NavLink
           to="./profile"
-          className="mr-4 cursor-pointer flex flex-wrap my-auto w-1/5 hover:text-main2 hover:motion-safe:animate-pulsateLittle"
+          className="mr-4 cursor-pointer flex flex-wrap my-auto w-1/5 hover:text-main2"
           id="profile"
           onClick={handleClick}
         >
@@ -85,7 +85,7 @@ const NavBar = ({ userType }) => {
         </NavLink>
         <NavLink
           to="./welcome"
-          className="cursor-pointer flex flex-wrap my-auto w-1/5 hover:text-main2 hover:motion-safe:animate-pulsateLittle"
+          className="cursor-pointer flex flex-wrap my-auto w-1/5 hover:text-main2"
           id="logout"
           onClick={handleClick}
         >
