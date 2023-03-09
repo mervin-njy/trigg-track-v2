@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import useFetch from "../../hooks/useFetch";
-import LoadingSpinner from "../Loading/LoadingSpinner";
 
+import { MdEdit, MdReportProblem, MdOutlineAltRoute } from "react-icons/md";
+
+import LoadingSpinner from "../Loading/LoadingSpinner";
 import ButtonNormalLogger from "../Interactions/ButtonNormalLogger";
 import ButtonPromptLogger from "../Interactions/ButtonPromptLogger";
-import { MdEdit, MdReportProblem, MdOutlineAltRoute } from "react-icons/md";
+import LogSection from "./LogSection";
 
 // START OF COMPONENT ***********************************************************************************************************************
 const LogRecord = ({ loggerInfo, recordDate }) => {
@@ -148,7 +150,7 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
                 <MdReportProblem
                   size={30}
                   className="cursor-pointer text-main2 hover:text-purpleAccent hover:shadow-xl mr-6"
-                  id={"condition"}
+                  id={"Condition"}
                   onFocus={handleFocus}
                 />
                 <h2 className="text-2xl tracking-widest mb-8">
@@ -184,7 +186,7 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
                 <MdOutlineAltRoute
                   size={30}
                   className="cursor-pointer text-main2 hover:text-purpleAccent hover:shadow-xl mr-6"
-                  id={"condition"}
+                  id={"Variable"}
                   onFocus={handleFocus}
                 />
                 <h2 className="text-2xl tracking-widest mb-8">Add variable?</h2>
