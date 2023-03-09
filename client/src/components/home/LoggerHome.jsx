@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import useFetch from "../../hooks/useFetch";
-import ButtonLogger from "../Interactions/ButtonLogger";
+import ButtonNormalLogger from "../Interactions/ButtonNormalLogger";
+import ButtonPromptLogger from "../Interactions/ButtonPromptLogger";
 
 // START OF COMPONENT ***********************************************************************************************************************
 const LoggerHome = ({ loggerInfo }) => {
@@ -13,10 +14,8 @@ const LoggerHome = ({ loggerInfo }) => {
   }
 
   // states -------------------------------------------------------------------------------------------------------
-  // state toggles from question button click => show form input fields when true
-  const [showForm, setShowForm] = useState(false);
-  // state checks if details on today's date already exists in the database => show question types
-  const [todayDone, setTodayDone] = useState(false);
+  const [showForm, setShowForm] = useState(false); // toggles between question & form on Click
+  const [todayDone, setTodayDone] = useState(false); // toggles display messages & button types
   const { fetchData, isLoading, data, error } = useFetch();
 
   //   event handlers ---------------------------------------------------------------------------------------------
@@ -69,8 +68,20 @@ const LoggerHome = ({ loggerInfo }) => {
               filled in your records today.
             </h2>
             <h2 className="text-mainLightest text-3xl tracking-widest mt-8 mr-auto">
-              Would you like to log your record for today?
+              Would you like to add more details?
             </h2>
+          </div>
+
+          <div className="m-auto">
+            <ButtonNormalLogger
+              displayName={"Record"}
+              category={"Records"}
+              width={"10rem"}
+              fontSize={"1.3rem"}
+              padding={"0.4rem"}
+              margin={"1rem 0"}
+              onClick={handleOpenForm}
+            />
           </div>
         </div>
       )}
@@ -91,7 +102,7 @@ const LoggerHome = ({ loggerInfo }) => {
           </div>
 
           <div className="m-auto">
-            <ButtonLogger
+            <ButtonPromptLogger
               displayName={"Record"}
               category={"Records"}
               width={"10rem"}

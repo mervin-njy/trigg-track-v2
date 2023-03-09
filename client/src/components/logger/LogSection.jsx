@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Subsection = () => {
+const LogSection = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const Subsection = () => {
     );
 };
 
-export default Subsection;
+export default LogSection;
