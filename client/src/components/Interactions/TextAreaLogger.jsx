@@ -4,7 +4,7 @@ const TextAreaLogger = ({
   type,
   name,
   value,
-  reference,
+  placeholder,
   margin,
   width,
   onChange,
@@ -15,12 +15,12 @@ const TextAreaLogger = ({
     <>
       <textarea
         className={
-          "overflow-auto bg-main9 px-4 py-1 text-purpleAccent tracking-widest accent-purpleAccent border-solid border-1 border-purpleAccent rounded-md hover:border-2"
+          "overflow-auto align-middle bg-main9 px-4 py-1 h-9 text-purpleAccent tracking-widest accent-purpleAccent border-solid border-1 border-purpleAccent rounded-md hover:border-2"
         }
         type={type}
         name={name}
         value={value}
-        ref={reference}
+        placeholder={placeholder}
         style={{ margin: margin, width: width }}
         onChange={(event) => onChange(event)}
         checked={checked}

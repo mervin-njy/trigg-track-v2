@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import LoadingSpinner from "../Loading/LoadingSpinner";
+import InputLogger from "../Interactions/InputLogger";
+import TextAreaLogger from "../Interactions/TextAreaLogger";
+
+import { MdAddCircle, MdClose } from "react-icons/md";
 
 // START OF COMPONENT ***********************************************************************************************************************
 const LogEntry = ({ sectionInput }) => {
@@ -39,8 +43,38 @@ const LogEntry = ({ sectionInput }) => {
   // render component --------------------------------------------------------------------------------------------
   return (
     <>
-      <h2>{sectionInput.type}</h2>
-      <h2>Entry item</h2>
+      <div className="flex flex-wrap justify-between mt-6">
+        <InputLogger
+          type="text"
+          name="title"
+          value={entryInput.title}
+          placeholder={"title"}
+          width={"20%"}
+          onChange={handleChange}
+          required={true}
+        />
+        <TextAreaLogger
+          type="text"
+          name="item"
+          value={entryInput.item}
+          placeholder={"item"}
+          width={"60%"}
+          onChange={handleChange}
+          required={true}
+        />
+        <MdClose
+          size={30}
+          className="cursor-pointer text-main2 hover:text-orangeMain hover:shadow-xl"
+          id={"Remove"}
+          onClick={handleRemove}
+        />
+        <MdAddCircle
+          size={30}
+          className="cursor-pointer text-main2 hover:text-greenMain hover:shadow-xl"
+          id={"Add"}
+          onClick={handleAdd}
+        />
+      </div>
     </>
   );
 };

@@ -75,6 +75,7 @@ const LogSection = ({ recordDate, recordType, confirmSubmit, setShowType }) => {
   // render component --------------------------------------------------------------------------------------------
   return (
     <>
+      {/* header to display type */}
       <header className="flex flex-wrap justify-between">
         <div className="flex flex-wrap justify-start mb-8">
           {typeIcon(recordType)}
@@ -90,7 +91,9 @@ const LogSection = ({ recordDate, recordType, confirmSubmit, setShowType }) => {
 
       <div className="pb-4 border-t-4" />
 
+      {/* input fields start here */}
       <section>
+        {/* #1 name */}
         <div className="flex flex-wrap justify-between mt-6">
           <div className="flex flex-wrap justify-start w-3/12">
             <h4 className="text-xl tracking-widest my-auto">name:</h4>
@@ -105,6 +108,7 @@ const LogSection = ({ recordDate, recordType, confirmSubmit, setShowType }) => {
           />
         </div>
 
+        {/* #2 category */}
         <div className="flex flex-wrap justify-between mt-4">
           <div className="flex flex-wrap justify-start w-3/12">
             <h4 className="text-xl tracking-widest my-auto">category:</h4>
@@ -118,6 +122,18 @@ const LogSection = ({ recordDate, recordType, confirmSubmit, setShowType }) => {
             required={true}
           />
         </div>
+
+        {/* #3 headers for each entry */}
+        {/* <div className="flex flex-wrap justify-between mt-4">
+          <div className="flex flex-wrap justify-center w-3/12">
+            <h4 className="text-xl tracking-widest my-auto">title:</h4>
+          </div>
+          <div className="flex flex-wrap justify-center w-7/12">
+            <h4 className="text-xl tracking-widest my-auto">item:</h4>
+          </div>
+        </div> */}
+
+        <div className="py-3 border-b-1 border-purpleMain border-opacity-50" />
 
         {/* add id to LogEntry + convert to function to count number of times */}
         <LogEntry sectionInput={sectionInput} />

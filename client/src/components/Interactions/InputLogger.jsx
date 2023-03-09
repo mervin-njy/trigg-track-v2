@@ -4,7 +4,7 @@ const InputLogger = ({
   type,
   name,
   value,
-  reference,
+  placeholder,
   width,
   onChange,
   checked,
@@ -19,7 +19,7 @@ const InputLogger = ({
         type={type}
         name={name}
         value={value}
-        ref={reference}
+        placeholder={placeholder}
         style={{ width: width }}
         onChange={(event) => onChange(event)}
         checked={checked}
