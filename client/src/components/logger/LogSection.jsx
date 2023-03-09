@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import useFetch from "../../hooks/useFetch";
 
-const LogSection = ({ recordID }) => {
+const LogSection = ({ recordDate, recordType, confirmSubmit }) => {
   // take record date from props
   // states -------------------------------------------------------------------------------------------------------
   const { fetchData, isLoading, data, error } = useFetch();
   const [EntryInput, setEntryInput] = useState({
-    date: recordID,
-    type: "Condition",
+    date: recordDate,
+    type: recordType,
     name: "",
     category: "",
     item: "",
@@ -36,9 +36,9 @@ const LogSection = ({ recordID }) => {
 
   // render component --------------------------------------------------------------------------------------------
   return (
-    <div>
+    <>
       <h2>Displaying section</h2>
-    </div>
+    </>
   );
 };
 
