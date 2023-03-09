@@ -5,6 +5,7 @@ import AccountManager from "../admin/AccountManager";
 import ButtonSubmit from "../Interactions/ButtonGeneral";
 // import LoadingSpinner from "../Loading/LoadingSpinner";
 
+// START OF COMPONENT ***********************************************************************************************************************
 const Home = ({ loggedUserData }) => {
   // variables ----------------------------------------------------------------------------------------------------
   let colText = "text-purpleAccent"; // default: health logger

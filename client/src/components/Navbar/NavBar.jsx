@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 import { RiLogoutBoxFill } from "react-icons/ri";
 
+// START OF COMPONENT ***********************************************************************************************************************
 const NavBar = ({ userType }) => {
   // event handlers -----------------------------------------------------------------------------------------------
   const handleClick = (event) => {

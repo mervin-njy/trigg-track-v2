@@ -23,6 +23,7 @@ import ButtonGeneral from "../Interactions/ButtonGeneral";
 import InputGeneral from "../Interactions/InputGeneral";
 import LoadingSpinner from "../Loading/LoadingSpinner";
 
+// START OF COMPONENT ***********************************************************************************************************************
 // FOR: userCreate
 const Signup = ({ setNewUser, setShowSignup }) => {
   // states -------------------------------------------------------------------------------------------------------

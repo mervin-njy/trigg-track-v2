@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import TextAreaAdmin from "../Interactions/TextAreaAdmin";
 import LoadingSpinner from "../Loading/LoadingSpinner";
 
+// START OF COMPONENT ***********************************************************************************************************************
 const AccountDetails = ({
   access,
   userInfo,
@@ -19,6 +20,7 @@ const AccountDetails = ({
   updateUser,
   deleteUser,
   setUpdateUser,
+  setDeleteUser,
   setRefreshAccounts,
 }) => {
   // variables ----------------------------------------------------------------------------------------------------
@@ -55,6 +57,7 @@ const AccountDetails = ({
   const [info, setInfo] = useState({
     username: userInfo.username,
     password: userInfo.hash,
+    accessType: userInfo.access_type,
     displayName: userInfo.display_name,
     profilePicture: userInfo.profile_picture,
     profession: userInfo.profession,
@@ -102,7 +105,7 @@ const AccountDetails = ({
   };
 
   // effects ------------------------------------------------------------------------------------------------------
-  // #1 - http request - updateUser dependent on updateUser truthy
+  // #1 - http request - updateUser if update changes are confirmed
   useEffect(() => {
     const controller = new AbortController();
     const fetchURL = `http://127.0.0.1:5001/updateUser`;
@@ -150,6 +153,11 @@ const AccountDetails = ({
     }
   }, [data]);
 
+  // TODO: refresh changes useEffect(() => { codes ,[userInfo])}
+  // useEffect(() => {
+  //   console.log("AccountDetails - ", "useEffect rerendering: ", userInfo);
+  // }, [userInfo]);
+
   // render component --------------------------------------------------------------------------------------------
   return (
     <>
@@ -157,11 +165,8 @@ const AccountDetails = ({
         <div
           className={isObject(data) ? introTheme.onChange : introTheme.onExpand}
         >
-          {accessIcon(userInfo.access_type)}
-          <h2 className={textColours[userInfo.access_type]}>
-            {userInfo.access_type}
-          </h2>
-          {/* <h2 className="mt-4 text-2xl italic w-3/10">{userInfo.access_type}</h2> */}
+          {accessIcon(info.accessType)}
+          <h2 className={textColours[info.accessType]}>{info.accessType}</h2>
 
           <div className="w-7/12">
             {/* field 1: alias */}
@@ -259,23 +264,27 @@ const AccountDetails = ({
         )}
       </div>
 
-      {!isLoading && data && (
-        <div className="my-12">
-          <h2 className="text-2xl text-center">{data.message}</h2>
-        </div>
-      )}
+      {updateUser && (
+        <>
+          {!isLoading && data && (
+            <div className="my-12">
+              <h2 className="text-2xl text-center">{data.message}</h2>
+            </div>
+          )}
 
-      {/* While fetching, display load spinner */}
-      {isLoading && (
-        <div className="mt-12 text-center">
-          <LoadingSpinner />
-        </div>
-      )}
-      {/* Display error message if fetch has an error */}
-      {!isLoading && error && (
-        <div className="my-12">
-          <h2 className="text-2xl text-center">{error}</h2>
-        </div>
+          {/* While fetching, display load spinner */}
+          {isLoading && (
+            <div className="mt-12 text-center">
+              <LoadingSpinner />
+            </div>
+          )}
+          {/* Display error message if fetch has an error */}
+          {!isLoading && error && (
+            <div className="my-12">
+              <h2 className="text-2xl text-center">{error}</h2>
+            </div>
+          )}
+        </>
       )}
     </>
   );

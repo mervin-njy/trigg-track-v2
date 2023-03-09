@@ -3,6 +3,7 @@ import ButtonGeneral from "../Interactions/ButtonGeneral";
 import Login from "./Login";
 import Signup from "./Signup";
 
+// START OF COMPONENT ***********************************************************************************************************************
 const LandingPage = ({ setLoggedUserData, setUserConnections, setNewUser }) => {
   // states -------------------------------------------------------------------------------------------------------
   const [showLogin, setShowLogin] = useState(false);

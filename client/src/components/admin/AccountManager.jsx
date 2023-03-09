@@ -13,6 +13,7 @@ import useFetch from "../../hooks/useFetch";
 import LoadingSpinner from "../Loading/LoadingSpinner";
 import AccountDetails from "./AccountDetails";
 
+// START OF COMPONENT ***********************************************************************************************************************
 const AccountManager = ({ adminInfo }) => {
   // variables ----------------------------------------------------------------------------------------------------
   const textColours = {
@@ -103,31 +104,56 @@ const AccountManager = ({ adminInfo }) => {
     fetchData(fetchURL, fetchOptions);
   }, [refreshAccounts]); // triggered upon confirmUpdate / confirmDelete in child component
 
-  // #2 - once data is populated, set state (showDetails) of each data item to false
+  // #2 - once data is populated, set states (showDetails, updateUser, deleteUser) of each data item to false
   useEffect(() => {
-    // a. if data fetching is a success => set state for user info + navigate to home
+    // a. if data fetching is a success => set states for expanding details & whether user is being updated/deleted
     console.log("AccountManager -", "2nd useEffect: ", "setting states");
     if (data) {
       setUsersData(data);
-      data.map((user, id) => {
+      data.map((user) => {
+        // only at the beginning when states are empty => set them to false (refetching data will not touch them)
         if (Object.keys(showDetails).length === 0) {
           setshowDetails((prevShowDetails) => {
-            console.log("showDetails false for user:", user);
-            return { ...prevShowDetails, [id]: false };
+            console.log("onMount: showDetails false for user:", user);
+            return { ...prevShowDetails, [user.username]: false };
+          });
+        } else {
+          setshowDetails((prevShowDetails) => {
+            console.log("onRerender: showDetails false for user:", user);
+            return {
+              ...prevShowDetails,
+              [user.username]: prevShowDetails[user.username],
+            };
           });
         }
 
         if (Object.keys(updateUser).length === 0) {
           setUpdateUser((prevUpdateUser) => {
-            console.log("updateUser false for user:", user);
-            return { ...prevUpdateUser, [id]: false };
+            console.log("onMount: updateUser false for user:", user);
+            return { ...prevUpdateUser, [user.username]: false };
+          });
+        } else {
+          setUpdateUser((prevUpdateUser) => {
+            console.log("onRerender: updateUser same for user:", user);
+            return {
+              ...prevUpdateUser,
+              [user.username]: prevUpdateUser[user.username],
+            };
           });
         }
 
         if (Object.keys(deleteUser).length === 0) {
           setDeleteUser((prevDeleteUser) => {
-            console.log("deleteUser false for user:", user);
-            return { ...prevDeleteUser, [id]: false };
+            console.log("onMount: deleteUser same for user:", user);
+            return { ...prevDeleteUser, [user.username]: false };
+          });
+        } else {
+          setDeleteUser((prevDeleteUser) => {
+            console.log("onRerender: deleteUser false for user:", user);
+            return {
+              ...prevDeleteUser,
+              [user.username]: prevDeleteUser[user.username],
+            };
           });
         }
       });
@@ -144,7 +170,7 @@ const AccountManager = ({ adminInfo }) => {
             return (
               <div
                 key={id}
-                className="h-max py-8 px-12 border-solid border-2 rounded-xl mx-2 my-10 hover:motion-safe:animate-pulsateLittle hover:border-4 hover:shadow-3xl"
+                className="h-max py-8 px-12 border-solid border-2 rounded-xl mx-2 my-10 hover:motion-safe:animate-pulsateLittle hover:border-main4 hover:border-4 hover:shadow-3xl"
               >
                 {/* show main header  */}
                 <div className="flex flex-wrap justify-between">
@@ -159,48 +185,49 @@ const AccountManager = ({ adminInfo }) => {
                   </div>
 
                   {/* w/ options to view details (when false / not being shown) */}
-                  {!showDetails[id] && (
+                  {!showDetails[user.username] && (
                     <FaCaretDown
                       size={30}
                       className="cursor-pointer my-auto ml-auto hover:font-bold hover:text-yellowMain"
-                      id={id}
+                      id={user.username}
                       onClick={handleShow}
                     />
                   )}
                   {/* show more options when viewing details */}
-                  {showDetails[id] && (
+                  {showDetails[user.username] && (
                     <div className="flex flex-wrap w-1/12 justify-between">
                       <FaUserEdit
                         size={30}
                         className="cursor-pointer my-auto hover:font-bold hover:text-blueAccent"
-                        id={id}
+                        id={user.username}
                         onClick={handleEdit}
                       />
                       <MdRemoveModerator
                         size={30}
                         className="cursor-pointer my-auto hover:font-bold hover:text-orangeMain"
-                        id={id}
+                        id={user.username}
                         onClick={handleDelete}
                       />
                       <FaCaretUp
                         size={30}
                         className="cursor-pointer my-auto hover:font-bold hover:text-yellowMain"
-                        id={id}
+                        id={user.username}
                         onClick={handleShow}
                       />
                     </div>
                   )}
                 </div>
 
-                {/* show details if id is true */}
-                {showDetails[id] && (
+                {/* show details if id is true => *** rerender on updateUser */}
+                {showDetails[user.username] && (
                   <AccountDetails
                     access={adminInfo.access}
                     userInfo={user}
-                    userId={id}
-                    updateUser={updateUser[id]}
-                    deleteUser={deleteUser[id]}
+                    userId={user.username}
+                    updateUser={updateUser[user.username]} // showFields
+                    deleteUser={deleteUser[user.username]}
                     setUpdateUser={setUpdateUser}
+                    setDeleteUser={setDeleteUser}
                     setRefreshAccounts={setRefreshAccounts}
                   />
                 )}
