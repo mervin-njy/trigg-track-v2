@@ -61,9 +61,8 @@ function App() {
           path="/records"
           element={<Records loggedUserData={loggedUserData} />}
         />
-        {/* <Route path="/triggers" element={<Triggers />} /> */}
         {/* <Route path="/connect" element={<Connect />} /> */}
-        {/* <Route path="/about" element={<About />} /> */}
+        {/* <Route path="/services" element={<Services />} /> */}
 
         {/* COMMON: CORNER --------------------------------------------------------------------------------------- */}
         <Route
