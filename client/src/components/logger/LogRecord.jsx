@@ -6,6 +6,9 @@ import {
   MdReportProblem,
   MdOutlineAltRoute,
   MdClose,
+  MdAddCircle,
+  MdDelete,
+  MdLibraryAddCheck,
 } from "react-icons/md";
 
 import LoadingSpinner from "../Loading/LoadingSpinner";
@@ -51,7 +54,8 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
     username: loggerInfo.username,
     date: recordDate,
   });
-  const [sectionCount, setSectionCount] = useState([0]);
+  const [conditionCount, setConditionCount] = useState([0]);
+  const [variableCount, setVariableCount] = useState([0]);
 
   // event handlers -----------------------------------------------------------------------------------------------
   const handleChange = (event) => {
@@ -65,19 +69,70 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
     });
   };
 
-  const handleAddType = () => {};
-
   const handleAddEntry = (event) => {
     console.log("LogRecord - button clicked: ", event.target.id);
     if (event.target.id === "Condition") setShowCondition(true);
     if (event.target.id === "Variable") setShowVariable(true);
   };
 
-  const handleRemove = () => {};
+  const handleAddType = (event) => {
+    event.preventDefault();
+    console.log("LogRecord -", "Adding new section");
+    if (event.target.id === "NextCondition") {
+      console.log("current conditions:", conditionCount);
+      setConditionCount((prevConditionCount) => {
+        return [...prevConditionCount, conditionCount.length];
+      });
+    }
+
+    if (event.target.id === "NextVariable") {
+      console.log("current variables:", variableCount);
+      setVariableCount((prevVariableCount) => {
+        return [...prevVariableCount, variableCount.length];
+      });
+    }
+  };
+
+  const handleRemove = (event) => {
+    event.preventDefault();
+    console.log("LogRecord -", "Removing section");
+
+    if (event.target.id === "NextCondition") {
+      console.log("current array:", conditionCount);
+      if (conditionCount.length >= 1) {
+        console.log("current condition count:", conditionCount.length);
+        setConditionCount((prevConditionCount) => {
+          return prevConditionCount.filter((item) => {
+            console.log(item);
+            return item !== conditionCount.length - 1;
+          });
+        });
+      } else {
+        alert("Don't remove the last one!");
+      }
+    }
+
+    if (event.target.id === "NextVariable") {
+      console.log("current array:", variableCount);
+      if (variableCount.length >= 1) {
+        console.log("current variable count:", variableCount.length);
+        setVariableCount((prevVariableCount) => {
+          return prevVariableCount.filter((item) => {
+            console.log(item);
+            return item !== variableCount.length - 1;
+          });
+        });
+      } else {
+        alert("Don't remove the last one!");
+      }
+    }
+  };
+
+  const handleSubmit = () => {};
 
   const handleClose = (event) => {
     event.preventDefault();
-    console.log("LogSection -", "Closing", event.target.id);
+    console.log("LogRecord -", "Closing", event.target.id);
 
     if (event.target.id === "Condition") {
       setShowCondition((prevShowCondition) => {
@@ -96,8 +151,6 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
     console.log("LogRecord - button clicked: ", event.target.id);
     if (event.target.id === "Date") setDateEdit(true);
   };
-
-  const handleSubmit = () => {};
 
   // // effects ------------------------------------------------------------------------------------------------------
   // #1 - http request to check current date shown EXCEPT onMount
@@ -189,7 +242,7 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
       {/* body: display form sections - Left: conditions; Right: variables */}
       <section className="flex flex-wrap justify-between mx-auto">
         {/* left side: condition */}
-        <div className="w-9/20 h-max py-12 px-12 border-solid border-2 rounded-2xl mx-2 my-10 motion-safe:animate-float shadow-xl hover:motion-safe:animate-floatStop hover:shadow-3xl">
+        <div className="w-9/20 h-max py-12 px-12 border-solid border-2 rounded-2xl mx-2 my-10 motion-safe:animate-float shadow-xl hover:motion-safe:animate-floatStop hover:border-purpleAccent hover:shadow-3xl">
           {!showCondition && (
             <>
               <div className="flex flex-wrap">
@@ -214,36 +267,57 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
             <>
               {/* header to display type */}
               <div className="flex flex-wrap justify-between">
-                <div className="flex flex-wrap justify-start mb-8">
+                <div className="flex flex-wrap justify-start mb-4">
                   {typeIcon("Condition")}
                   <h1 className="ml-2 text-2xl tracking-wider">Condition</h1>
                 </div>
                 <MdClose
                   size={24}
-                  className="cursor-pointer my-auto w-1/12 mb-8 hover:font-bold hover:text-main2"
+                  className="cursor-pointer my-auto w-1/12 mb-6 hover:font-bold hover:text-main2"
                   id="Condition"
                   onClick={handleClose}
                 />
               </div>
 
               {/* # mapped sections for each type */}
-              {sectionCount.map((item) => {
+              {conditionCount.map((item) => {
                 return (
                   <LogSection
-                    sectionId={item}
                     recordDate={recordInput.date}
                     recordType={"Condition"}
                     confirmSubmit={confirmSubmit}
-                    setSectionCount={setSectionCount}
                   />
                 );
               })}
+
+              <div className="flex flex-wrap justify-between mt-9">
+                <MdLibraryAddCheck
+                  size={35}
+                  className="cursor-pointer text-greenAccent hover:text-greenMain hover:shadow-xl"
+                  id={"NextCondition"}
+                  onClick={handleSubmit}
+                />
+                <div className="flex flex-wrap">
+                  <MdDelete
+                    size={35}
+                    className="cursor-pointer text-purpleAccent hover:text-orangeMain hover:shadow-xl mr-4"
+                    id={"NextCondition"}
+                    onClick={handleRemove}
+                  />
+                  <MdAddCircle
+                    size={35}
+                    className="cursor-pointer text-purpleAccent hover:text-greenMain hover:shadow-xl"
+                    id={"NextCondition"}
+                    onClick={handleAddType}
+                  />
+                </div>
+              </div>
             </>
           )}
         </div>
 
         {/* right side: variable */}
-        <div className="w-9/20 h-max py-12 px-12 border-solid border-2 rounded-2xl mx-2 my-10 motion-safe:animate-float shadow-xl hover:motion-safe:animate-floatStop hover:shadow-3xl">
+        <div className="w-9/20 h-max py-12 px-12 border-solid border-2 rounded-2xl mx-2 my-10 motion-safe:animate-float shadow-xl hover:motion-safe:animate-floatStop hover:border-purpleAccent hover:shadow-3xl">
           {!showVariable && (
             <>
               <div className="flex flex-wrap">
@@ -266,31 +340,51 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
             <>
               {/* header to display type */}
               <div className="flex flex-wrap justify-between">
-                <div className="flex flex-wrap justify-start mb-8">
+                <div className="flex flex-wrap justify-start mb-4">
                   {typeIcon("Variable")}
                   <h1 className="ml-2 text-2xl tracking-wider">Variable</h1>
                 </div>
                 <MdClose
                   size={24}
-                  className="cursor-pointer my-auto w-1/12 mb-8 hover:font-bold hover:text-main2"
+                  className="cursor-pointer my-auto w-1/12 mb-6 hover:font-bold hover:text-main2"
                   id="Variable"
                   onClick={handleClose}
                 />
               </div>
 
               {/* # mapped sections for each type */}
-              {sectionCount.map((item) => {
+              {variableCount.map((item) => {
                 return (
                   <LogSection
-                    lastSection={item === sectionCount.length}
-                    sectionId={item}
                     recordDate={recordInput.date}
                     recordType={"Variable"}
                     confirmSubmit={confirmSubmit}
-                    setSectionCount={setSectionCount}
                   />
                 );
               })}
+
+              <div className="flex flex-wrap justify-between mt-9">
+                <MdLibraryAddCheck
+                  size={35}
+                  className="cursor-pointer text-greenAccent hover:text-greenMain hover:shadow-xl"
+                  id={"NextVariable"}
+                  onClick={handleSubmit}
+                />
+                <div className="flex flex-wrap">
+                  <MdDelete
+                    size={35}
+                    className="cursor-pointer text-purpleAccent hover:text-orangeMain hover:shadow-xl mr-4"
+                    id={"NextVariable"}
+                    onClick={handleRemove}
+                  />
+                  <MdAddCircle
+                    size={35}
+                    className="cursor-pointer text-purpleAccent hover:text-greenMain hover:shadow-xl"
+                    id={"NextVariable"}
+                    onClick={handleAddType}
+                  />
+                </div>
+              </div>
             </>
           )}
         </div>

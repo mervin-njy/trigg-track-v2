@@ -60,6 +60,7 @@ const LogEntry = ({ id, sectionInput, entryCount, setEntryCount }) => {
       });
     }
   };
+  
   const handleSubmit = () => {};
 
   // render component --------------------------------------------------------------------------------------------

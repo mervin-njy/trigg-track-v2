@@ -5,13 +5,7 @@ import LogEntry from "./LogEntry";
 import { MdLibraryAddCheck, MdAddCircle, MdDelete } from "react-icons/md";
 
 // START OF COMPONENT ***********************************************************************************************************************
-const LogSection = ({
-  sectionId,
-  recordDate,
-  recordType,
-  confirmSubmit,
-  setSectionCount,
-}) => {
+const LogSection = ({ recordDate, recordType, confirmSubmit }) => {
   // functions ----------------------------------------------------------------------------------------------------
   function isObject(value) {
     return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -38,18 +32,7 @@ const LogSection = ({
     });
   };
 
-  const handleAdd = () => {};
-  const handleRemove = () => {};
   const handleSubmit = () => {};
-
-  // const handleEdit = () => {};
-  // const handleClose = (event) => {
-  //   event.preventDefault();
-  //   console.log("LogSection -", "Closing", recordType);
-  //   // setShowType((prevShowType) => {
-  //   //   return !prevShowType;
-  //   // });
-  // };
 
   // effects ------------------------------------------------------------------------------------------------------
 
@@ -57,7 +40,7 @@ const LogSection = ({
   return (
     <>
       {/* header to display type is in parent */}
-      <div className="pb-4 border-t-4" />
+      <div className="pb-4 border-t-4 mt-6" />
 
       {/* input fields start here */}
       <section className=" motion-safe:animate-fadeIn">
@@ -108,31 +91,6 @@ const LogSection = ({
 
         {/* #4 confirmation + add/delete options */}
         <div className="py-2 border-b-2 border-purpleMain border-opacity-50" />
-
-        {lastSection && (
-          <div className="flex flex-wrap justify-between mt-9">
-            <MdLibraryAddCheck
-              size={35}
-              className="cursor-pointer text-greenAccent hover:text-greenMain hover:shadow-xl"
-              id={"Submit"}
-              onClick={handleSubmit}
-            />
-            <div className="flex flex-wrap">
-              <MdDelete
-                size={35}
-                className="cursor-pointer text-purpleAccent hover:text-orangeMain hover:shadow-xl mr-4"
-                id={"Remove"}
-                onClick={handleRemove}
-              />
-              <MdAddCircle
-                size={35}
-                className="cursor-pointer text-purpleAccent hover:text-greenMain hover:shadow-xl"
-                id={"Add"}
-                onClick={handleAdd}
-              />
-            </div>
-          </div>
-        )}
       </section>
     </>
   );
