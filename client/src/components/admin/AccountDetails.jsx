@@ -65,7 +65,12 @@ const AccountDetails = ({
     bio: userInfo.bio,
   });
   const [confirmUpdate, setConfirmUpdate] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const { fetchData, isLoading, data, error } = useFetch();
+  const [requestTypes, setRequestTypes] = useState({
+    accountEndpoint: "",
+    fetchMethod: "",
+  });
 
   // event handlers -----------------------------------------------------------------------------------------------
   const handleChange = (event) => {
@@ -80,37 +85,87 @@ const AccountDetails = ({
 
   const handleClose = (event) => {
     event.preventDefault();
-    setUpdateUser((prevUpdateUser) => {
-      console.log(
-        "AccountDetails - ",
-        "toggle updateUser for:",
-        event.target.id
-      );
-      return {
-        ...prevUpdateUser,
-        [userId]: !prevUpdateUser[userId],
-      };
-    });
+
+    if (updateUser) {
+      setUpdateUser((prevUpdateUser) => {
+        console.log(
+          "AccountDetails - ",
+          "toggle updateUser for:",
+          event.target.id
+        );
+
+        return {
+          ...prevUpdateUser,
+          [userId]: !prevUpdateUser[userId],
+        };
+      });
+    }
+
+    if (deleteUser) {
+      setDeleteUser((prevDeleteUser) => {
+        console.log(
+          "AccountDetails - ",
+          "toggle deleteUser for:",
+          event.target.id
+        );
+
+        return {
+          ...prevDeleteUser,
+          [userId]: !prevDeleteUser[userId],
+        };
+      });
+    }
   };
+
   const handleConfirm = (event) => {
     event.preventDefault();
-    console.log("AccountDetails - ", "confirming change for:", event.target.id);
-    // toast(`You have confirmed your changes for ${event.target.id}.`, {
-    //   position: toast.POSITION.TOP_CENTER,
-    //   theme: "dark",
-    //   hideProgressBar: true,
-    //   className: "bg-main7 text-greenAccent border-2 border-main3 rounded-4",
-    // });
-    setConfirmUpdate(true);
+
+    if (updateUser) {
+      console.log(
+        "AccountDetails - ",
+        "confirming change for:",
+        event.target.id
+      );
+      // toast(`You have made changes to account: ${event.target.id}.`, {
+      //   position: toast.POSITION.TOP_CENTER,
+      //   theme: "dark",
+      //   hideProgressBar: true,
+      //   className: "bg-main7 text-greenAccent border-2 border-main3 rounded-4",
+      // });
+      setRequestTypes({
+        accountEndpoint: "updateUser",
+        fetchMethod: "PATCH",
+      });
+      setConfirmUpdate(true);
+    }
+
+    if (deleteUser) {
+      console.log(
+        "AccountDetails - ",
+        "confirming delete for:",
+        event.target.id
+      );
+      // toast(`You have deleted account: ${event.target.id}.`, {
+      //   position: toast.POSITION.TOP_CENTER,
+      //   theme: "dark",
+      //   hideProgressBar: true,
+      //   className: "bg-main7 text-orangeMain border-2 border-main3 rounded-4",
+      // });
+      setRequestTypes({
+        accountEndpoint: "deleteUser",
+        fetchMethod: "DELETE",
+      });
+      setConfirmDelete(true);
+    }
   };
 
   // effects ------------------------------------------------------------------------------------------------------
   // #1 - http request - updateUser if update changes are confirmed
   useEffect(() => {
     const controller = new AbortController();
-    const fetchURL = `http://127.0.0.1:5001/updateUser`;
+    const fetchURL = `http://127.0.0.1:5001/${requestTypes.accountEndpoint}`;
     const fetchOptions = {
-      method: "PATCH",
+      method: requestTypes.fetchMethod,
       headers: {
         "Content-type": "application/json",
         Authorization: `Bearer ${access}`,
@@ -119,15 +174,13 @@ const AccountDetails = ({
       signal: controller.signal,
     };
 
-    if (confirmUpdate) {
-      console.log(
-        "AccountDetails - ",
-        "updateUser useEffect triggered:",
-        "ADMIN - PATCH /updateUsers"
-      );
-      fetchData(fetchURL, fetchOptions);
-    }
-  }, [confirmUpdate]);
+    console.log(
+      "AccountDetails - ",
+      "http request useEffect triggered: ADMIN -",
+      requestTypes
+    );
+    fetchData(fetchURL, fetchOptions);
+  }, [confirmUpdate, confirmDelete]);
 
   // #2 - upon http request success
   useEffect(() => {
@@ -138,6 +191,14 @@ const AccountDetails = ({
           return {
             ...prevUpdateUser,
             [userId]: !prevUpdateUser[userId],
+          };
+        });
+      } else if (data.message.includes("delete")) {
+        setDeleteUser((prevDeleteUser) => {
+          console.log("AccountDetails - ", "delete user successful:");
+          return {
+            ...prevDeleteUser,
+            [userId]: !prevDeleteUser[userId],
           };
         });
       }
@@ -264,7 +325,27 @@ const AccountDetails = ({
         )}
       </div>
 
-      {updateUser && (
+      {deleteUser && (
+        <div className="my-12">
+          <h2 className="text-2xl text-center">Confirm delete?</h2>
+          <div className="flex flex-wrap justify-end mt-auto ml-auto">
+            <MdClose
+              size={30}
+              className="mr-4 cursor-pointer text-main2 hover:text-orangeMain hover:shadow-xl"
+              id={info.username}
+              onClick={handleClose}
+            />
+            <MdLibraryAddCheck
+              size={30}
+              className="cursor-pointer text-main2 hover:text-greenAccent hover:shadow-xl"
+              id={info.username}
+              onClick={handleConfirm}
+            />
+          </div>
+        </div>
+      )}
+
+      {updateUser && deleteUser && (
         <>
           {!isLoading && data && (
             <div className="my-12">
