@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 // import { useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import AccountManager from "../admin/AccountManager";
-import ButtonSubmit from "../Interactions/ButtonGeneral";
+import LoggerHome from "./LoggerHome";
 // import LoadingSpinner from "../Loading/LoadingSpinner";
 
 // START OF COMPONENT ***********************************************************************************************************************
@@ -58,6 +58,10 @@ const Home = ({ loggedUserData }) => {
 
         {loggedUserData.userType === "Admin" && (
           <AccountManager adminInfo={loggedUserData} />
+        )}
+
+        {loggedUserData.userType === "Health Logger" && (
+          <LoggerHome loggerInfo={loggedUserData} />
         )}
       </div>
     </>

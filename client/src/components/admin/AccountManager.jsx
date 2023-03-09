@@ -9,6 +9,9 @@ import {
 } from "react-icons/fa";
 import { MdRemoveModerator } from "react-icons/md";
 // import ButtonAdmin from "../Interactions/ButtonAdmin";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import useFetch from "../../hooks/useFetch";
 import LoadingSpinner from "../Loading/LoadingSpinner";
 import AccountDetails from "./AccountDetails";
@@ -63,6 +66,7 @@ const AccountManager = ({ adminInfo }) => {
 
   const handleEdit = (event) => {
     event.preventDefault();
+
     setUpdateUser((prevUpdateUser) => {
       console.log("set updateUser true for:", event.target.id);
       return {
@@ -74,6 +78,7 @@ const AccountManager = ({ adminInfo }) => {
 
   const handleDelete = (event) => {
     event.preventDefault();
+
     setDeleteUser((prevDeleteUser) => {
       console.log("set deleteUser true for :", event.target.id);
       return {
@@ -96,18 +101,44 @@ const AccountManager = ({ adminInfo }) => {
       },
       signal: controller.signal,
     };
+
     console.log(
       "AccountManager - ",
       "1st useEffect triggered:",
       "ADMIN - GET /getUsers"
     );
+
     fetchData(fetchURL, fetchOptions);
+
+    // if not null
+    // if (refreshAccounts) {
+    //   if (!updateUser[refreshAccounts]) {
+    //     toast(`You have made changes to account: ${refreshAccounts}.`, {
+    //       position: toast.POSITION.TOP_CENTER,
+    //       theme: "dark",
+    //       autoClose: 10000,
+    //       hideProgressBar: true,
+    //       className:
+    //         "bg-main7 text-greenAccent border-2 border-main3 rounded-4",
+    //     });
+    //   }
+
+    //   if (!deleteUser[refreshAccounts]) {
+    //     toast(`You have deleted account: ${refreshAccounts}.`, {
+    //       position: toast.POSITION.TOP_CENTER,
+    //       theme: "dark",
+    //       autoClose: 10000,
+    //       hideProgressBar: true,
+    //       className: "bg-main7 text-orangeMain border-2 border-main3 rounded-4",
+    //     });
+    //   }
+    // }
   }, [refreshAccounts]); // triggered upon confirmUpdate / confirmDelete in child component
 
   // #2 - once data is populated, set states (showDetails, updateUser, deleteUser) of each data item to false
   useEffect(() => {
     // a. if data fetching is a success => set states for expanding details & whether user is being updated/deleted
-    console.log("AccountManager -", "2nd useEffect: ", "setting states");
+    console.log("AccountManager - ", "2nd useEffect: ", "setting states");
     if (data) {
       setUsersData(data);
       data.map((user) => {
@@ -163,6 +194,8 @@ const AccountManager = ({ adminInfo }) => {
   // render component --------------------------------------------------------------------------------------------
   return (
     <div>
+      {/* display confirmation messages */}
+      <ToastContainer />
       {/* Display date's contents if fetched success and loaded */}
       {!isLoading && usersData && (
         <div>
@@ -236,14 +269,12 @@ const AccountManager = ({ adminInfo }) => {
           })}
         </div>
       )}
-
       {/* While fetching, display load spinner */}
       {isLoading && (
         <div className="centered">
           <LoadingSpinner />
         </div>
       )}
-
       {/* Display error message if fetch has an error */}
       {!isLoading && error && (
         <div>

@@ -4,13 +4,16 @@ import { FaUser } from "react-icons/fa";
 import { RiLogoutBoxFill } from "react-icons/ri";
 
 // START OF COMPONENT ***********************************************************************************************************************
-const NavBar = ({ userType }) => {
+const NavBar = ({ userType, setLoggedUserData }) => {
   // event handlers -----------------------------------------------------------------------------------------------
-  const handleClick = (event) => {
-    console.log("NavBar -", "clicked: ", event.target.id);
-    if (event.target.id === "logout") setLoggedUserData(null);
+  const handleLogout = () => {
+    console.log("NavBar -", "logout clicked: ");
+    setLoggedUserData(null);
   };
 
+  const handleProfile = () => {};
+
+  // START OF COMPONENT ***********************************************************************************************************************
   const showAll = userType !== "Admin" ? true : false;
   return (
     <header className="fixed z-50 flex justify-between items-center top-0 bg-mainDarkest w-full h-20 text-2xl text-mainLightest">
@@ -79,7 +82,7 @@ const NavBar = ({ userType }) => {
           to="./profile"
           className="mr-4 cursor-pointer flex flex-wrap my-auto w-1/5 hover:text-blueAccent"
           id="profile"
-          onClick={handleClick}
+          onClick={handleProfile}
         >
           <FaUser size={24} className="my-auto mr-2" />
           <h3 className="text-sm tracking-wide my-auto">profile</h3>
@@ -88,7 +91,7 @@ const NavBar = ({ userType }) => {
           to="./welcome"
           className="cursor-pointer flex flex-wrap my-auto w-1/5 hover:text-yellowAccent"
           id="logout"
-          onClick={handleClick}
+          onClick={handleLogout}
         >
           <RiLogoutBoxFill size={24} className="my-auto mr-2" />
           <h3 className="text-sm tracking-wide my-auto">log out</h3>

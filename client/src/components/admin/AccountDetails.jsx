@@ -7,8 +7,8 @@ import {
   MdClose,
   MdCheck,
 } from "react-icons/md";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import { ToastContainer, toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 import TextAreaAdmin from "../Interactions/TextAreaAdmin";
 import LoadingSpinner from "../Loading/LoadingSpinner";
 
@@ -34,6 +34,12 @@ const AccountDetails = ({
     onChange:
       "mt-12 flex flex-wrap motion-safe:animate-successfulChange w-9/12",
   };
+
+  // let introColour = "mt-12 flex flex-wrap motion-safe:animate-fadeIn w-9/12";
+  // if (confirmUpdate) {
+  //   introColour =
+  //     "mt-12 flex flex-wrap motion-safe:animate-successfulChange w-9/12";
+  // }
 
   // functions ----------------------------------------------------------------------------------------------------
   function accessIcon(accessType) {
@@ -126,16 +132,12 @@ const AccountDetails = ({
         "confirming change for:",
         event.target.id
       );
-      // toast(`You have made changes to account: ${event.target.id}.`, {
-      //   position: toast.POSITION.TOP_CENTER,
-      //   theme: "dark",
-      //   hideProgressBar: true,
-      //   className: "bg-main7 text-greenAccent border-2 border-main3 rounded-4",
-      // });
+
       setRequestTypes({
         accountEndpoint: "updateUser",
         fetchMethod: "PATCH",
       });
+
       setConfirmUpdate(true);
     }
 
@@ -145,16 +147,12 @@ const AccountDetails = ({
         "confirming delete for:",
         event.target.id
       );
-      // toast(`You have deleted account: ${event.target.id}.`, {
-      //   position: toast.POSITION.TOP_CENTER,
-      //   theme: "dark",
-      //   hideProgressBar: true,
-      //   className: "bg-main7 text-orangeMain border-2 border-main3 rounded-4",
-      // });
+
       setRequestTypes({
         accountEndpoint: "deleteUser",
         fetchMethod: "DELETE",
       });
+
       setConfirmDelete(true);
     }
   };
@@ -209,22 +207,19 @@ const AccountDetails = ({
           "toggle refreshAccounts for change:",
           data.message
         );
+        // return info.username;
         return !prevRefreshAccounts;
       });
+      // setRefreshAccounts(info.username);
     }
   }, [data]);
-
-  // TODO: refresh changes useEffect(() => { codes ,[userInfo])}
-  // useEffect(() => {
-  //   console.log("AccountDetails - ", "useEffect rerendering: ", userInfo);
-  // }, [userInfo]);
 
   // render component --------------------------------------------------------------------------------------------
   return (
     <>
       <div className="flex flex-wrap">
         <div
-          className={isObject(data) ? introTheme.onChange : introTheme.onExpand}
+          className={confirmUpdate ? introTheme.onChange : introTheme.onExpand}
         >
           {accessIcon(info.accessType)}
           <h2 className={textColours[info.accessType]}>{info.accessType}</h2>
@@ -324,9 +319,9 @@ const AccountDetails = ({
           </div>
         )}
       </div>
-
       {deleteUser && (
-        <div className="my-12">
+        <div className="my-12 flex flex-wrap">
+          <div className="w-8/12"></div>
           <h2 className="text-2xl text-center">Confirm delete?</h2>
           <div className="flex flex-wrap justify-end mt-auto ml-auto">
             <MdClose
@@ -344,7 +339,6 @@ const AccountDetails = ({
           </div>
         </div>
       )}
-
       {updateUser && deleteUser && (
         <>
           {!isLoading && data && (

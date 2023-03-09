@@ -124,13 +124,13 @@ servtest,$2b$12$Kl4l5gqX1XghzteiykAil.nkRPrBL/iP15DVu6zJoZEkhjCs5x8Vu,Service Pr
 \.
 
 COPY "record" ("id", "logger_username", "date") FROM stdin (DELIMITER ',');
-441234001,mervin_njy,2023-03-01
-441234002,mervin_njy,2023-03-02
-441234003,mervin_njy,2023-03-03
-441234004,mervin_njy,2023-03-04
-441234005,mervin_njy,2023-03-05
-441234006,mervin_njy,2023-03-06
-441234007,mervin_njy,2023-03-07
+441234001,mervin,2023-03-01
+441234002,mervin,2023-03-02
+441234003,mervin,2023-03-03
+441234004,mervin,2023-03-04
+441234005,mervin,2023-03-05
+441234006,mervin,2023-03-06
+441234007,mervin,2023-03-07
 \.
 
 -- TODO: add image once working
@@ -145,12 +145,12 @@ COPY "entry" ("record_id", "id", "type", "name", "category", "title", "item", "t
 \.
 
 COPY "logger_service" ("logger_username", "servicer_username", "status") FROM stdin (DELIMITER ',');
-mervin_njy,amir,Requested
-mervin_njy,izhar,Partnered
+mervin,amir,Requested
+mervin,izhar,Partnered
 \.
 
 COPY "comment" ("servicer_username", "logger_username", "servicer_comment", "servicer_response", "record_entry_id") FROM stdin (DELIMITER ',');
-izhar,mervin_njy,"That\'s nice\, but curry contains coconut milk... Try to avoid. And bojio?",false,881234005
+izhar,mervin,"That\'s nice\, but curry contains coconut milk... Try to avoid. And bojio?",false,881234005
 \.
 
 COPY "review" ("date", "logger_review", "logger_rating") FROM stdin (DELIMITER ',');
@@ -158,7 +158,7 @@ COPY "review" ("date", "logger_review", "logger_rating") FROM stdin (DELIMITER '
 \.
 
 COPY "triggers" ("logger_username","trigger_condition", "trigger_variable", "trigger_id") FROM stdin (DELIMITER ',');
-mervin_njy,"Eczema","Diet",881234005
+mervin,"Eczema","Diet",881234005
 \.
 
 -- COMMIT ------------------------------------------------------------------------------------------------------------------------------------------
