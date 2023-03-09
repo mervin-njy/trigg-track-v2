@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import InputLogger from "../Interactions/InputLogger";
 import LogEntry from "./LogEntry";
 
@@ -14,6 +14,9 @@ import {
 
 // START OF COMPONENT ***********************************************************************************************************************
 const LogSection = ({ recordDate, recordType, confirmSubmit, setShowType }) => {
+  // variables ----------------------------------------------------------------------------------------------------
+  // const entryCount = [1];
+
   // functions ----------------------------------------------------------------------------------------------------
   function isObject(value) {
     return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -46,7 +49,7 @@ const LogSection = ({ recordDate, recordType, confirmSubmit, setShowType }) => {
     name: "",
     category: "",
   });
-  const [entryCount, setEntryCount] = useState(1);
+  const [entryCount, setEntryCount] = useState([0]);
 
   // event handlers -----------------------------------------------------------------------------------------------
   const handleChange = (event) => {
@@ -71,6 +74,12 @@ const LogSection = ({ recordDate, recordType, confirmSubmit, setShowType }) => {
       return !prevShowType;
     });
   };
+
+  // effects ------------------------------------------------------------------------------------------------------
+  // #1 - http request
+  useEffect(() => {
+    console.log("LogSection - rerendering on entryCount change");
+  }, [entryCount]);
 
   // render component --------------------------------------------------------------------------------------------
   return (
@@ -123,20 +132,23 @@ const LogSection = ({ recordDate, recordType, confirmSubmit, setShowType }) => {
           />
         </div>
 
-        {/* #3 headers for each entry */}
-        {/* <div className="flex flex-wrap justify-between mt-4">
-          <div className="flex flex-wrap justify-center w-3/12">
-            <h4 className="text-xl tracking-widest my-auto">title:</h4>
-          </div>
-          <div className="flex flex-wrap justify-center w-7/12">
-            <h4 className="text-xl tracking-widest my-auto">item:</h4>
-          </div>
-        </div> */}
-
-        <div className="py-3 border-b-1 border-purpleMain border-opacity-50" />
+        {/* #3 entry items */}
+        <div className="py-3 border-b-2 border-purpleMain border-opacity-50" />
 
         {/* add id to LogEntry + convert to function to count number of times */}
-        <LogEntry sectionInput={sectionInput} />
+        {entryCount.map((item) => {
+          return (
+            <LogEntry
+              id={item}
+              sectionInput={sectionInput}
+              entryCount={entryCount}
+              setEntryCount={setEntryCount}
+            />
+          );
+        })}
+
+        {/* #4 confirmation */}
+        <div className="py-2 border-b-2 border-purpleMain border-opacity-50" />
       </section>
     </>
   );

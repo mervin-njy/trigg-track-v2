@@ -4,10 +4,10 @@ import LoadingSpinner from "../Loading/LoadingSpinner";
 import InputLogger from "../Interactions/InputLogger";
 import TextAreaLogger from "../Interactions/TextAreaLogger";
 
-import { MdAddCircle, MdClose } from "react-icons/md";
+import { MdAddCircle, MdDelete } from "react-icons/md";
 
 // START OF COMPONENT ***********************************************************************************************************************
-const LogEntry = ({ sectionInput }) => {
+const LogEntry = ({ id, sectionInput, entryCount, setEntryCount }) => {
   // states -------------------------------------------------------------------------------------------------------
   const { fetchData, isLoading, data, error } = useFetch();
   const [entryInput, setEntryInput] = useState({
@@ -30,20 +30,42 @@ const LogEntry = ({ sectionInput }) => {
     });
   };
 
-  const handleAdd = () => {};
-  const handleRemove = (event) => {
-    event.preventDefault();
+  const handleAdd = () => {
+    console.log("LogEntry -", "Adding new entry");
+    console.log("current count:", entryCount.length);
+    console.log("current entries", entryCount);
+    if (
+      entryInput.title !== "" &&
+      entryInput.item !== "" &&
+      sectionInput.name !== "" &&
+      sectionInput.category !== ""
+    ) {
+      setEntryCount((prevEntryCount) => {
+        return [...prevEntryCount, (id += 1)];
+      });
+    } else {
+      alert("Don't be greedy, please fill entries before adding new ones.");
+    }
+  };
+
+  const handleRemove = () => {
     console.log("LogEntry -", "Removing", entryInput.title);
-    // setShowEntry((prevShowEntry) => {
-    //   return !prevShowEntry;
-    // });
+    console.log("current count:", entryCount.length);
+    console.log("current entries", entryCount);
+    if (entryCount.length >= 1) {
+      setEntryCount((prevEntryCount) => {
+        return prevEntryCount.filter((item) => {
+          return item !== id;
+        });
+      });
+    }
   };
   const handleSubmit = () => {};
 
   // render component --------------------------------------------------------------------------------------------
   return (
     <>
-      <div className="flex flex-wrap justify-between mt-6">
+      <div className="flex flex-wrap justify-between mt-4">
         <InputLogger
           type="text"
           name="title"
@@ -62,7 +84,7 @@ const LogEntry = ({ sectionInput }) => {
           onChange={handleChange}
           required={true}
         />
-        <MdClose
+        <MdDelete
           size={30}
           className="cursor-pointer text-main2 hover:text-orangeMain hover:shadow-xl"
           id={"Remove"}
