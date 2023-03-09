@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import useFetch from "../../hooks/useFetch";
+import ButtonLogger from "../Interactions/ButtonLogger";
 
 // START OF COMPONENT ***********************************************************************************************************************
 const LoggerHome = ({ loggerInfo }) => {
@@ -19,7 +20,8 @@ const LoggerHome = ({ loggerInfo }) => {
   const { fetchData, isLoading, data, error } = useFetch();
 
   //   event handlers ---------------------------------------------------------------------------------------------
-  const handleOpenForm = () => {
+  const handleOpenForm = (event) => {
+    console.log(event.target.name);
     setShowForm(true);
   };
 
@@ -57,12 +59,50 @@ const LoggerHome = ({ loggerInfo }) => {
   return (
     <>
       {data && todayDone && (
-        <div>
-          <h2>You have already filled in your records today.</h2>
-          {/* <h2>{JSON.stringify(data)}</h2> */}
+        <div className="flex flex-wrap justify-between">
+          <div className="w-8/12">
+            <h2 className="text-mainLightest text-3xl tracking-widest mr-auto">
+              You{" "}
+              <span className="text-greenAccent motion-safe:animate-successText">
+                have already
+              </span>{" "}
+              filled in your records today.
+            </h2>
+            <h2 className="text-mainLightest text-3xl tracking-widest mt-8 mr-auto">
+              Would you like to log your record for today?
+            </h2>
+          </div>
         </div>
       )}
-      {data && !todayDone && <h2>We have not heard from you today yet.</h2>}
+
+      {data && !todayDone && (
+        <div className="flex flex-wrap justify-between">
+          <div className="w-8/12">
+            <h2 className="text-mainLightest text-3xl tracking-widest mr-auto">
+              We{" "}
+              <span className="text-orangeMain font-bold motion-safe:animate-noSuccessText">
+                have not
+              </span>{" "}
+              heard from you today yet.
+            </h2>
+            <h2 className="text-mainLightest text-3xl tracking-widest mt-8 mr-auto">
+              Would you like to log your record for today?
+            </h2>
+          </div>
+
+          <div className="m-auto">
+            <ButtonLogger
+              displayName={"Record"}
+              category={"Records"}
+              width={"10rem"}
+              fontSize={"1.3rem"}
+              padding={"0.4rem"}
+              margin={"1rem 0"}
+              onClick={handleOpenForm}
+            />
+          </div>
+        </div>
+      )}
     </>
   );
 };

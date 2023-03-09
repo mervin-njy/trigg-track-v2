@@ -52,7 +52,7 @@ const Home = ({ loggedUserData }) => {
     <>
       <div className="w-9/12 mt-40 mb-40 mx-auto">
         <h1 className="tracking-wider text-6xl font-bold my-8 mb-20">
-          Welcome, <span className={colText}>{loggedUserData.displayName}</span>
+          Welcome, <span className={colText}>{loggedUserData.displayName}</span>{" "}
           .
         </h1>
 

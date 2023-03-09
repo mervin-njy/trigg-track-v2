@@ -73,7 +73,9 @@ module.exports = {
         pulsate: "pulsate 1.2s ease-in-out infinite",
         pulsateLittle: "pulsate 2s ease-in-out infinite",
         pulsateStop: "pulsate 3s ease-in-out forwards",
-        successfulChange: "greenFade 5s ease-in forwards",
+        successText: "greenFade 1s ease-in forwards",
+        noSuccessText: "redFade 1s ease-in forwards",
+        promptClick: "promptClick 1.5s ease-in-out infinite",
       },
       keyframes: {
         fadeIn: {
@@ -105,15 +107,32 @@ module.exports = {
           "50%": { transform: "rotate(3deg)" },
         },
         greenFade: {
-          "0%": { opacity: 0, color: "#55efc4" },
-          "50%": { opacity: 1, color: "#00b894" },
-          "100%": { opacity: 1, color: "#F1FDFF" },
+          "0%": { opacity: 0, color: "#F1FDFF" },
+          "50%": { opacity: 0.5, color: "#00b894" },
+          "100%": { opacity: 1, color: "#55efc4" },
         },
-        // glowing {
-        //   "0%": { backgroundColor: "#474368", boxShadow: "0 0 0 #474368", color: "#a29bfe"},
-        //   "50%": { backgroundColor: "#a29bfe", boxShadow: "0 0 1.2rem #a29bfe", color: "#474368" },
-        //   "100%": { backgroundColor: "#474368", boxShadow: "0 0 0.5rem #474368", color: "#a29bfe" },
-        // }
+        redFade: {
+          "0%": { opacity: 0, color: "#F1FDFF" },
+          "50%": { opacity: 0.5, color: "#fab1a0" },
+          "100%": { opacity: 1, color: "#ff7675" },
+        },
+        promptClick: {
+          "0%": {
+            backgroundColor: "#474368",
+            color: "#a29bfe",
+            boxShadow: "0 0 0 #474368",
+          },
+          "50%": {
+            backgroundColor: "#a29bfe",
+            color: "#474368",
+            boxShadow: "0 0 1.2rem #a29bfe",
+          },
+          "100%": {
+            backgroundColor: "#474368",
+            color: "#a29bfe",
+            boxShadow: "0 0 0.5rem #474368",
+          },
+        },
       },
       width: {
         "3/10": "30%",
