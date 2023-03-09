@@ -1,18 +1,19 @@
 import React, { useState } from "react";
-import useFetch from "../../hooks/useFetch";
-import LoadingSpinner from "../Loading/LoadingSpinner";
+import InputLogger from "../Interactions/InputLogger";
+import LogEntry from "./LogEntry";
 
 import {
   MdDescription,
   MdEdit,
   MdLibraryAddCheck,
+  MdAddCircle,
   MdClose,
   MdReportProblem,
   MdOutlineAltRoute,
 } from "react-icons/md";
 
 // START OF COMPONENT ***********************************************************************************************************************
-const LogSection = ({ recordDate, recordType, confirmSubmit }) => {
+const LogSection = ({ recordDate, recordType, confirmSubmit, setShowType }) => {
   // functions ----------------------------------------------------------------------------------------------------
   function isObject(value) {
     return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -39,26 +40,21 @@ const LogSection = ({ recordDate, recordType, confirmSubmit }) => {
   }
 
   // states -------------------------------------------------------------------------------------------------------
-  const { fetchData, isLoading, data, error } = useFetch();
-  const [EntryInput, setEntryInput] = useState({
+  const [sectionInput, setSectionInput] = useState({
     date: recordDate,
     type: recordType,
     name: "",
     category: "",
-    item: "",
-    imageUrl: "",
-    triggerTag: "",
   });
-
-  // refs ---------------------------------------------------------------------------------------------------------
+  const [entryCount, setEntryCount] = useState(1);
 
   // event handlers -----------------------------------------------------------------------------------------------
   const handleChange = (event) => {
     event.preventDefault();
-    setRecordInput((prevRecordInput) => {
-      console.log("LogRecord -", "handleChange, before:", recordInput);
+    setSectionInput((prevSectionInput) => {
+      console.log("LogRecord -", "handleChange, before:", sectionInput);
       return {
-        ...prevRecordInput,
+        ...prevSectionInput,
         [event.target.name]: event.target.value,
       };
     });
@@ -68,21 +64,64 @@ const LogSection = ({ recordDate, recordType, confirmSubmit }) => {
   const handleRemove = () => {};
   const handleEdit = () => {};
   const handleSubmit = () => {};
-  const handleClose = () => {};
+  const handleClose = (event) => {
+    event.preventDefault();
+    console.log("LogSection -", "Closing", recordType);
+    setShowType((prevShowType) => {
+      return !prevShowType;
+    });
+  };
 
   // render component --------------------------------------------------------------------------------------------
   return (
     <>
-      <div className="flex flex-wrap justify-between">
-        {typeIcon(recordType)}
-        <h1 className="text-2xl tracking-wider mb-14">{recordType}</h1>
+      <header className="flex flex-wrap justify-between">
+        <div className="flex flex-wrap justify-start mb-8">
+          {typeIcon(recordType)}
+          <h1 className="text-2xl tracking-wider">{recordType}</h1>
+        </div>
         <MdClose
           size={24}
-          className="cursor-pointer my-auto w-1/12 mb-14 hover:font-bold hover:text-main2"
+          className="cursor-pointer my-auto w-1/12 mb-8 hover:font-bold hover:text-main2"
           id="Close"
           onClick={handleClose}
         />
-      </div>
+      </header>
+
+      <div className="pb-4 border-t-4" />
+
+      <section>
+        <div className="flex flex-wrap justify-between mt-6">
+          <div className="flex flex-wrap justify-start w-3/12">
+            <h4 className="text-xl tracking-widest my-auto">name:</h4>
+          </div>
+          <InputLogger
+            type="text"
+            name="name"
+            value={sectionInput.name}
+            width={"70%"}
+            onChange={handleChange}
+            required={true}
+          />
+        </div>
+
+        <div className="flex flex-wrap justify-between mt-4">
+          <div className="flex flex-wrap justify-start w-3/12">
+            <h4 className="text-xl tracking-widest my-auto">category:</h4>
+          </div>
+          <InputLogger
+            type="text"
+            name="category"
+            value={sectionInput.category}
+            width={"70%"}
+            onChange={handleChange}
+            required={true}
+          />
+        </div>
+
+        {/* add id to LogEntry + convert to function to count number of times */}
+        <LogEntry sectionInput={sectionInput} />
+      </section>
     </>
   );
 };

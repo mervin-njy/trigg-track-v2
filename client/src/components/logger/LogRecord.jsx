@@ -174,6 +174,7 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
               recordDate={recordInput.date}
               recordType={"Condition"}
               confirmSubmit={confirmSubmit}
+              setShowType={setShowCondition}
             />
           )}
         </div>
@@ -208,6 +209,7 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
               recordDate={recordInput.date}
               recordType={"Variable"}
               confirmSubmit={confirmSubmit}
+              setShowType={setShowVariable}
             />
           )}
         </div>
