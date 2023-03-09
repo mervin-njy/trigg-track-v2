@@ -125,7 +125,8 @@ const LoggerHome = ({ loggerInfo }) => {
             </header>
           )}
 
-          {showForm && <LogRecord loggerInfo={loggerInfo} />}
+          {/* record for selected date - today's date bydefault */}
+          {showForm && <LogRecord loggerInfo={loggerInfo} recordDate={date} />}
         </>
       )}
 

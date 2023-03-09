@@ -58,6 +58,7 @@ const Signup = ({ setNewUser, setShowSignup }) => {
 
   // event handlers -----------------------------------------------------------------------------------------------
   const handleChange = (event) => {
+    event.preventDefault();
     setAccountInput((prevAccountInput) => {
       console.log("Signup -", "handleChange, before:", accountInput);
       return {
