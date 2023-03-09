@@ -28,8 +28,8 @@ const LogEntry = ({
     item: "",
     imageUrl: null,
     triggerTag: false,
-  });
-  // onSubmit => combine entryInput w/ sectionInput i.e., { ...sectionInput, ...entryInput }
+  }); // onSubmit => combine entryInput w/ sectionInput i.e., { ...sectionInput, ...entryInput }
+  const [displayFields, setDisplayFields] = useState(true);
 
   // event handlers -----------------------------------------------------------------------------------------------
   const handleChange = (event) => {
@@ -106,6 +106,7 @@ const LogEntry = ({
       // 1. for checking date in records
       if (data.message === "record entry created") {
         setFetchStatus(true);
+        setDisplayFields(false);
       }
     }
   }, [data]);
@@ -113,38 +114,51 @@ const LogEntry = ({
   // render component --------------------------------------------------------------------------------------------
   return (
     <>
-      <div className="flex flex-wrap justify-between mt-4">
-        <InputLogger
-          type="text"
-          name="title"
-          value={entryInput.title}
-          placeholder={"title"}
-          width={"20%"}
-          onChange={handleChange}
-          required={true}
-        />
-        <TextAreaLogger
-          type="text"
-          name="item"
-          value={entryInput.item}
-          placeholder={"item"}
-          width={"60%"}
-          onChange={handleChange}
-          required={true}
-        />
-        <MdDelete
-          size={30}
-          className="cursor-pointer text-main2 hover:text-orangeMain hover:shadow-xl"
-          id={"Remove"}
-          onClick={handleRemove}
-        />
-        <MdAddCircle
-          size={30}
-          className="cursor-pointer text-main2 hover:text-greenMain hover:shadow-xl"
-          id={"Add"}
-          onClick={handleAdd}
-        />
-      </div>
+      {displayFields && (
+        <div className="flex flex-wrap justify-between mt-4">
+          <InputLogger
+            type="text"
+            name="title"
+            value={entryInput.title}
+            placeholder={"title"}
+            width={"20%"}
+            onChange={handleChange}
+            required={true}
+          />
+          <TextAreaLogger
+            type="text"
+            name="item"
+            value={entryInput.item}
+            placeholder={"item"}
+            width={"60%"}
+            onChange={handleChange}
+            required={true}
+          />
+          <MdDelete
+            size={30}
+            className="cursor-pointer text-main2 hover:text-orangeMain hover:shadow-xl"
+            id={"Remove"}
+            onClick={handleRemove}
+          />
+          <MdAddCircle
+            size={30}
+            className="cursor-pointer text-main2 hover:text-greenMain hover:shadow-xl"
+            id={"Add"}
+            onClick={handleAdd}
+          />
+        </div>
+      )}
+
+      {!displayFields && (
+        <div className="flex flex-wrap justify-between mt-4 motion-safe:animate-successText">
+          <h3 className="w-3/10` text-md tracking-widest my-auto">
+            {entryInput.title}
+          </h3>
+          <h3 className="w-7/10 text-md tracking-widest my-auto">
+            {entryInput.item}
+          </h3>
+        </div>
+      )}
     </>
   );
 };

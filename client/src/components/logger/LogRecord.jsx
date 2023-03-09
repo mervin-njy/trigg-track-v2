@@ -325,7 +325,7 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
                     access={loggerInfo.access}
                     recordDate={recordInput.date}
                     recordType={"Condition"}
-                    confirmSubmit={confirmSubmit}
+                    createEntries={createEntries}
                     setFetchStatus={setFetchStatus}
                   />
                 );
