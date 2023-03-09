@@ -22,7 +22,7 @@ const LoggerHome = ({ loggerInfo }) => {
 
   //   event handlers ---------------------------------------------------------------------------------------------
   const handleOpenForm = (event) => {
-    console.log(event.target.name);
+    console.log("LoggerHome - button clicked: ", event.target.name);
     setShowForm(true);
   };
 
@@ -53,7 +53,15 @@ const LoggerHome = ({ loggerInfo }) => {
 
   // #2 - check if data is not null (object is true) => obtain dates to compare w/ current date
   useEffect(() => {
-    if (isObject(data) && data.status !== "error") setTodayDone(true);
+    if (isObject(data) && data.status !== "error") {
+      console.log(
+        "LoggerHome - 2nd useEffect, data fetched | status:",
+        data.status,
+        "message:",
+        data.message
+      );
+      setTodayDone(true);
+    }
   }, [data]);
 
   // render component --------------------------------------------------------------------------------------------
@@ -112,7 +120,7 @@ const LoggerHome = ({ loggerInfo }) => {
                   <div className="m-auto">
                     <ButtonPromptLogger
                       displayName={"Record"}
-                      category={"Records"}
+                      category={"records"}
                       width={"10rem"}
                       fontSize={"1.3rem"}
                       padding={"0.4rem"}

@@ -26,6 +26,20 @@ import LoadingSpinner from "../Loading/LoadingSpinner";
 // START OF COMPONENT ***********************************************************************************************************************
 // FOR: userCreate
 const Signup = ({ setNewUser, setShowSignup }) => {
+  // functions ----------------------------------------------------------------------------------------------------
+  function isObject(value) {
+    return typeof value === "object" && value !== null && !Array.isArray(value);
+  }
+
+  function toPascalCase(str) {
+    const splitStr = str.toLowerCase().split(" ");
+    let newStr = "";
+    for (const word of splitStr) {
+      newStr += word[0].toUpperCase() + word.slice(1) + " ";
+    }
+    return newStr;
+  }
+
   // states -------------------------------------------------------------------------------------------------------
   const [showFields, setshowFields] = useState(true);
   const { fetchData, isLoading, data, error } = useFetch();
@@ -99,20 +113,6 @@ const Signup = ({ setNewUser, setShowSignup }) => {
       return !prevShowSignup;
     });
   };
-
-  // functions ----------------------------------------------------------------------------------------------------
-  function isObject(value) {
-    return typeof value === "object" && value !== null && !Array.isArray(value);
-  }
-
-  function toPascalCase(str) {
-    const splitStr = str.toLowerCase().split(" ");
-    let newStr = "";
-    for (const word of splitStr) {
-      newStr += word[0].toUpperCase() + word.slice(1) + " ";
-    }
-    return newStr;
-  }
 
   // effects ------------------------------------------------------------------------------------------------------
   // #1 - http request

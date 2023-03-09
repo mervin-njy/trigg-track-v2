@@ -75,8 +75,8 @@ module.exports = {
         pulsateStop: "pulsate 3s ease-in-out forwards",
         successText: "greenFade 1s ease-in forwards",
         noSuccessText: "redFade 1s ease-in forwards",
-        promptClick: "promptClick 1.8s ease-in-out infinite",
-        promptHover: "promptClick 1s ease-in-out infinite",
+        promptClick: "promptClick 1.5s ease-in-out infinite",
+        promptHover: "promptClick 0.8s ease-in-out infinite",
       },
       keyframes: {
         fadeIn: {

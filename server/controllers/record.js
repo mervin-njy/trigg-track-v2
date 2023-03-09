@@ -73,7 +73,7 @@ const createEntry = async (req, res) => {
       ]
     );
     console.log("created entry is ", createdEntry.rows[0]);
-    res.json({ status: "okay", message: "record created" });
+    res.json({ status: "okay", message: "record entry created" });
   } catch (error) {
     console.log("PUT /logger/createEntry/", error);
     res.status(400).json({ status: "error", message: "an error has occurred" });
