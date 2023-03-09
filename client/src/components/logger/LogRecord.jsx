@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import useFetch from "../../hooks/useFetch";
 
-import { MdEdit, MdReportProblem, MdOutlineAltRoute } from "react-icons/md";
+import {
+  MdEdit,
+  MdReportProblem,
+  MdOutlineAltRoute,
+  MdClose,
+} from "react-icons/md";
 
 import LoadingSpinner from "../Loading/LoadingSpinner";
 import ButtonNormalLogger from "../Interactions/ButtonNormalLogger";
@@ -15,6 +20,26 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
     return typeof value === "object" && value !== null && !Array.isArray(value);
   }
 
+  function typeIcon(type) {
+    if (type === "Condition") {
+      return (
+        <MdReportProblem
+          size={30}
+          className="cursor-pointer text-main2 hover:text-purpleAccent hover:shadow-xl mr-6"
+          id={"Condition"}
+        />
+      );
+    } else {
+      return (
+        <MdOutlineAltRoute
+          size={30}
+          className="cursor-pointer text-main2 hover:text-purpleAccent hover:shadow-xl mr-6"
+          id={"Variable"}
+        />
+      );
+    }
+  }
+
   // states -------------------------------------------------------------------------------------------------------
   const [showCondition, setShowCondition] = useState(false); // for showing condition form section => TODO: change to {id: bool}
   const [showVariable, setShowVariable] = useState(false); // for showing variable form section => TODO: change to {id: bool}
@@ -26,6 +51,7 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
     username: loggerInfo.username,
     date: recordDate,
   });
+  const [sectionCount, setSectionCount] = useState([0]);
 
   // event handlers -----------------------------------------------------------------------------------------------
   const handleChange = (event) => {
@@ -39,18 +65,38 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
     });
   };
 
-  const handleFocus = () => {};
   const handleAddType = () => {};
+
   const handleAddEntry = (event) => {
     console.log("LogRecord - button clicked: ", event.target.id);
     if (event.target.id === "Condition") setShowCondition(true);
     if (event.target.id === "Variable") setShowVariable(true);
   };
+
   const handleRemove = () => {};
+
+  const handleClose = (event) => {
+    event.preventDefault();
+    console.log("LogSection -", "Closing", event.target.id);
+
+    if (event.target.id === "Condition") {
+      setShowCondition((prevShowCondition) => {
+        return !prevShowCondition;
+      });
+    }
+
+    if (event.target.id === "Variable") {
+      setShowVariable((prevShowVariable) => {
+        return !prevShowVariable;
+      });
+    }
+  };
+
   const handleEdit = (event) => {
     console.log("LogRecord - button clicked: ", event.target.id);
     if (event.target.id === "Date") setDateEdit(true);
   };
+
   const handleSubmit = () => {};
 
   // // effects ------------------------------------------------------------------------------------------------------
@@ -147,12 +193,7 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
           {!showCondition && (
             <>
               <div className="flex flex-wrap">
-                <MdReportProblem
-                  size={30}
-                  className="cursor-pointer text-main2 hover:text-purpleAccent hover:shadow-xl mr-6"
-                  id={"Condition"}
-                  onFocus={handleFocus}
-                />
+                {typeIcon("Condition")}
                 <h2 className="text-2xl tracking-widest mb-8">
                   Add condition?
                 </h2>
@@ -170,12 +211,34 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
           )}
 
           {showCondition && (
-            <LogSection
-              recordDate={recordInput.date}
-              recordType={"Condition"}
-              confirmSubmit={confirmSubmit}
-              setShowType={setShowCondition}
-            />
+            <>
+              {/* header to display type */}
+              <div className="flex flex-wrap justify-between">
+                <div className="flex flex-wrap justify-start mb-8">
+                  {typeIcon("Condition")}
+                  <h1 className="ml-2 text-2xl tracking-wider">Condition</h1>
+                </div>
+                <MdClose
+                  size={24}
+                  className="cursor-pointer my-auto w-1/12 mb-8 hover:font-bold hover:text-main2"
+                  id="Condition"
+                  onClick={handleClose}
+                />
+              </div>
+
+              {/* # mapped sections for each type */}
+              {sectionCount.map((item) => {
+                return (
+                  <LogSection
+                    sectionId={item}
+                    recordDate={recordInput.date}
+                    recordType={"Condition"}
+                    confirmSubmit={confirmSubmit}
+                    setSectionCount={setSectionCount}
+                  />
+                );
+              })}
+            </>
           )}
         </div>
 
@@ -184,12 +247,7 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
           {!showVariable && (
             <>
               <div className="flex flex-wrap">
-                <MdOutlineAltRoute
-                  size={30}
-                  className="cursor-pointer text-main2 hover:text-purpleAccent hover:shadow-xl mr-6"
-                  id={"Variable"}
-                  onFocus={handleFocus}
-                />
+                {typeIcon("Variable")}
                 <h2 className="text-2xl tracking-widest mb-8">Add variable?</h2>
               </div>
               <ButtonPromptLogger
@@ -205,12 +263,35 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
           )}
 
           {showVariable && (
-            <LogSection
-              recordDate={recordInput.date}
-              recordType={"Variable"}
-              confirmSubmit={confirmSubmit}
-              setShowType={setShowVariable}
-            />
+            <>
+              {/* header to display type */}
+              <div className="flex flex-wrap justify-between">
+                <div className="flex flex-wrap justify-start mb-8">
+                  {typeIcon("Variable")}
+                  <h1 className="ml-2 text-2xl tracking-wider">Variable</h1>
+                </div>
+                <MdClose
+                  size={24}
+                  className="cursor-pointer my-auto w-1/12 mb-8 hover:font-bold hover:text-main2"
+                  id="Variable"
+                  onClick={handleClose}
+                />
+              </div>
+
+              {/* # mapped sections for each type */}
+              {sectionCount.map((item) => {
+                return (
+                  <LogSection
+                    lastSection={item === sectionCount.length}
+                    sectionId={item}
+                    recordDate={recordInput.date}
+                    recordType={"Variable"}
+                    confirmSubmit={confirmSubmit}
+                    setSectionCount={setSectionCount}
+                  />
+                );
+              })}
+            </>
           )}
         </div>
       </section>

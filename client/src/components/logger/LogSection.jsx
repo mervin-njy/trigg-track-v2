@@ -2,44 +2,19 @@ import React, { useState, useEffect } from "react";
 import InputLogger from "../Interactions/InputLogger";
 import LogEntry from "./LogEntry";
 
-import {
-  MdDescription,
-  MdEdit,
-  MdLibraryAddCheck,
-  MdAddCircle,
-  MdClose,
-  MdReportProblem,
-  MdOutlineAltRoute,
-} from "react-icons/md";
+import { MdLibraryAddCheck, MdAddCircle, MdDelete } from "react-icons/md";
 
 // START OF COMPONENT ***********************************************************************************************************************
-const LogSection = ({ recordDate, recordType, confirmSubmit, setShowType }) => {
-  // variables ----------------------------------------------------------------------------------------------------
-  // const entryCount = [1];
-
+const LogSection = ({
+  sectionId,
+  recordDate,
+  recordType,
+  confirmSubmit,
+  setSectionCount,
+}) => {
   // functions ----------------------------------------------------------------------------------------------------
   function isObject(value) {
     return typeof value === "object" && value !== null && !Array.isArray(value);
-  }
-
-  function typeIcon(type) {
-    if (type === "Condition") {
-      return (
-        <MdReportProblem
-          size={30}
-          className="cursor-pointer text-main2 hover:text-purpleAccent hover:shadow-xl mr-6"
-          id={"Condition"}
-        />
-      );
-    } else {
-      return (
-        <MdOutlineAltRoute
-          size={30}
-          className="cursor-pointer text-main2 hover:text-purpleAccent hover:shadow-xl mr-6"
-          id={"Variable"}
-        />
-      );
-    }
   }
 
   // states -------------------------------------------------------------------------------------------------------
@@ -65,43 +40,27 @@ const LogSection = ({ recordDate, recordType, confirmSubmit, setShowType }) => {
 
   const handleAdd = () => {};
   const handleRemove = () => {};
-  const handleEdit = () => {};
   const handleSubmit = () => {};
-  const handleClose = (event) => {
-    event.preventDefault();
-    console.log("LogSection -", "Closing", recordType);
-    setShowType((prevShowType) => {
-      return !prevShowType;
-    });
-  };
+
+  // const handleEdit = () => {};
+  // const handleClose = (event) => {
+  //   event.preventDefault();
+  //   console.log("LogSection -", "Closing", recordType);
+  //   // setShowType((prevShowType) => {
+  //   //   return !prevShowType;
+  //   // });
+  // };
 
   // effects ------------------------------------------------------------------------------------------------------
-  // #1 - http request
-  useEffect(() => {
-    console.log("LogSection - rerendering on entryCount change");
-  }, [entryCount]);
 
   // render component --------------------------------------------------------------------------------------------
   return (
     <>
-      {/* header to display type */}
-      <header className="flex flex-wrap justify-between">
-        <div className="flex flex-wrap justify-start mb-8">
-          {typeIcon(recordType)}
-          <h1 className="text-2xl tracking-wider">{recordType}</h1>
-        </div>
-        <MdClose
-          size={24}
-          className="cursor-pointer my-auto w-1/12 mb-8 hover:font-bold hover:text-main2"
-          id="Close"
-          onClick={handleClose}
-        />
-      </header>
-
+      {/* header to display type is in parent */}
       <div className="pb-4 border-t-4" />
 
       {/* input fields start here */}
-      <section>
+      <section className=" motion-safe:animate-fadeIn">
         {/* #1 name */}
         <div className="flex flex-wrap justify-between mt-6">
           <div className="flex flex-wrap justify-start w-3/12">
@@ -132,10 +91,10 @@ const LogSection = ({ recordDate, recordType, confirmSubmit, setShowType }) => {
           />
         </div>
 
-        {/* #3 entry items */}
+        {/* #3 multientry */}
         <div className="py-3 border-b-2 border-purpleMain border-opacity-50" />
 
-        {/* add id to LogEntry + convert to function to count number of times */}
+        {/* # mapped entry item*/}
         {entryCount.map((item) => {
           return (
             <LogEntry
@@ -147,8 +106,33 @@ const LogSection = ({ recordDate, recordType, confirmSubmit, setShowType }) => {
           );
         })}
 
-        {/* #4 confirmation */}
+        {/* #4 confirmation + add/delete options */}
         <div className="py-2 border-b-2 border-purpleMain border-opacity-50" />
+
+        {lastSection && (
+          <div className="flex flex-wrap justify-between mt-9">
+            <MdLibraryAddCheck
+              size={35}
+              className="cursor-pointer text-greenAccent hover:text-greenMain hover:shadow-xl"
+              id={"Submit"}
+              onClick={handleSubmit}
+            />
+            <div className="flex flex-wrap">
+              <MdDelete
+                size={35}
+                className="cursor-pointer text-purpleAccent hover:text-orangeMain hover:shadow-xl mr-4"
+                id={"Remove"}
+                onClick={handleRemove}
+              />
+              <MdAddCircle
+                size={35}
+                className="cursor-pointer text-purpleAccent hover:text-greenMain hover:shadow-xl"
+                id={"Add"}
+                onClick={handleAdd}
+              />
+            </div>
+          </div>
+        )}
       </section>
     </>
   );
