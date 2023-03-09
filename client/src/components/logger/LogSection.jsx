@@ -2,10 +2,14 @@ import React, { useState, useEffect } from "react";
 import InputLogger from "../Interactions/InputLogger";
 import LogEntry from "./LogEntry";
 
-import { MdLibraryAddCheck, MdAddCircle, MdDelete } from "react-icons/md";
-
 // START OF COMPONENT ***********************************************************************************************************************
-const LogSection = ({ recordDate, recordType, confirmSubmit }) => {
+const LogSection = ({
+  access,
+  recordDate,
+  recordType,
+  createEntries,
+  setFetchStatus,
+}) => {
   // functions ----------------------------------------------------------------------------------------------------
   function isObject(value) {
     return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -32,15 +36,11 @@ const LogSection = ({ recordDate, recordType, confirmSubmit }) => {
     });
   };
 
-  const handleSubmit = () => {};
-
-  // effects ------------------------------------------------------------------------------------------------------
-
   // render component --------------------------------------------------------------------------------------------
   return (
     <>
       {/* header to display type is in parent */}
-      <div className="pb-4 border-t-4 mt-6" />
+      <div className="pb-4 border-t-2 mt-6" />
 
       {/* input fields start here */}
       <section className=" motion-safe:animate-fadeIn">
@@ -82,9 +82,12 @@ const LogSection = ({ recordDate, recordType, confirmSubmit }) => {
           return (
             <LogEntry
               id={item}
+              access={access}
               sectionInput={sectionInput}
               entryCount={entryCount}
               setEntryCount={setEntryCount}
+              createEntries={createEntries}
+              setFetchStatus={setFetchStatus}
             />
           );
         })}

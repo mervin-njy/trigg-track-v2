@@ -34,7 +34,7 @@ CREATE TABLE "user" (
 CREATE TABLE "record" (
   "id" SERIAL PRIMARY KEY,
   "logger_username" VARCHAR(100),
-  "date" DATE,
+  "date" DATE UNIQUE,
   CONSTRAINT "fk_username"
     FOREIGN KEY ("logger_username")
         REFERENCES "user" ("username") ON DELETE CASCADE

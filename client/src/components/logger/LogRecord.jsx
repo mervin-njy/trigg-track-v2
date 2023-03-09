@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import useFetch from "../../hooks/useFetch";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import {
   MdEdit,
@@ -12,7 +14,6 @@ import {
 } from "react-icons/md";
 
 import LoadingSpinner from "../Loading/LoadingSpinner";
-import ButtonNormalLogger from "../Interactions/ButtonNormalLogger";
 import ButtonPromptLogger from "../Interactions/ButtonPromptLogger";
 import LogSection from "./LogSection";
 
@@ -48,7 +49,9 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
   const [showVariable, setShowVariable] = useState(false); // for showing variable form section => TODO: change to {id: bool}
   const [dateEdit, setDateEdit] = useState(false); // for showing date edit field
   const [dateExists, setDateExists] = useState(false); // for checking if editted date exists in record already
-  const [confirmSubmit, setConfirmSubmit] = useState(false); // final check for creating
+  const [confirmSubmit, setConfirmSubmit] = useState(false); // for createRecords
+  const [createEntries, setCreateEntries] = useState(false); // for createEntry(s)
+  const [fetchStatus, setFetchStatus] = useState(false); // final check for creating
   const { fetchData, isLoading, data, error } = useFetch();
   const [recordInput, setRecordInput] = useState({
     username: loggerInfo.username,
@@ -108,7 +111,7 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
           });
         });
       } else {
-        alert("Don't remove the last one!");
+        alert("No more to remove!");
       }
     }
 
@@ -123,12 +126,15 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
           });
         });
       } else {
-        alert("Don't remove the last one!");
+        alert("No more to remove!");
       }
     }
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = (event) => {
+    console.log("LogRecord - submitting records w/", event.target.id);
+    setConfirmSubmit(true);
+  };
 
   const handleClose = (event) => {
     event.preventDefault();
@@ -192,6 +198,7 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
       // 2. for checking if createRecord === successful
       if (data.message === "record created") {
         console.log("record creation success");
+        setCreateEntries(true);
       }
     }
   }, [data]);
@@ -219,24 +226,56 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
 
       fetchData(fetchURL, fetchOptions);
     }
-  }, [confirmSubmit]); // triggered upon change in date input => create newID & get new ID to add for entries
+  }, [confirmSubmit]); // triggered upon change in date input => creates a newID that can be linked with date for adding entries
+
+  useEffect(() => {
+    if (createEntries) {
+      if (fetchStatus) {
+        toast(`Record creation succesful!`, {
+          position: toast.POSITION.TOP_CENTER,
+          theme: "dark",
+          autoClose: 10000,
+          hideProgressBar: true,
+          className:
+            "bg-main7 text-greenAccent border-2 border-main3 rounded-4",
+        });
+      } else {
+        toast(`Record creation is not successful.`, {
+          position: toast.POSITION.TOP_CENTER,
+          theme: "dark",
+          autoClose: 10000,
+          hideProgressBar: true,
+          className: "bg-main7 text-orangeMain border-2 border-main3 rounded-4",
+        });
+      }
+    }
+  }, [fetchStatus]);
 
   // render component --------------------------------------------------------------------------------------------
   return (
     <>
+      <ToastContainer />
       {/* header: date */}
-      <header className="flex flex-wrap justify-start mb-8">
-        <h2 className="tracking-wider text-4xl font-800 mr-8">Record for:</h2>
-        {/* TODO: add state to toggle to form input */}
-        <h2 className="tracking-widest text-4xl font-800 mr-8 text-purpleAccent">
-          {recordInput.date}
-        </h2>
-        <MdEdit
-          size={30}
-          className="cursor-pointer text-main2 hover:text-blueAccent hover:shadow-xl my-auto ml-8"
-          id={"Date"}
-          onClick={handleEdit}
-        />
+      <header className="flex flex-wrap justify-between">
+        <div className="flex flex-wrap justify-start mb-8">
+          <h2 className="tracking-wider text-4xl font-800 mx-3">Record for:</h2>
+          {/* TODO: add state to toggle to form input */}
+          <h2 className="tracking-widest text-4xl font-800 ml-12 text-purpleAccent">
+            {recordInput.date}
+          </h2>
+          <MdEdit
+            size={30}
+            className="cursor-pointer ml-16 text-main2 hover:text-blueAccent hover:shadow-xl my-auto"
+            id={"Date"}
+            onClick={handleEdit}
+          />
+          <MdLibraryAddCheck
+            size={35}
+            className="cursor-pointer my-auto ml-4 text-greenAccent hover:text-greenMain hover:shadow-xl"
+            id={"All Records"}
+            onClick={handleSubmit}
+          />
+        </div>
       </header>
 
       {/* body: display form sections - Left: conditions; Right: variables */}
@@ -283,34 +322,28 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
               {conditionCount.map((item) => {
                 return (
                   <LogSection
+                    access={loggerInfo.access}
                     recordDate={recordInput.date}
                     recordType={"Condition"}
                     confirmSubmit={confirmSubmit}
+                    setFetchStatus={setFetchStatus}
                   />
                 );
               })}
 
-              <div className="flex flex-wrap justify-between mt-9">
-                <MdLibraryAddCheck
+              <div className="flex flex-wrap justify-end mt-9">
+                <MdDelete
                   size={35}
-                  className="cursor-pointer text-greenAccent hover:text-greenMain hover:shadow-xl"
+                  className="cursor-pointer text-purpleAccent hover:text-orangeMain hover:shadow-xl mr-4"
                   id={"NextCondition"}
-                  onClick={handleSubmit}
+                  onClick={handleRemove}
                 />
-                <div className="flex flex-wrap">
-                  <MdDelete
-                    size={35}
-                    className="cursor-pointer text-purpleAccent hover:text-orangeMain hover:shadow-xl mr-4"
-                    id={"NextCondition"}
-                    onClick={handleRemove}
-                  />
-                  <MdAddCircle
-                    size={35}
-                    className="cursor-pointer text-purpleAccent hover:text-greenMain hover:shadow-xl"
-                    id={"NextCondition"}
-                    onClick={handleAddType}
-                  />
-                </div>
+                <MdAddCircle
+                  size={35}
+                  className="cursor-pointer text-purpleAccent hover:text-greenMain hover:shadow-xl"
+                  id={"NextCondition"}
+                  onClick={handleAddType}
+                />
               </div>
             </>
           )}
@@ -356,34 +389,28 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
               {variableCount.map((item) => {
                 return (
                   <LogSection
+                    access={loggerInfo.access}
                     recordDate={recordInput.date}
                     recordType={"Variable"}
-                    confirmSubmit={confirmSubmit}
+                    createEntries={createEntries}
+                    setFetchStatus={setFetchStatus}
                   />
                 );
               })}
 
-              <div className="flex flex-wrap justify-between mt-9">
-                <MdLibraryAddCheck
+              <div className="flex flex-wrap justify-end mt-9">
+                <MdDelete
                   size={35}
-                  className="cursor-pointer text-greenAccent hover:text-greenMain hover:shadow-xl"
+                  className="cursor-pointer text-purpleAccent hover:text-orangeMain hover:shadow-xl mr-4"
                   id={"NextVariable"}
-                  onClick={handleSubmit}
+                  onClick={handleRemove}
                 />
-                <div className="flex flex-wrap">
-                  <MdDelete
-                    size={35}
-                    className="cursor-pointer text-purpleAccent hover:text-orangeMain hover:shadow-xl mr-4"
-                    id={"NextVariable"}
-                    onClick={handleRemove}
-                  />
-                  <MdAddCircle
-                    size={35}
-                    className="cursor-pointer text-purpleAccent hover:text-greenMain hover:shadow-xl"
-                    id={"NextVariable"}
-                    onClick={handleAddType}
-                  />
-                </div>
+                <MdAddCircle
+                  size={35}
+                  className="cursor-pointer text-purpleAccent hover:text-greenMain hover:shadow-xl"
+                  id={"NextVariable"}
+                  onClick={handleAddType}
+                />
               </div>
             </>
           )}

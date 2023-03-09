@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useFetch from "../../hooks/useFetch";
 import LoadingSpinner from "../Loading/LoadingSpinner";
 import InputLogger from "../Interactions/InputLogger";
@@ -7,7 +7,20 @@ import TextAreaLogger from "../Interactions/TextAreaLogger";
 import { MdAddCircle, MdDelete } from "react-icons/md";
 
 // START OF COMPONENT ***********************************************************************************************************************
-const LogEntry = ({ id, sectionInput, entryCount, setEntryCount }) => {
+const LogEntry = ({
+  id,
+  access,
+  sectionInput,
+  entryCount,
+  setEntryCount,
+  createEntries,
+  setFetchStatus,
+}) => {
+  // functions ----------------------------------------------------------------------------------------------------
+  function isObject(value) {
+    return typeof value === "object" && value !== null && !Array.isArray(value);
+  }
+
   // states -------------------------------------------------------------------------------------------------------
   const { fetchData, isLoading, data, error } = useFetch();
   const [entryInput, setEntryInput] = useState({
@@ -60,8 +73,42 @@ const LogEntry = ({ id, sectionInput, entryCount, setEntryCount }) => {
       });
     }
   };
-  
-  const handleSubmit = () => {};
+
+  // effects ------------------------------------------------------------------------------------------------------
+  // #1 - http request - on confirm submit - createEntry (multiple) here + createRecord in parent
+  useEffect(() => {
+    if (createEntries) {
+      const controller = new AbortController();
+      const fetchURL = `http://127.0.0.1:5001/logger/createEntry`;
+      const fetchOptions = {
+        method: "PUT",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${access}`,
+        },
+        body: JSON.stringify({ ...sectionInput, ...entryInput }),
+        signal: controller.signal,
+      };
+
+      console.log(
+        "LogEntry - ",
+        "useEffect triggered:",
+        "LOGGER - PUT /createEntry"
+      );
+
+      fetchData(fetchURL, fetchOptions);
+    }
+  }, [createEntries]); // triggered upon change in date input => creates a newID that can be linked with date for adding entries
+
+  // #2 - check if data is not null (object is true) => obtain dates to compare w/ current date
+  useEffect(() => {
+    if (isObject(data)) {
+      // 1. for checking date in records
+      if (data.message === "record entry created") {
+        setFetchStatus(true);
+      }
+    }
+  }, [data]);
 
   // render component --------------------------------------------------------------------------------------------
   return (
