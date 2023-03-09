@@ -9,8 +9,8 @@ import {
 } from "react-icons/fa";
 import { MdRemoveModerator } from "react-icons/md";
 // import ButtonAdmin from "../Interactions/ButtonAdmin";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import { ToastContainer, toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 
 import useFetch from "../../hooks/useFetch";
 import LoadingSpinner from "../Loading/LoadingSpinner";
@@ -195,7 +195,7 @@ const AccountManager = ({ adminInfo }) => {
   return (
     <div>
       {/* display confirmation messages */}
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       {/* Display date's contents if fetched success and loaded */}
       {!isLoading && usersData && (
         <div>
