@@ -203,7 +203,7 @@ const AccountManager = ({ adminInfo }) => {
             return (
               <div
                 key={id}
-                className="h-max py-8 px-12 border-solid border-2 rounded-xl mx-2 my-10 hover:motion-safe:animate-pulsateLittle hover:border-main4 hover:border-4 hover:shadow-3xl"
+                className="h-max py-8 px-12 border-solid border-1 rounded-xl mx-2 my-10 hover:motion-safe:animate-pulsateLittle hover:border-orangeMain hover:border-2 hover:shadow-3xl"
               >
                 {/* show main header  */}
                 <div className="flex flex-wrap justify-between">
