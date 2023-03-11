@@ -11,7 +11,7 @@ Reiterated version of [trigg.track.](https://github.com/mervin-njy/trigg-track),
 |       HTTP requests | Read                  | CRUD                 |
 | User Authentication | -                     | yes                  |
 
-There is more emphasis on designing on the SQL database, which can be found [here](#Database tables & relationships). There is a need for a logger-service table to link data between connected users, although the project hasn't included that functionality as of now.
+There is more emphasis on designing on the SQL database, which can be found [here](### Database tables & relationships). There is a need for a logger-service table to link data between connected users, although the project hasn't included that functionality as of now.
 
 THe project also incoporates user authentication as well, through protected routes with the controller. The passwords are hashed with bcrypt, and access/refresh tokens are generated with Json Web Tokens (JWTs). However, the actual JWT log out is not implmented as of now.
 
@@ -52,6 +52,12 @@ Apart from admin users, there are two main types of users.
 ![database tables & relationships](./diagrams/database/display-db-rs.drawio.svg)
 
 #### Snapshots
+
+![welcome page](./diagrams/snapshots/welcome-page.png)
+
+![records adding page](./diagrams/snapshots/add-records-page.png)
+
+![admin page](./diagrams/snapshots/admin-page.png)
 
 ## Installation / Dependencies
 
