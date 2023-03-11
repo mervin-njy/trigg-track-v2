@@ -132,15 +132,14 @@ const getUsers = async (req, res) => {
       );
 
       res.json(users.rows);
+    } else {
+      // if other users - don't show admin users
+      const users = await pool.query(
+        `SELECT "username", "user_type", "access_type", "display_name", "profile_picture", "profession", "email", "bio", "overall_rating" FROM "user" WHERE "user_type" != $1`,
+        ["Admin"]
+      );
+      res.json(users.rows);
     }
-    // else {
-    //   // don't show admin - TO REMOVE
-    //   const users = await pool.query(
-    //     `SELECT "username", "user_type", "access_type", "display_name", "profile_picture", "profession", "email", "bio", "overall_rating" FROM "user" WHERE "user_type" != $1`,
-    //     ["Admin"]
-    //   );
-    //   res.json(users.rows);
-    // }
   } catch (error) {
     console.log("GET /getUsers", error);
     res.status(400).json({ status: "error", message: error.message });
