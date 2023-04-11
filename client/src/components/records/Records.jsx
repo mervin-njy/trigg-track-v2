@@ -11,6 +11,7 @@ const Records = ({ loggedUserData }) => {
   }
 
   // states -------------------------------------------------------------------------------------------------------
+  const [searchEntries, setSearchEntries] = useState(false);
   const [entriesOptions, setEntriesOptions] = useState({
     username: loggedUserData.username,
     date: "",
@@ -46,10 +47,34 @@ const Records = ({ loggedUserData }) => {
     );
 
     fetchData(fetchURL, fetchOptions);
-  }, []);
+  }, [searchEntries]);
 
   return (
-    <>
+    <div className="w-9/12 mt-40 mb-40 mx-auto">
+      <section>
+        <h2 className="">Select month to display:</h2>
+        <div className="flex flex-wrap">
+          <Select
+            id="year"
+            className={styles.displaySelect}
+            onChange={handleSelectionChange}
+            optionValues={date.years}
+          />
+          <Select
+            id="month"
+            className={styles.displaySelect}
+            onChange={handleSelectionChange}
+            optionValues={date.months}
+          />
+          <Select
+            id="month"
+            className={styles.displaySelect}
+            onChange={handleSelectionChange}
+            optionValues={date.months}
+          />
+        </div>
+      </section>
+
       {Object.keys(loggedUserData).map((element, ind) => {
         return (
           <div className="flex flex-wrap justify-between mb-8">
@@ -59,7 +84,7 @@ const Records = ({ loggedUserData }) => {
           </div>
         );
       })}
-    </>
+    </div>
   );
 };
 
