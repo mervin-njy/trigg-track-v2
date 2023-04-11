@@ -57,37 +57,41 @@ const Records = ({ loggedUserData }) => {
   return (
     <div className="w-9/12 mt-40 mb-40 mx-auto">
       <section>
-        <h1 className="text-2xl tracking-wider mb-14">
+        <h1 className="text-2xl tracking-wider mb-12">
           Select range of dates to display:
         </h1>
-        <div className="flex flex-wrap justify-between mb-14">
-          <div className="flex flex-wrap justify-start">
-            <select
-              id="year"
-              className="p-4"
-              onChange={handleSelectionChange}
-              optionValues={["2023", "2022"]}
-            />
-            <select
-              id="month"
-              className="p-4"
-              onChange={handleSelectionChange}
-              optionValues={["01", "02"]}
-            />
-            <select
-              id="day"
-              className="p-4"
-              onChange={handleSelectionChange}
-              optionValues={["01", "02"]}
-            />
-          </div>
+        <div className="flex flex-wrap justify-start mb-14">
+          <select
+            id="year"
+            className="w-2/12 p-4 border-solid border-2 rounded-2xl bg-black text-white text-4xl"
+            onChange={handleSelectionChange}
+          >
+            <option value="2023"></option>
+            <option value="2022"></option>
+          </select>
+          <select
+            id="month"
+            className="w-2/12 p-4 border-solid border-2 rounded-2xl bg-black text-white text-4xl"
+            onChange={handleSelectionChange}
+          >
+            <option value="01"></option>
+            <option value="02"></option>
+          </select>
+          <select
+            id="day"
+            className="w-2/12 p-4 border-solid border-2 rounded-2xl bg-black text-white text-4xl"
+            onChange={handleSelectionChange}
+          >
+            <option value="01"></option>
+            <option value="02"></option>
+          </select>
           <ButtonGeneral
             displayName={"view dates"}
             category={"entries"}
             width={"16rem"}
             fontSize={"1.3rem"}
             padding={"0.4rem"}
-            margin={"1rem 0"}
+            margin={"1rem 0 1rem 2rem"}
             onClick={handleClick}
           />
         </div>
