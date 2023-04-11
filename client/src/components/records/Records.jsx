@@ -20,9 +20,13 @@ const Records = ({ loggedUserData }) => {
   const { fetchData, isLoading, data, error } = useFetch();
 
   //   event handlers ---------------------------------------------------------------------------------------------
-  const handleChange = (event) => {
-    console.log("Records - selection changed: ", event.target.name);
-    setEntriesOptions(true);
+  const handleSelectionChange = (event) => {
+    console.log("Records - selection changed: ", event.target.id);
+    // setEntriesOptions(true); => combine YYYY-MM-DD for entriesOptions.date
+  };
+
+  const handleClick = (event) => {
+    console.log(event.target);
   };
 
   // effects ------------------------------------------------------------------------------------------------------
@@ -58,23 +62,23 @@ const Records = ({ loggedUserData }) => {
         </h1>
         <div className="flex flex-wrap justify-between mb-14">
           <div className="flex flex-wrap justify-start">
-            <Select
+            <select
               id="year"
-              className={styles.displaySelect}
+              className="p-4"
               onChange={handleSelectionChange}
-              optionValues={date.years}
+              optionValues={["2023", "2022"]}
             />
-            <Select
+            <select
               id="month"
-              className={styles.displaySelect}
+              className="p-4"
               onChange={handleSelectionChange}
-              optionValues={date.months}
+              optionValues={["01", "02"]}
             />
-            <Select
-              id="month"
-              className={styles.displaySelect}
+            <select
+              id="day"
+              className="p-4"
               onChange={handleSelectionChange}
-              optionValues={date.months}
+              optionValues={["01", "02"]}
             />
           </div>
           <ButtonGeneral
