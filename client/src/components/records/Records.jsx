@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useFetch from "../../hooks/useFetch";
 
 const Records = ({ loggedUserData }) => {
   // variables ----------------------------------------------------------------------------------------------------
-  const date = new Date().toISOString().split("T")[0];
+  const defaultDate = new Date().toISOString().split("T")[0].slice(0, 7); // get current month
 
   // functions ----------------------------------------------------------------------------------------------------
   function isObject(value) {
@@ -14,7 +14,7 @@ const Records = ({ loggedUserData }) => {
   const [searchEntries, setSearchEntries] = useState(false);
   const [entriesOptions, setEntriesOptions] = useState({
     username: loggedUserData.username,
-    date: "",
+    date: defaultDate,
   });
   const { fetchData, isLoading, data, error } = useFetch();
 
@@ -52,7 +52,7 @@ const Records = ({ loggedUserData }) => {
   return (
     <div className="w-9/12 mt-40 mb-40 mx-auto">
       <section>
-        <h2 className="">Select month to display:</h2>
+        <h2 className="">Select range of dates to display:</h2>
         <div className="flex flex-wrap">
           <Select
             id="year"
