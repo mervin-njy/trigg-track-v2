@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import useFetch from "../../hooks/useFetch";
+import ButtonGeneral from "../Interactions/ButtonGeneral";
 
 const Records = ({ loggedUserData }) => {
   // variables ----------------------------------------------------------------------------------------------------
@@ -52,25 +53,38 @@ const Records = ({ loggedUserData }) => {
   return (
     <div className="w-9/12 mt-40 mb-40 mx-auto">
       <section>
-        <h2 className="">Select range of dates to display:</h2>
-        <div className="flex flex-wrap">
-          <Select
-            id="year"
-            className={styles.displaySelect}
-            onChange={handleSelectionChange}
-            optionValues={date.years}
-          />
-          <Select
-            id="month"
-            className={styles.displaySelect}
-            onChange={handleSelectionChange}
-            optionValues={date.months}
-          />
-          <Select
-            id="month"
-            className={styles.displaySelect}
-            onChange={handleSelectionChange}
-            optionValues={date.months}
+        <h1 className="text-2xl tracking-wider mb-14">
+          Select range of dates to display:
+        </h1>
+        <div className="flex flex-wrap justify-between mb-14">
+          <div className="flex flex-wrap justify-start">
+            <Select
+              id="year"
+              className={styles.displaySelect}
+              onChange={handleSelectionChange}
+              optionValues={date.years}
+            />
+            <Select
+              id="month"
+              className={styles.displaySelect}
+              onChange={handleSelectionChange}
+              optionValues={date.months}
+            />
+            <Select
+              id="month"
+              className={styles.displaySelect}
+              onChange={handleSelectionChange}
+              optionValues={date.months}
+            />
+          </div>
+          <ButtonGeneral
+            displayName={"view dates"}
+            category={"entries"}
+            width={"16rem"}
+            fontSize={"1.3rem"}
+            padding={"0.4rem"}
+            margin={"1rem 0"}
+            onClick={handleClick}
           />
         </div>
       </section>
