@@ -28,15 +28,26 @@ const RecordSelection = ({
     return options;
   }
 
+  // states -------------------------------------------------------------------------------------------------------
+  const [selectedDate, setSelectedDate] = useState({
+    year: defaultYear,
+    month: defaultMonth,
+    day: "",
+  });
+
   // event handlers ---------------------------------------------------------------------------------------------
   const handleSelectionChange = (event) => {
     console.log("RecordSelection - selection changed: ", event.target.id);
     console.log(entriesOptions.date, currentMonthDays);
-    // setEntriesOptions(true); => combine YYYY-MM-DD for entriesOptions.date
+    setSelectedDate((prevSelectedDate) => {
+      return { ...prevSelectedDate, [event.target.id]: event.target.value };
+    });
   };
 
   const handleClick = (event) => {
-    console.log("RecordSelection - submit selection", event.target);
+    console.log("RecordSelection - submit selection", selectedDate);
+    // setEntriesOptions => combine YYYY-MM-DD function from selectedDate state
+    // setSearchEntries(true);
   };
 
   // effects ------------------------------------------------------------------------------------------------------
@@ -75,6 +86,7 @@ const RecordSelection = ({
           id="year"
           className="w-2/12 py-2 px-4 border-solid border-2 rounded-lg border-mainDarkest mr-2 bg-main3 text-mainDarkest text-2xl font-semibold tracking-wider"
           onChange={handleSelectionChange}
+          value={selectedDate.year}
         >
           {getDateOptions(defaultYear, 10, 4).map((val, ind) => {
             return (
@@ -92,6 +104,7 @@ const RecordSelection = ({
           id="month"
           className="w-2/12 py-2 px-4 border-solid border-2 rounded-lg border-mainDarkest mr-2 bg-main3 text-mainDarkest text-2xl font-semibold tracking-wider"
           onChange={handleSelectionChange}
+          value={selectedDate.month}
         >
           {getDateOptions(13, 12, 2).map((val, ind) => {
             return (
@@ -100,15 +113,13 @@ const RecordSelection = ({
               </option>
             );
           })}
-          <option selected key={defaultMonth} value={defaultMonth}>
-            {defaultMonth}
-          </option>
         </select>
 
         <select
           id="day"
           className="w-2/12 py-2 px-4 border-solid border-2 rounded-lg border-mainDarkest mr-2 bg-main3 text-mainDarkest text-2xl font-semibold tracking-wider"
           onChange={handleSelectionChange}
+          value={selectedDate.day}
         >
           {getDateOptions(currentMonthDays + 1, currentMonthDays, 2).map(
             (val, ind) => {
