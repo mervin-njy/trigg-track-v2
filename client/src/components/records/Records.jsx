@@ -5,7 +5,6 @@ import RecordSelection from "./RecordSelection";
 
 const Records = ({ loggedUserData }) => {
   // variables ----------------------------------------------------------------------------------------------------
-  const defaultDate = new Date().toISOString().split("T")[0].slice(0, 7); // get current month
 
   // functions ----------------------------------------------------------------------------------------------------
   function isObject(value) {
@@ -16,7 +15,7 @@ const Records = ({ loggedUserData }) => {
   const [searchEntries, setSearchEntries] = useState(false);
   const [entriesOptions, setEntriesOptions] = useState({
     username: loggedUserData.username,
-    date: defaultDate,
+    date: "",
   });
   const { fetchData, isLoading, data, error } = useFetch();
 
@@ -44,7 +43,7 @@ const Records = ({ loggedUserData }) => {
       "LOGGER - POST /getRecordEntries"
     );
 
-    // fetchData(fetchURL, fetchOptions);
+    fetchData(fetchURL, fetchOptions);
     console.log("fetching data");
   }, [searchEntries]);
 
@@ -52,16 +51,13 @@ const Records = ({ loggedUserData }) => {
   return (
     <div className="w-9/12 mt-40 mb-40 mx-auto">
       <RecordSelection
-        entriesOptions={entriesOptions}
         setEntriesOptions={setEntriesOptions}
         setSearchEntries={setSearchEntries}
       />
 
-      {searchEntries && (
-        <h2 className="tracking-wider text-4xl font-800 mx-3">
-          {entriesOptions.date}
-        </h2>
-      )}
+      <h2 className="tracking-wider text-4xl font-800 mx-3">
+        {entriesOptions.date}
+      </h2>
 
       {Object.keys(loggedUserData).map((element, ind) => {
         return (

@@ -5,14 +5,11 @@ import ButtonGeneral from "../Interactions/ButtonGeneral";
 // 1. get existing recorded dates as select options
 // 2. if no options available => queue to log details, or other options
 
-const RecordSelection = ({
-  entriesOptions,
-  setEntriesOptions,
-  setSearchEntries,
-}) => {
+const RecordSelection = ({ setEntriesOptions, setSearchEntries }) => {
   // variables ----------------------------------------------------------------------------------------------------
-  const defaultYear = entriesOptions.date.split("-")[0];
-  const defaultMonth = entriesOptions.date.split("-")[1];
+  const defaultDate = new Date().toISOString().split("T")[0].slice(0, 7); // get current month
+  const defaultYear = defaultDate.split("-")[0];
+  const defaultMonth = defaultDate.split("-")[1];
   const currentMonthDays = getDaysOfMonth(defaultYear, defaultMonth);
 
   // functions ----------------------------------------------------------------------------------------------------
@@ -22,24 +19,28 @@ const RecordSelection = ({
 
   // generates dropdown options of for each select element (YYYY, MM, DD)
   function getDateOptions(lastVal, total, digits) {
-    const options = [];
+    const options = digits === 4 ? [] : ["-"]; // allow empty option for MM & DD
     for (let i = lastVal - total; i < lastVal; i++) {
       options.push(("0" + i).slice(-digits)); // add 0 at the front to single digits
     }
     return options;
   }
 
+  function checkVal(val) {
+    return val !== "-" ? "-" + val : "";
+  }
+
   // states -------------------------------------------------------------------------------------------------------
   const [selectedDate, setSelectedDate] = useState({
     year: defaultYear,
     month: defaultMonth,
-    day: "",
+    day: "-",
   });
 
   // event handlers ---------------------------------------------------------------------------------------------
   const handleSelectionChange = (event) => {
     console.log("RecordSelection - selection changed: ", event.target.id);
-    console.log(selectedDate.date, currentMonthDays);
+    console.log(selectedDate, currentMonthDays);
     setSelectedDate((prevSelectedDate) => {
       return { ...prevSelectedDate, [event.target.id]: event.target.value };
     });
@@ -47,21 +48,16 @@ const RecordSelection = ({
 
   const handleClick = (event) => {
     console.log("RecordSelection - submit selection", selectedDate);
-    // setEntriesOptions => combine YYYY-MM-DD function from selectedDate state
-
-    const submitDate = Object.values(selectedDate).reduce((acc, elem, ind) => {
-      if (elem !== "-") {
-        acc += elem;
-        if (ind !== 2) acc += "-";
-      }
-
-      return acc;
-    }, "");
+    // combine YYYY-MM-DD function from selectedDate state
+    const submitDate =
+      selectedDate.year +
+      checkVal(selectedDate.month) +
+      checkVal(selectedDate.day);
 
     setEntriesOptions((prevEntriesOptions) => {
       return { ...prevEntriesOptions, date: submitDate };
     });
-    setSearchEntries(true);
+    setSearchEntries((prevSearchEntries) => !prevSearchEntries);
   };
 
   // effects ------------------------------------------------------------------------------------------------------
@@ -135,15 +131,17 @@ const RecordSelection = ({
           onChange={handleSelectionChange}
           value={selectedDate.day}
         >
-          {getDateOptions(currentMonthDays + 1, currentMonthDays, 2).map(
-            (val, ind) => {
-              return (
-                <option key={ind} value={val}>
-                  {val}
-                </option>
-              );
-            }
-          )}
+          {getDateOptions(
+            getDaysOfMonth(selectedDate.year, selectedDate.month) + 1,
+            getDaysOfMonth(selectedDate.year, selectedDate.month),
+            2
+          ).map((val, ind) => {
+            return (
+              <option key={ind} value={val}>
+                {val}
+              </option>
+            );
+          })}
         </select>
 
         <ButtonGeneral
