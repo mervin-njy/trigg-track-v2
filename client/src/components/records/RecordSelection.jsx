@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ButtonGeneral from "../Interactions/ButtonGeneral";
 
 // TODO:
@@ -20,10 +20,12 @@ const RecordSelection = ({
     return new Date(year, month, 0).getDate();
   }
 
-  function getDateOptions(lastVal, total) {
+  function getDateOptions(lastVal, total, digits) {
+    const options = [];
     for (let i = lastVal - total; i < lastVal; i++) {
-      return <option value="01">{"01"}</option>;
+      options.push(("0" + i).slice(-digits)); // add 0 at the front to single digits
     }
+    return options;
   }
 
   // event handlers ---------------------------------------------------------------------------------------------
@@ -74,25 +76,51 @@ const RecordSelection = ({
           className="w-2/12 py-2 px-4 border-solid border-2 rounded-lg border-mainDarkest mr-2 bg-main3 text-mainDarkest text-2xl font-semibold tracking-wider"
           onChange={handleSelectionChange}
         >
-          <option value="2023">{"2023"}</option>
-          <option value="2022">{"2022"}</option>
+          {getDateOptions(defaultYear, 10, 4).map((val, ind) => {
+            return (
+              <option key={ind} value={val}>
+                {val}
+              </option>
+            );
+          })}
+          <option selected key={defaultYear} value={defaultYear}>
+            {defaultYear}
+          </option>
         </select>
+
         <select
           id="month"
           className="w-2/12 py-2 px-4 border-solid border-2 rounded-lg border-mainDarkest mr-2 bg-main3 text-mainDarkest text-2xl font-semibold tracking-wider"
           onChange={handleSelectionChange}
         >
-          <option value="01">{"01"}</option>
-          <option value="02">{"02"}</option>
+          {getDateOptions(13, 12, 2).map((val, ind) => {
+            return (
+              <option key={ind} value={val}>
+                {val}
+              </option>
+            );
+          })}
+          <option selected key={defaultMonth} value={defaultMonth}>
+            {defaultMonth}
+          </option>
         </select>
+
         <select
           id="day"
           className="w-2/12 py-2 px-4 border-solid border-2 rounded-lg border-mainDarkest mr-2 bg-main3 text-mainDarkest text-2xl font-semibold tracking-wider"
           onChange={handleSelectionChange}
         >
-          <option value="01">{"01"}</option>
-          <option value="02">{"02"}</option>
+          {getDateOptions(currentMonthDays + 1, currentMonthDays, 2).map(
+            (val, ind) => {
+              return (
+                <option key={ind} value={val}>
+                  {val}
+                </option>
+              );
+            }
+          )}
         </select>
+
         <ButtonGeneral
           displayName={"view dates"}
           category={"entries"}

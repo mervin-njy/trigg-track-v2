@@ -44,7 +44,8 @@ const Records = ({ loggedUserData }) => {
       "LOGGER - POST /getRecordEntries"
     );
 
-    fetchData(fetchURL, fetchOptions);
+    // fetchData(fetchURL, fetchOptions);
+    console.log("fetching data");
   }, [searchEntries]);
 
   // render component ---------------------------------------------------------------------------------------------
@@ -58,10 +59,8 @@ const Records = ({ loggedUserData }) => {
 
       {Object.keys(loggedUserData).map((element, ind) => {
         return (
-          <div className="flex flex-wrap justify-between mb-8">
-            <h2 key={ind} className="tracking-wider text-4xl font-800 mx-3">
-              {element}
-            </h2>
+          <div key={ind} className="flex flex-wrap justify-between mb-8">
+            <h2 className="tracking-wider text-4xl font-800 mx-3">{element}</h2>
           </div>
         );
       })}
