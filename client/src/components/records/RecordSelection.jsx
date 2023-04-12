@@ -20,6 +20,7 @@ const RecordSelection = ({
     return new Date(year, month, 0).getDate();
   }
 
+  // generates dropdown options of for each select element (YYYY, MM, DD)
   function getDateOptions(lastVal, total, digits) {
     const options = [];
     for (let i = lastVal - total; i < lastVal; i++) {
@@ -38,7 +39,7 @@ const RecordSelection = ({
   // event handlers ---------------------------------------------------------------------------------------------
   const handleSelectionChange = (event) => {
     console.log("RecordSelection - selection changed: ", event.target.id);
-    console.log(entriesOptions.date, currentMonthDays);
+    console.log(selectedDate.date, currentMonthDays);
     setSelectedDate((prevSelectedDate) => {
       return { ...prevSelectedDate, [event.target.id]: event.target.value };
     });
@@ -47,7 +48,20 @@ const RecordSelection = ({
   const handleClick = (event) => {
     console.log("RecordSelection - submit selection", selectedDate);
     // setEntriesOptions => combine YYYY-MM-DD function from selectedDate state
-    // setSearchEntries(true);
+
+    const submitDate = Object.values(selectedDate).reduce((acc, elem, ind) => {
+      if (elem !== "-") {
+        acc += elem;
+        if (ind !== 2) acc += "-";
+      }
+
+      return acc;
+    }, "");
+
+    setEntriesOptions((prevEntriesOptions) => {
+      return { ...prevEntriesOptions, date: submitDate };
+    });
+    setSearchEntries(true);
   };
 
   // effects ------------------------------------------------------------------------------------------------------
@@ -106,7 +120,7 @@ const RecordSelection = ({
           onChange={handleSelectionChange}
           value={selectedDate.month}
         >
-          {getDateOptions(13, 12, 2).map((val, ind) => {
+          {getDateOptions(12 + 1, 12, 2).map((val, ind) => {
             return (
               <option key={ind} value={val}>
                 {val}

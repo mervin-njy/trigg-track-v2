@@ -57,10 +57,16 @@ const Records = ({ loggedUserData }) => {
         setSearchEntries={setSearchEntries}
       />
 
+      {searchEntries && (
+        <h2 className="tracking-wider text-4xl font-800 mx-3">
+          {entriesOptions.date}
+        </h2>
+      )}
+
       {Object.keys(loggedUserData).map((element, ind) => {
         return (
           <div key={ind} className="flex flex-wrap justify-between mb-8">
-            <h2 className="tracking-wider text-4xl font-800 mx-3">{element}</h2>
+            <h2 className="tracking-wider text-2xl font-800 mx-3">{element}</h2>
           </div>
         );
       })}
