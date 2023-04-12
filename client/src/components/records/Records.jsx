@@ -57,41 +57,41 @@ const Records = ({ loggedUserData }) => {
   return (
     <div className="w-9/12 mt-40 mb-40 mx-auto">
       <section>
-        <h1 className="text-2xl tracking-wider mb-12">
+        <h1 className="text-3xl tracking-wider mb-8">
           Select range of dates to display:
         </h1>
         <div className="flex flex-wrap justify-start mb-14">
           <select
             id="year"
-            className="w-2/12 p-4 border-solid border-2 rounded-2xl bg-black text-white text-4xl"
+            className="w-2/12 py-2 px-4 border-solid border-2 rounded-lg border-mainDarkest mr-2 bg-main3 text-mainDarkest text-2xl font-semibold tracking-wider"
             onChange={handleSelectionChange}
           >
-            <option value="2023"></option>
-            <option value="2022"></option>
+            <option value="2023">{"2023"}</option>
+            <option value="2022">{"2022"}</option>
           </select>
           <select
             id="month"
-            className="w-2/12 p-4 border-solid border-2 rounded-2xl bg-black text-white text-4xl"
+            className="w-2/12 py-2 px-4 border-solid border-2 rounded-lg border-mainDarkest mr-2 bg-main3 text-mainDarkest text-2xl font-semibold tracking-wider"
             onChange={handleSelectionChange}
           >
-            <option value="01"></option>
-            <option value="02"></option>
+            <option value="01">{"01"}</option>
+            <option value="02">{"02"}</option>
           </select>
           <select
             id="day"
-            className="w-2/12 p-4 border-solid border-2 rounded-2xl bg-black text-white text-4xl"
+            className="w-2/12 py-2 px-4 border-solid border-2 rounded-lg border-mainDarkest mr-2 bg-main3 text-mainDarkest text-2xl font-semibold tracking-wider"
             onChange={handleSelectionChange}
           >
-            <option value="01"></option>
-            <option value="02"></option>
+            <option value="01">{"01"}</option>
+            <option value="02">{"02"}</option>
           </select>
           <ButtonGeneral
             displayName={"view dates"}
             category={"entries"}
-            width={"16rem"}
+            width={"14rem"}
             fontSize={"1.3rem"}
             padding={"0.4rem"}
-            margin={"1rem 0 1rem 2rem"}
+            margin={"0 5rem"}
             onClick={handleClick}
           />
         </div>
