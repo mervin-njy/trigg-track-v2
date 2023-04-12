@@ -26,14 +26,13 @@ const Records = ({ loggedUserData }) => {
   useEffect(() => {
     const controller = new AbortController();
     const fetchURL = `http://127.0.0.1:5001/user/getRecordEntries`;
-    // req.body => username + date
     const fetchOptions = {
       method: "POST",
       headers: {
         "Content-type": "application/json",
         Authorization: `Bearer ${loggedUserData.access}`,
       },
-      body: JSON.stringify({ entriesOptions }),
+      body: JSON.stringify(entriesOptions),
       signal: controller.signal,
     };
 
@@ -44,7 +43,7 @@ const Records = ({ loggedUserData }) => {
     );
 
     fetchData(fetchURL, fetchOptions);
-    console.log("fetching data");
+    console.log(entriesOptions);
   }, [searchEntries]);
 
   // render component ---------------------------------------------------------------------------------------------
@@ -55,9 +54,15 @@ const Records = ({ loggedUserData }) => {
         setSearchEntries={setSearchEntries}
       />
 
-      <h2 className="tracking-wider text-4xl font-800 mx-3">
-        {entriesOptions.date}
-      </h2>
+      <div className="flex flex-wrap justify-between mb-8">
+        <div className="w-9/20 h-max py-12 px-12 border-solid border-2 rounded-2xl mx-2 my-10">
+          <h2 className="tracking-wider text-4xl font-800 mx-3">
+            {entriesOptions.date}
+          </h2>
+          {/* display all record entries */}
+          <></>
+        </div>
+      </div>
 
       {Object.keys(loggedUserData).map((element, ind) => {
         return (
