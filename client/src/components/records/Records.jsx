@@ -46,6 +46,23 @@ const Records = ({ loggedUserData }) => {
     console.log(entriesOptions);
   }, [searchEntries]);
 
+  // #2 - check if data is not null (object is true) => obtain dates to compare w/ current date
+  useEffect(() => {
+    if (isObject(data)) {
+      // // 1. for checking date in records
+      // if (data.message === "record exists") {
+      //   setDateExists(false);
+      // } else if (data.message === "record date not found") {
+      //   setDateExists(true);
+      // }
+      // // 2. for checking if createRecord === successful
+      // if (data.message === "record created") {
+      //   console.log("record creation success");
+      //   setCreateEntries(true);
+      // }
+    }
+  }, [data]);
+
   // render component ---------------------------------------------------------------------------------------------
   return (
     <div className="w-9/12 mt-40 mb-40 mx-auto">
