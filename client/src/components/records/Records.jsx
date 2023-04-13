@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import useFetch from "../../hooks/useFetch";
 import RecordSelection from "./RecordSelection";
 import LoadingSpinner from "../Loading/LoadingSpinner";
+import RecordCard from "./RecordCard";
 
 const Records = ({ loggedUserData }) => {
   // variables ----------------------------------------------------------------------------------------------------
@@ -62,24 +63,34 @@ const Records = ({ loggedUserData }) => {
         setRecordExists(false);
       }
 
+      console.log(data.records);
       // 2. categorize data.records into arrays for each separate day
       // a. loop throuh data.records (rec, ind)
-      Array.isArray(data.records) &&
-        data.records.map((rec) => {
-          // b. if data.records.date !== entriesByDay.key => entriesByDay[data.records.date] = rec
-          // c. else => entriesByDay[data.records.date].push(rec);
-          console.log(rec);
+      isObject(data.records) &&
+        // data.records.map((rec) => {
+        //   // b. if data.records.date !== entriesByDay.key => entriesByDay[data.records.date] = rec
+        //   // c. else => entriesByDay[data.records.date].push(rec);
+        //   console.log("current entries;", entriesByDay);
+        //   console.log(rec);
 
-          return Object.entries(entriesByDay).includes(rec.date.split("T")[0])
-            ? setEntriesByDay((prevEntriesByDay) => {
-                const newState = { ...prevEntriesByDay };
-                newState[rec.date.split("T")[0]].push(rec);
-                return newState;
-              })
-            : setEntriesByDay((prevEntriesByDay) => {
-                return { ...prevEntriesByDay, [rec.date.split("T")[0]]: rec };
-              });
-        });
+        //   return Object.entries(entriesByDay).includes(rec.date)
+        //     ? setEntriesByDay((prevEntriesByDay) => {
+        //         const newState = { ...prevEntriesByDay };
+        //         newState[rec.date].push(rec);
+        //         return newState;
+        //       })
+        //     : setEntriesByDay((prevEntriesByDay) => {
+        //         return { ...prevEntriesByDay, [rec.date]: [rec] };
+        //       });
+        // });
+
+        setEntriesByDay(
+          Object.values(data.records).reduce((acc, rec) => {
+            rec.date in acc ? acc[rec.date].push(rec) : (acc[rec.date] = [rec]);
+
+            return acc;
+          }, {})
+        );
     }
   }, [data]);
 
@@ -109,14 +120,18 @@ const Records = ({ loggedUserData }) => {
           {/* Display entries if fetched success and loaded */}
           {!isLoading && (
             <div className="flex flex-wrap justify-between mb-8">
-              <div className="w-11/12 h-max py-12 px-12 border-solid border-2 rounded-2xl mx-2 my-10">
-                {/* display all record entries */}
-                {/* <div>{JSON.stringify(data.records)}</div> */}
-                <div>
-                  {Object.keys(entriesByDay).map((e, i) => {
-                    return <h2 key={i}>{e}</h2>;
-                  })}
-                </div>
+              {/* display all record entries */}
+              <div>
+                {Object.entries(entriesByDay).map((e, i) => {
+                  return (
+                    <div
+                      key={i}
+                      className="w-11/12 h-max py-12 px-12 border-solid border-2 rounded-2xl mx-2 my-10"
+                    >
+                      <RecordCard date={e[0]} entries={e[1]} />
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}
