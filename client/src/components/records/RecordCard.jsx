@@ -5,7 +5,7 @@ const RecordCard = ({ date, entries }) => {
     <div>
       <h2 className="tracking-widest text-3xl font-medium mb-20">{date}</h2>
       {Object.values(entries).map((e, i) => {
-        // console.log("RecordCard", "no. of entries:", entries);
+        console.log("RecordCard", "no. of entries:", entries);
         return (
           <h2 key={i} className="tracking-widest text-2xl font-medium">
             {e}
