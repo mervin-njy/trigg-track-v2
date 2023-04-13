@@ -34,7 +34,7 @@ CREATE TABLE "user" (
 CREATE TABLE "record" (
   "id" SERIAL PRIMARY KEY,
   "logger_username" VARCHAR(100),
-  "date" DATE UNIQUE,
+  "date" VARCHAR(10) UNIQUE,
   CONSTRAINT "fk_username"
     FOREIGN KEY ("logger_username")
         REFERENCES "user" ("username") ON DELETE CASCADE
@@ -71,7 +71,7 @@ CREATE TABLE "triggers" (
 );
 
 CREATE TABLE "review" (
-  "date" DATE NOT NULL PRIMARY KEY,
+  "date" VARCHAR(10) NOT NULL PRIMARY KEY,
   "logger_review" TEXT NOT NULL,
   "logger_rating" INT2 NOT NULL,
   CONSTRAINT "rating_check" 
@@ -82,7 +82,7 @@ CREATE TABLE "logger_service" (
   "logger_username" VARCHAR(100),
   "servicer_username" VARCHAR(100),
   "status" VARCHAR(20) NOT NULL,
-  "review_date" DATE NULL,
+  "review_date" VARCHAR(10) NULL,
   PRIMARY KEY ("logger_username", "servicer_username"),
   CONSTRAINT "fk_logger"
     FOREIGN KEY ("logger_username")

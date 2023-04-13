@@ -85,7 +85,7 @@ const getRecordEntriesOnDate = async (req, res) => {
   try {
     // 1. check if user's record date exists
     const selectedRecord = await pool.query(
-      `SELECT * FROM "entry" JOIN "record" ON entry.record_id = record.id WHERE record.logger_username = $1 AND record.date::text LIKE '%'||$2||'%'`,
+      `SELECT record.date FROM "entry" JOIN "record" ON entry.record_id = record.id WHERE record.logger_username = $1 AND record.date::text LIKE $2||'%'`,
       [req.body.username, req.body.date]
     );
     console.log(selectedRecord.rows);
@@ -96,6 +96,7 @@ const getRecordEntriesOnDate = async (req, res) => {
         .json({ status: "error", message: "record entries not found" });
     }
 
+    console.log("date entered:", req.body.date);
     console.log("no. of entries: ", selectedRecord.rowCount);
     console.log("entries retrieved: ", selectedRecord.rows);
     res.json({

@@ -66,13 +66,8 @@ const Records = ({ loggedUserData }) => {
       // a. loop throuh data.records (rec, ind)
       Array.isArray(data.records) &&
         data.records.map((rec) => {
-          // // b. if data.records.date !== entriesByDay.key => entriesByDay[data.records.date] = rec
-          // !Object.entries(entriesByDay).includes(data.records.date) &&
-          //   setEntriesByDay((prevEntriesByDay) => {
-          //     return { ...prevEntriesByDay, [data.records.date]: rec };
-          //   });
+          // b. if data.records.date !== entriesByDay.key => entriesByDay[data.records.date] = rec
           // c. else => entriesByDay[data.records.date].push(rec);
-
           console.log(rec);
 
           return Object.entries(entriesByDay).includes(rec.date.split("T")[0])
@@ -117,7 +112,11 @@ const Records = ({ loggedUserData }) => {
               <div className="w-11/12 h-max py-12 px-12 border-solid border-2 rounded-2xl mx-2 my-10">
                 {/* display all record entries */}
                 {/* <div>{JSON.stringify(data.records)}</div> */}
-                <div>{JSON.stringify(entriesByDay)}</div>
+                <div>
+                  {Object.keys(entriesByDay).map((e, i) => {
+                    return <h2 key={i}>{e}</h2>;
+                  })}
+                </div>
               </div>
             </div>
           )}
