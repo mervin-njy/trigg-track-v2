@@ -5,6 +5,7 @@ import RecordSelection from "./RecordSelection";
 
 const Records = ({ loggedUserData }) => {
   // variables ----------------------------------------------------------------------------------------------------
+  const defaultDate = new Date().toISOString().split("T")[0].slice(0, 7); // get current month
 
   // functions ----------------------------------------------------------------------------------------------------
   function isObject(value) {
@@ -15,9 +16,10 @@ const Records = ({ loggedUserData }) => {
   const [searchEntries, setSearchEntries] = useState(false);
   const [entriesOptions, setEntriesOptions] = useState({
     username: loggedUserData.username,
-    date: "",
+    date: defaultDate,
   });
   const { fetchData, isLoading, data, error } = useFetch();
+  const [recordExists, setRecordExists] = useState(false);
 
   // event handlers ---------------------------------------------------------------------------------------------
 
@@ -46,15 +48,15 @@ const Records = ({ loggedUserData }) => {
     console.log(entriesOptions);
   }, [searchEntries]);
 
-  // #2 - check if data is not null (object is true) => obtain dates to compare w/ current date
+  // #2 - check if data is not null (object is true) => obtain entries data and pass down to record card for display
   useEffect(() => {
     if (isObject(data)) {
-      // // 1. for checking date in records
-      // if (data.message === "record exists") {
-      //   setDateExists(false);
-      // } else if (data.message === "record date not found") {
-      //   setDateExists(true);
-      // }
+      // 1. for checking entries in records
+      if (data.message === "entries exist") {
+        setRecordExists(true);
+      } else if (data.message === "record entries not found") {
+        setRecordExists(false);
+      }
       // // 2. for checking if createRecord === successful
       // if (data.message === "record created") {
       //   console.log("record creation success");
@@ -71,23 +73,27 @@ const Records = ({ loggedUserData }) => {
         setSearchEntries={setSearchEntries}
       />
 
-      <div className="flex flex-wrap justify-between mb-8">
-        <div className="w-9/20 h-max py-12 px-12 border-solid border-2 rounded-2xl mx-2 my-10">
-          <h2 className="tracking-wider text-4xl font-800 mx-3">
-            {entriesOptions.date}
-          </h2>
-          {/* display all record entries */}
-          <></>
-        </div>
-      </div>
-
-      {Object.keys(loggedUserData).map((element, ind) => {
+      {/* {Object.keys(loggedUserData).map((element, ind) => {
         return (
           <div key={ind} className="flex flex-wrap justify-between mb-8">
             <h2 className="tracking-wider text-2xl font-800 mx-3">{element}</h2>
           </div>
         );
-      })}
+      })} */}
+
+      {!recordExists && (
+        <h2 className="tracking-widest text-4xl font-medium mx-3">
+          {`No entries found for ${entriesOptions.date}. Please select another date.`}
+        </h2>
+      )}
+      {recordExists && (
+        <div className="flex flex-wrap justify-between mb-8">
+          <div className="w-9/12 h-max py-12 px-12 border-solid border-2 rounded-2xl mx-2 my-10">
+            {/* display all record entries */}
+            <></>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
