@@ -98,7 +98,11 @@ const getRecordEntriesOnDate = async (req, res) => {
 
     console.log("no. of entries: ", selectedRecord.rowCount);
     console.log("entries retrieved: ", selectedRecord.rows);
-    res.json({ status: "okay", message: "entries exist" });
+    res.json({
+      status: "okay",
+      message: "entries exist",
+      records: selectedRecord.rows,
+    });
   } catch (error) {
     console.log("POST /user/getRecordEntries/", error);
     res.status(400).json({ status: "error", message: "an error has occurred" });

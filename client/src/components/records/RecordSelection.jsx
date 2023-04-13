@@ -105,9 +105,6 @@ const RecordSelection = ({ setEntriesOptions, setSearchEntries }) => {
               </option>
             );
           })}
-          <option selected key={defaultYear} value={defaultYear}>
-            {defaultYear}
-          </option>
         </select>
 
         <select
