@@ -24,7 +24,6 @@ const Records = ({ loggedUserData }) => {
   // for data after searching
   const { fetchData, isLoading, data, error } = useFetch();
   const [recordExists, setRecordExists] = useState(false);
-  const [entriesByDay, setEntriesByDay] = useState({});
 
   // event handlers ---------------------------------------------------------------------------------------------
 
@@ -95,7 +94,7 @@ const Records = ({ loggedUserData }) => {
             <div className="flex flex-wrap justify-between mb-8">
               {/* display all record entries */}
               <div>
-                {Object.entries(entriesByDay).map((e, i) => {
+                {Object.entries(data.records).map((e, i) => {
                   return (
                     <div
                       key={i}
