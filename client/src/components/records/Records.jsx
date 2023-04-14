@@ -70,6 +70,7 @@ const Records = ({ loggedUserData }) => {
   return (
     <div className="w-9/12 mt-40 mb-40 mx-auto">
       <RecordSelection
+        loggedUserData={loggedUserData}
         setEntriesOptions={setEntriesOptions}
         setSearchEntries={setSearchEntries}
       />

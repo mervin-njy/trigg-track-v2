@@ -5,9 +5,13 @@ import ButtonGeneral from "../Interactions/ButtonGeneral";
 // 1. get existing recorded dates as select options
 // 2. if no options available => queue to log details, or other options
 
-const RecordSelection = ({ setEntriesOptions, setSearchEntries }) => {
+const RecordSelection = ({
+  loggedUserData,
+  setEntriesOptions,
+  setSearchEntries,
+}) => {
   // variables ----------------------------------------------------------------------------------------------------
-  const defaultDate = new Date().toISOString().split("T")[0].slice(0, 7); // get current month
+  const defaultDate = new Date().toISOString().split("T")[0];
   const defaultYear = defaultDate.split("-")[0];
   const defaultMonth = defaultDate.split("-")[1];
   const currentMonthDays = getDaysOfMonth(defaultYear, defaultMonth);
@@ -47,7 +51,8 @@ const RecordSelection = ({ setEntriesOptions, setSearchEntries }) => {
     });
   };
 
-  const handleClick = (event) => {
+  const handleViewRecords = (event) => {
+    event.preventDefault();
     console.log("RecordSelection - submit selection", selectedDate);
     console.log(defaultYear, defaultMonth, defaultDate);
     // combine YYYY-MM-DD function from selectedDate state
@@ -59,40 +64,44 @@ const RecordSelection = ({ setEntriesOptions, setSearchEntries }) => {
     setEntriesOptions((prevEntriesOptions) => {
       return { ...prevEntriesOptions, date: submitDate };
     });
+    // prompt rerender of component to display entries from selected date
     setSearchEntries((prevSearchEntries) => !prevSearchEntries);
+  };
+
+  const handleAddRecord = (event) => {
+    event.preventDefault();
+    
   };
 
   // effects ------------------------------------------------------------------------------------------------------
   // #1 - http request to get all logged dates on mount
-  //   useEffect(() => {
-  //     const controller = new AbortController();
-  //     const fetchURL = `http://127.0.0.1:5001/user/getRecordEntries`;
-  //     // req.body => username + date
-  //     const fetchOptions = {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-type": "application/json",
-  //         Authorization: `Bearer ${loggedUserData.access}`,
-  //       },
-  //       body: JSON.stringify({ entriesOptions }),
-  //       signal: controller.signal,
-  //     };
+  // useEffect(() => {
+  //   const controller = new AbortController();
+  //   const fetchURL = `http://127.0.0.1:5001/user/getRecordEntries`;
+  //   // req.body => username + date
+  //   const fetchOptions = {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-type": "application/json",
+  //       Authorization: `Bearer ${loggedUserData.access}`,
+  //     },
+  //     body: JSON.stringify({ entriesOptions }),
+  //     signal: controller.signal,
+  //   };
 
-  //     console.log(
-  //       "Records - ",
-  //       "1st useEffect triggered:",
-  //       "LOGGER - POST /getRecordEntries"
-  //     );
+  //   console.log(
+  //     "Records - ",
+  //     "1st useEffect triggered:",
+  //     "LOGGER - POST /getRecordEntries"
+  //   );
 
-  //     fetchData(fetchURL, fetchOptions);
-  //   }, []);
+  //   fetchData(fetchURL, fetchOptions);
+  // }, []);
 
   // render component ---------------------------------------------------------------------------------------------
   return (
     <section>
-      <h1 className="text-3xl tracking-wider mb-8">
-        Select range of dates to display:
-      </h1>
+      <h1 className="text-3xl tracking-wider mb-8">Select dates to display:</h1>
       <div className="flex flex-wrap justify-start mb-14">
         <select
           id="year"
@@ -144,13 +153,23 @@ const RecordSelection = ({ setEntriesOptions, setSearchEntries }) => {
         </select>
 
         <ButtonGeneral
-          displayName={"view dates"}
-          category={"entries"}
+          displayName={"view records"}
+          category={"view"}
           width={"14rem"}
           fontSize={"1.3rem"}
           padding={"0.4rem"}
-          margin={"0 5rem"}
-          onClick={handleClick}
+          margin={"0 0 0 5rem"}
+          onClick={handleViewRecords}
+        />
+
+        <ButtonGeneral
+          displayName={"add record"}
+          category={"add"}
+          width={"14rem"}
+          fontSize={"1.3rem"}
+          padding={"0.4rem"}
+          margin={"0 0 0 1rem"}
+          onClick={handleAddRecord}
         />
       </div>
     </section>
