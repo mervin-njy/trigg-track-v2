@@ -80,55 +80,57 @@ const Records = ({ loggedUserData }) => {
         />
       )}
 
-      <div>
-        <RecordSelection
-          setEntriesOptions={setEntriesOptions}
-          setSearchEntries={setSearchEntries}
-          setNewRecord={setNewRecord}
-        />
+      {!newRecord && (
+        <div>
+          <RecordSelection
+            setEntriesOptions={setEntriesOptions}
+            setSearchEntries={setSearchEntries}
+            setNewRecord={setNewRecord}
+          />
 
-        {!recordExists && (
-          <h2 className="tracking-widest text-4xl font-medium">
-            {`No entries found for ${entriesOptions.date}. Please select another date.`}
-          </h2>
-        )}
-        {recordExists && isObject(data) && (
-          <section>
-            {/* Display entries if fetched success and loaded */}
-            {!isLoading && (
-              <div className="flex flex-wrap justify-between mb-8">
-                {/* display all record entries */}
-                <div>
-                  {Object.entries(data.records).map((e, i) => {
-                    return (
-                      <div
-                        key={i}
-                        className="w-11/12 h-max py-12 px-12 border-solid border-2 rounded-2xl mx-2 my-10"
-                      >
-                        <RecordCard date={e[0]} entries={e[1]} />
-                      </div>
-                    );
-                  })}
+          {!recordExists && (
+            <h2 className="tracking-widest text-4xl font-medium">
+              {`No entries found for ${entriesOptions.date}. Please select another date.`}
+            </h2>
+          )}
+          {recordExists && isObject(data) && (
+            <section>
+              {/* Display entries if fetched success and loaded */}
+              {!isLoading && (
+                <div className="flex flex-wrap justify-between mb-8">
+                  {/* display all record entries */}
+                  <div>
+                    {Object.entries(data.records).map((e, i) => {
+                      return (
+                        <div
+                          key={i}
+                          className="w-11/12 h-max py-12 px-12 border-solid border-2 rounded-2xl mx-2 my-10"
+                        >
+                          <RecordCard date={e[0]} entries={e[1]} />
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            {/* While fetching, display load spinner */}
-            {isLoading && (
-              <div className="centered">
-                <LoadingSpinner />
-              </div>
-            )}
+              {/* While fetching, display load spinner */}
+              {isLoading && (
+                <div className="centered">
+                  <LoadingSpinner />
+                </div>
+              )}
 
-            {/* Display error message if fetch has an error */}
-            {!isLoading && error && (
-              <div>
-                <h2>{error}</h2>
-              </div>
-            )}
-          </section>
-        )}
-      </div>
+              {/* Display error message if fetch has an error */}
+              {!isLoading && error && (
+                <div>
+                  <h2>{error}</h2>
+                </div>
+              )}
+            </section>
+          )}
+        </div>
+      )}
     </div>
   );
 };

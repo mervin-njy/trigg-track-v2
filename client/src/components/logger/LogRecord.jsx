@@ -263,6 +263,7 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
           <h2 className="tracking-widest text-4xl font-800 ml-12 text-purpleAccent">
             {recordInput.date}
           </h2>
+
           <MdEdit
             size={30}
             className="cursor-pointer ml-16 text-main2 hover:text-blueAccent hover:shadow-xl my-auto"
