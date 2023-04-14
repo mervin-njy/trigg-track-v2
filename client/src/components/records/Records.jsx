@@ -3,6 +3,7 @@ import useFetch from "../../hooks/useFetch";
 import RecordSelection from "./RecordSelection";
 import LoadingSpinner from "../Loading/LoadingSpinner";
 import RecordCard from "./RecordCard";
+import LogRecord from "../logger/LogRecord";
 
 const Records = ({ loggedUserData }) => {
   // variables ----------------------------------------------------------------------------------------------------
@@ -20,6 +21,9 @@ const Records = ({ loggedUserData }) => {
     username: loggedUserData.username,
     date: defaultDate,
   });
+
+  // for adding record
+  const [newRecord, setNewRecord] = useState(false);
 
   // for data after searching
   const { fetchData, isLoading, data, error } = useFetch();
@@ -69,61 +73,62 @@ const Records = ({ loggedUserData }) => {
   // render component ---------------------------------------------------------------------------------------------
   return (
     <div className="w-9/12 mt-40 mb-40 mx-auto">
-      <RecordSelection
-        loggedUserData={loggedUserData}
-        setEntriesOptions={setEntriesOptions}
-        setSearchEntries={setSearchEntries}
-      />
-
-      {/* {Object.keys(loggedUserData).map((element, ind) => {
-        return (
-          <div key={ind} className="flex flex-wrap justify-between mb-8">
-            <h2 className="tracking-wider text-2xl font-800 mx-3">{element}</h2>
-          </div>
-        );
-      })} */}
-
-      {!recordExists && (
-        <h2 className="tracking-widest text-4xl font-medium">
-          {`No entries found for ${entriesOptions.date}. Please select another date.`}
-        </h2>
+      {newRecord && (
+        <LogRecord
+          loggerInfo={loggedUserData}
+          recordDate={entriesOptions.date}
+        />
       )}
-      {recordExists && isObject(data) && (
-        <section>
-          {/* Display entries if fetched success and loaded */}
-          {!isLoading && (
-            <div className="flex flex-wrap justify-between mb-8">
-              {/* display all record entries */}
-              <div>
-                {Object.entries(data.records).map((e, i) => {
-                  return (
-                    <div
-                      key={i}
-                      className="w-11/12 h-max py-12 px-12 border-solid border-2 rounded-2xl mx-2 my-10"
-                    >
-                      <RecordCard date={e[0]} entries={e[1]} />
-                    </div>
-                  );
-                })}
+
+      <div>
+        <RecordSelection
+          setEntriesOptions={setEntriesOptions}
+          setSearchEntries={setSearchEntries}
+          setNewRecord={setNewRecord}
+        />
+
+        {!recordExists && (
+          <h2 className="tracking-widest text-4xl font-medium">
+            {`No entries found for ${entriesOptions.date}. Please select another date.`}
+          </h2>
+        )}
+        {recordExists && isObject(data) && (
+          <section>
+            {/* Display entries if fetched success and loaded */}
+            {!isLoading && (
+              <div className="flex flex-wrap justify-between mb-8">
+                {/* display all record entries */}
+                <div>
+                  {Object.entries(data.records).map((e, i) => {
+                    return (
+                      <div
+                        key={i}
+                        className="w-11/12 h-max py-12 px-12 border-solid border-2 rounded-2xl mx-2 my-10"
+                      >
+                        <RecordCard date={e[0]} entries={e[1]} />
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* While fetching, display load spinner */}
-          {isLoading && (
-            <div className="centered">
-              <LoadingSpinner />
-            </div>
-          )}
+            {/* While fetching, display load spinner */}
+            {isLoading && (
+              <div className="centered">
+                <LoadingSpinner />
+              </div>
+            )}
 
-          {/* Display error message if fetch has an error */}
-          {!isLoading && error && (
-            <div>
-              <h2>{error}</h2>
-            </div>
-          )}
-        </section>
-      )}
+            {/* Display error message if fetch has an error */}
+            {!isLoading && error && (
+              <div>
+                <h2>{error}</h2>
+              </div>
+            )}
+          </section>
+        )}
+      </div>
     </div>
   );
 };

@@ -6,9 +6,9 @@ import ButtonGeneral from "../Interactions/ButtonGeneral";
 // 2. if no options available => queue to log details, or other options
 
 const RecordSelection = ({
-  loggedUserData,
   setEntriesOptions,
   setSearchEntries,
+  setNewRecord,
 }) => {
   // variables ----------------------------------------------------------------------------------------------------
   const defaultDate = new Date().toISOString().split("T")[0];
@@ -70,7 +70,7 @@ const RecordSelection = ({
 
   const handleAddRecord = (event) => {
     event.preventDefault();
-    
+    setNewRecord(true);
   };
 
   // effects ------------------------------------------------------------------------------------------------------
@@ -101,7 +101,9 @@ const RecordSelection = ({
   // render component ---------------------------------------------------------------------------------------------
   return (
     <section>
-      <h1 className="text-3xl tracking-wider mb-8">Select dates to display:</h1>
+      <h1 className="tracking-wider text-4xl mx-3 mb-8">
+        Select dates to display:
+      </h1>
       <div className="flex flex-wrap justify-start mb-14">
         <select
           id="year"
