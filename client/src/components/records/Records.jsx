@@ -64,33 +64,6 @@ const Records = ({ loggedUserData }) => {
       }
 
       console.log(data.records);
-      // 2. categorize data.records into arrays for each separate day
-      // a. loop throuh data.records (rec, ind)
-      isObject(data.records) &&
-        Object.values(data.records).map((rec) => {
-          // b. if data.records.date !== entriesByDay.key => entriesByDay[data.records.date] = rec
-          // c. else => entriesByDay[data.records.date].push(rec);
-          console.log("current entries;", entriesByDay);
-          console.log(rec);
-
-          rec.date in entriesByDay
-            ? setEntriesByDay((prevEntriesByDay) => {
-                const newState = { ...prevEntriesByDay };
-                newState[rec.date].push(rec);
-                return newState;
-              })
-            : setEntriesByDay((prevEntriesByDay) => {
-                return { ...prevEntriesByDay, [rec.date]: rec };
-              });
-        });
-
-      // setEntriesByDay(
-      //   Object.values(data.records).reduce((acc, rec) => {
-      //     rec.date in acc ? acc[rec.date].push(rec) : (acc[rec.date] = [rec]);
-
-      //     return acc;
-      //   }, {})
-      // );
     }
   }, [data]);
 
