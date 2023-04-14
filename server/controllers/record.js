@@ -99,10 +99,20 @@ const getRecordEntriesOnDate = async (req, res) => {
     console.log("date entered:", req.body.date);
     console.log("no. of entries: ", selectedRecord.rowCount);
     console.log("entries retrieved: ", selectedRecord.rows);
+
+    const recordsByDay = Object.values(selectedRecord.rows).reduce(
+      (acc, rec) => {
+        rec.date in acc ? acc[rec.date].push(rec) : (acc[rec.date] = [rec]);
+        console.log("/server - curr records:", acc);
+        return acc;
+      },
+      {}
+    );
+
     res.json({
       status: "okay",
       message: "entries exist",
-      records: selectedRecord.rows,
+      records: recordsByDay,
     });
   } catch (error) {
     console.log("POST /user/getRecordEntries/", error);

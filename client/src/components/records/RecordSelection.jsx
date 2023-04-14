@@ -19,8 +19,9 @@ const RecordSelection = ({ setEntriesOptions, setSearchEntries }) => {
 
   // generates dropdown options of for each select element (YYYY, MM, DD)
   function getDateOptions(lastVal, total, digits) {
+    const val = parseInt(lastVal) + 1;
     const options = digits === 4 ? [] : ["-"]; // allow empty option for MM & DD
-    for (let i = lastVal - total; i < lastVal; i++) {
+    for (let i = val - total; i < val; i++) {
       options.push(("0" + i).slice(-digits)); // add 0 at the front to single digits
     }
     return options;
@@ -48,6 +49,7 @@ const RecordSelection = ({ setEntriesOptions, setSearchEntries }) => {
 
   const handleClick = (event) => {
     console.log("RecordSelection - submit selection", selectedDate);
+    console.log(defaultYear, defaultMonth, defaultDate);
     // combine YYYY-MM-DD function from selectedDate state
     const submitDate =
       selectedDate.year +
@@ -113,7 +115,7 @@ const RecordSelection = ({ setEntriesOptions, setSearchEntries }) => {
           onChange={handleSelectionChange}
           value={selectedDate.month}
         >
-          {getDateOptions(12 + 1, 12, 2).map((val, ind) => {
+          {getDateOptions(12, 12, 2).map((val, ind) => {
             return (
               <option key={ind} value={val}>
                 {val}
@@ -129,7 +131,7 @@ const RecordSelection = ({ setEntriesOptions, setSearchEntries }) => {
           value={selectedDate.day}
         >
           {getDateOptions(
-            getDaysOfMonth(selectedDate.year, selectedDate.month) + 1,
+            getDaysOfMonth(selectedDate.year, selectedDate.month),
             getDaysOfMonth(selectedDate.year, selectedDate.month),
             2
           ).map((val, ind) => {
