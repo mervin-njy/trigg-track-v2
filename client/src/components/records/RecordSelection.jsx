@@ -49,12 +49,26 @@ const RecordSelection = ({
     setSelectedDate((prevSelectedDate) => {
       return { ...prevSelectedDate, [event.target.id]: event.target.value };
     });
+
+    // combine YYYY-MM-DD function from selectedDate state
+    const submitDate =
+      selectedDate.year +
+      checkVal(selectedDate.month) +
+      checkVal(selectedDate.day);
+
+    // convert this to prevEntriesOptions for option to be changed
+
+    setEntriesOptions((prevEntriesOptions) => {
+      return { ...prevEntriesOptions, date: submitDate };
+    });
   };
 
   const handleViewRecords = (event) => {
     event.preventDefault();
     console.log("RecordSelection - submit selection", selectedDate);
     console.log(defaultYear, defaultMonth, defaultDate);
+
+    // TO BE REMOVED => shijfted ^
     // combine YYYY-MM-DD function from selectedDate state
     const submitDate =
       selectedDate.year +
@@ -64,6 +78,7 @@ const RecordSelection = ({
     setEntriesOptions((prevEntriesOptions) => {
       return { ...prevEntriesOptions, date: submitDate };
     });
+
     // prompt rerender of component to display entries from selected date
     setSearchEntries((prevSearchEntries) => !prevSearchEntries);
   };
