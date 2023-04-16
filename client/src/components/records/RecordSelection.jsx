@@ -45,10 +45,10 @@ const RecordSelection = ({
   // event handlers ---------------------------------------------------------------------------------------------
   const handleSelectionChange = (event) => {
     console.log("RecordSelection - selection changed: ", event.target.id);
-    console.log(selectedDate, currentMonthDays);
-    setSelectedDate((prevSelectedDate) => {
-      return { ...prevSelectedDate, [event.target.id]: event.target.value };
-    });
+    // console.log(selectedDate, currentMonthDays);
+    // setSelectedDate((prevSelectedDate) => {
+    //   return { ...prevSelectedDate, [event.target.id]: event.target.value };
+    // });
 
     // combine YYYY-MM-DD function from selectedDate state
     const submitDate =
@@ -59,7 +59,19 @@ const RecordSelection = ({
     // convert this to prevEntriesOptions for option to be changed
 
     setEntriesOptions((prevEntriesOptions) => {
-      return { ...prevEntriesOptions, date: submitDate };
+      // const updatedEntry = {
+      //   ...prevEntriesOptions,
+      //   [date[event.target.id]]: event.target.value,
+      // };
+      const currDate = prevEntriesOptions.date.split("-");
+      const updatedDate =
+        (event.target.id === "year" ? event.target.value : currDate[0]) +
+        checkVal(
+          event.target.id === "month" ? event.target.value : currDate[1]
+        ) +
+        checkVal(event.target.id === "day" ? event.target.value : currDate[2]);
+
+      return { ...prevEntriesOptions, date: updatedDate };
     });
   };
 
@@ -68,16 +80,16 @@ const RecordSelection = ({
     console.log("RecordSelection - submit selection", selectedDate);
     console.log(defaultYear, defaultMonth, defaultDate);
 
-    // TO BE REMOVED => shijfted ^
-    // combine YYYY-MM-DD function from selectedDate state
-    const submitDate =
-      selectedDate.year +
-      checkVal(selectedDate.month) +
-      checkVal(selectedDate.day);
+    // // TO BE REMOVED => shijfted ^
+    // // combine YYYY-MM-DD function from selectedDate state
+    // const submitDate =
+    //   selectedDate.year +
+    //   checkVal(selectedDate.month) +
+    //   checkVal(selectedDate.day);
 
-    setEntriesOptions((prevEntriesOptions) => {
-      return { ...prevEntriesOptions, date: submitDate };
-    });
+    // setEntriesOptions((prevEntriesOptions) => {
+    //   return { ...prevEntriesOptions, date: submitDate };
+    // });
 
     // prompt rerender of component to display entries from selected date
     setSearchEntries((prevSearchEntries) => !prevSearchEntries);
