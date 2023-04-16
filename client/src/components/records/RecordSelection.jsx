@@ -16,7 +16,7 @@ const RecordSelection = ({
 
   // functions ----------------------------------------------------------------------------------------------------
   function getDateFromStr(ind) {
-    return ind === 2 ? "-" : dateEntries.split("-")[ind]; // ind = 0, 1, 2 => Y, M, D
+    return dateEntries.split("-")[ind] || "-"; // ind = 0, 1, 2 => Y, M, D, if undefined => "-"
   }
 
   function getDaysOfMonth(year, month) {
@@ -46,12 +46,14 @@ const RecordSelection = ({
     // combine YYYY-MM-DD function from parent state - entriesOptions.date || dateEntries
     setEntriesOptions((prevEntriesOptions) => {
       const currDate = prevEntriesOptions.date.split("-");
+      // const updatedDate = currDate.reduce((acc, val, ind) => {
+      //   acc += checkVal(event.target.id === ind ? event.target.value : val);
+      //   return acc;
+      // }, "");
       const updatedDate =
-        (event.target.id === "year" ? event.target.value : currDate[0]) +
-        checkVal(
-          event.target.id === "month" ? event.target.value : currDate[1]
-        ) +
-        checkVal(event.target.id === "day" ? event.target.value : currDate[2]);
+        (event.target.id === "0" ? event.target.value : currDate[0]) +
+        checkVal(event.target.id === "1" ? event.target.value : currDate[1]) +
+        checkVal(event.target.id === "2" ? event.target.value : currDate[2]);
       console.log(updatedDate);
 
       return { ...prevEntriesOptions, date: updatedDate };
@@ -102,8 +104,9 @@ const RecordSelection = ({
         Select dates to display:
       </h1>
       <div className="flex flex-wrap justify-start mb-14">
+        {/* YEAR OPTION */}
         <select
-          id="year"
+          id={0}
           className="w-2/12 py-2 px-4 border-solid border-2 rounded-lg border-mainDarkest mr-2 bg-main3 text-mainDarkest text-2xl font-semibold tracking-wider"
           onChange={handleSelectionChange}
           value={getDateFromStr(0)}
@@ -117,8 +120,9 @@ const RecordSelection = ({
           })}
         </select>
 
+        {/* MONTH OPTION */}
         <select
-          id="month"
+          id={1}
           className="w-2/12 py-2 px-4 border-solid border-2 rounded-lg border-mainDarkest mr-2 bg-main3 text-mainDarkest text-2xl font-semibold tracking-wider"
           onChange={handleSelectionChange}
           value={getDateFromStr(1)}
@@ -132,8 +136,9 @@ const RecordSelection = ({
           })}
         </select>
 
+        {/* DAY OPTION */}
         <select
-          id="day"
+          id={2}
           className="w-2/12 py-2 px-4 border-solid border-2 rounded-lg border-mainDarkest mr-2 bg-main3 text-mainDarkest text-2xl font-semibold tracking-wider"
           onChange={handleSelectionChange}
           value={getDateFromStr(2)}
