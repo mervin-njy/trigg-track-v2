@@ -6,17 +6,19 @@ import ButtonGeneral from "../Interactions/ButtonGeneral";
 // 2. if no options available => queue to log details, or other options
 
 const RecordSelection = ({
+  dateEntries,
   setEntriesOptions,
   setSearchEntries,
   setNewRecord,
 }) => {
   // variables ----------------------------------------------------------------------------------------------------
-  const defaultDate = new Date().toISOString().split("T")[0];
-  const defaultYear = defaultDate.split("-")[0];
-  const defaultMonth = defaultDate.split("-")[1];
-  const currentMonthDays = getDaysOfMonth(defaultYear, defaultMonth);
+  const defaultYear = new Date().toISOString().split("-")[0];
 
   // functions ----------------------------------------------------------------------------------------------------
+  function getDateFromStr(ind) {
+    return ind === 2 ? "-" : dateEntries.split("-")[ind]; // ind = 0, 1, 2 => Y, M, D
+  }
+
   function getDaysOfMonth(year, month) {
     return new Date(year, month, 0).getDate();
   }
@@ -32,37 +34,17 @@ const RecordSelection = ({
   }
 
   function checkVal(val) {
-    return val !== "-" ? "-" + val : "";
+    return val && val !== "-" ? "-" + val : "";
   }
 
   // states -------------------------------------------------------------------------------------------------------
-  const [selectedDate, setSelectedDate] = useState({
-    year: defaultYear,
-    month: defaultMonth,
-    day: "-",
-  });
 
-  // event handlers ---------------------------------------------------------------------------------------------
+  // event handlers -----------------------------------------------------------------------------------------------
   const handleSelectionChange = (event) => {
     console.log("RecordSelection - selection changed: ", event.target.id);
-    // console.log(selectedDate, currentMonthDays);
-    // setSelectedDate((prevSelectedDate) => {
-    //   return { ...prevSelectedDate, [event.target.id]: event.target.value };
-    // });
 
-    // combine YYYY-MM-DD function from selectedDate state
-    const submitDate =
-      selectedDate.year +
-      checkVal(selectedDate.month) +
-      checkVal(selectedDate.day);
-
-    // convert this to prevEntriesOptions for option to be changed
-
+    // combine YYYY-MM-DD function from parent state - entriesOptions.date || dateEntries
     setEntriesOptions((prevEntriesOptions) => {
-      // const updatedEntry = {
-      //   ...prevEntriesOptions,
-      //   [date[event.target.id]]: event.target.value,
-      // };
       const currDate = prevEntriesOptions.date.split("-");
       const updatedDate =
         (event.target.id === "year" ? event.target.value : currDate[0]) +
@@ -70,6 +52,7 @@ const RecordSelection = ({
           event.target.id === "month" ? event.target.value : currDate[1]
         ) +
         checkVal(event.target.id === "day" ? event.target.value : currDate[2]);
+      console.log(updatedDate);
 
       return { ...prevEntriesOptions, date: updatedDate };
     });
@@ -77,20 +60,7 @@ const RecordSelection = ({
 
   const handleViewRecords = (event) => {
     event.preventDefault();
-    console.log("RecordSelection - submit selection", selectedDate);
-    console.log(defaultYear, defaultMonth, defaultDate);
-
-    // // TO BE REMOVED => shijfted ^
-    // // combine YYYY-MM-DD function from selectedDate state
-    // const submitDate =
-    //   selectedDate.year +
-    //   checkVal(selectedDate.month) +
-    //   checkVal(selectedDate.day);
-
-    // setEntriesOptions((prevEntriesOptions) => {
-    //   return { ...prevEntriesOptions, date: submitDate };
-    // });
-
+    console.log("RecordSelection - submit selection", dateEntries);
     // prompt rerender of component to display entries from selected date
     setSearchEntries((prevSearchEntries) => !prevSearchEntries);
   };
@@ -136,7 +106,7 @@ const RecordSelection = ({
           id="year"
           className="w-2/12 py-2 px-4 border-solid border-2 rounded-lg border-mainDarkest mr-2 bg-main3 text-mainDarkest text-2xl font-semibold tracking-wider"
           onChange={handleSelectionChange}
-          value={selectedDate.year}
+          value={getDateFromStr(0)}
         >
           {getDateOptions(defaultYear, 10, 4).map((val, ind) => {
             return (
@@ -151,7 +121,7 @@ const RecordSelection = ({
           id="month"
           className="w-2/12 py-2 px-4 border-solid border-2 rounded-lg border-mainDarkest mr-2 bg-main3 text-mainDarkest text-2xl font-semibold tracking-wider"
           onChange={handleSelectionChange}
-          value={selectedDate.month}
+          value={getDateFromStr(1)}
         >
           {getDateOptions(12, 12, 2).map((val, ind) => {
             return (
@@ -166,11 +136,11 @@ const RecordSelection = ({
           id="day"
           className="w-2/12 py-2 px-4 border-solid border-2 rounded-lg border-mainDarkest mr-2 bg-main3 text-mainDarkest text-2xl font-semibold tracking-wider"
           onChange={handleSelectionChange}
-          value={selectedDate.day}
+          value={getDateFromStr(2)}
         >
           {getDateOptions(
-            getDaysOfMonth(selectedDate.year, selectedDate.month),
-            getDaysOfMonth(selectedDate.year, selectedDate.month),
+            getDaysOfMonth(getDateFromStr(0), getDateFromStr(1)),
+            getDaysOfMonth(getDateFromStr(0), getDateFromStr(1)),
             2
           ).map((val, ind) => {
             return (

@@ -83,6 +83,7 @@ const Records = ({ loggedUserData }) => {
       {!newRecord && (
         <div>
           <RecordSelection
+            dateEntries={entriesOptions.date}
             setEntriesOptions={setEntriesOptions}
             setSearchEntries={setSearchEntries}
             setNewRecord={setNewRecord}
