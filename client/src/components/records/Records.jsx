@@ -49,11 +49,11 @@ const Records = ({ loggedUserData }) => {
     console.log(
       "Records - ",
       "1st useEffect triggered:",
-      "LOGGER - POST /getRecordEntries"
+      "LOGGER - POST /getRecordEntries",
+      entriesOptions
     );
 
     fetchData(fetchURL, fetchOptions);
-    console.log(entriesOptions);
   }, [searchEntries]);
 
   // #2 - check if data is not null (object is true) => obtain entries data and pass down to record card for display
@@ -66,7 +66,7 @@ const Records = ({ loggedUserData }) => {
         setRecordExists(false);
       }
 
-      console.log(data.records);
+      console.log("Records - ", "2nd useEffect - records:", data.records);
     }
   }, [data]);
 
