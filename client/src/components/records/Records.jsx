@@ -94,10 +94,10 @@ const Records = ({ loggedUserData }) => {
               {`No entries found for ${entriesOptions.date}. Please select another date.`}
             </h2>
           )}
-          {recordExists && isObject(data) && (
+          {recordExists && (
             <section>
               {/* Display entries if fetched success and loaded */}
-              {!isLoading && (
+              {!isLoading && isObject(data.records) && (
                 <div className="flex flex-wrap justify-between mb-8">
                   {/* display all record entries */}
                   <div>
