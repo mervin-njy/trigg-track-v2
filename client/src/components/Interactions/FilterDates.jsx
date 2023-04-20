@@ -50,11 +50,11 @@ const FilterDates = ({ dateEntries, setEntriesOptions }) => {
 
   // render component ---------------------------------------------------------------------------------------------
   return (
-    <div>
+    <div className="w-6/12">
       {/* YEAR OPTION */}
       <select
         id={0}
-        className="w-2/12 py-2 px-4 border-solid border-2 rounded-lg border-mainDarkest mr-2 bg-main3 text-mainDarkest text-2xl font-semibold tracking-wider"
+        className="w-3/12 py-2 px-4 border-solid border-2 rounded-lg border-mainDarkest mr-2 bg-main3 text-mainDarkest text-2xl font-semibold tracking-wider"
         onChange={handleSelectionChange}
         value={getDateFromStr(0)}
       >
@@ -70,7 +70,7 @@ const FilterDates = ({ dateEntries, setEntriesOptions }) => {
       {/* MONTH OPTION */}
       <select
         id={1}
-        className="w-2/12 py-2 px-4 border-solid border-2 rounded-lg border-mainDarkest mr-2 bg-main3 text-mainDarkest text-2xl font-semibold tracking-wider"
+        className="w-3/12 py-2 px-4 border-solid border-2 rounded-lg border-mainDarkest mr-2 bg-main3 text-mainDarkest text-2xl font-semibold tracking-wider"
         onChange={handleSelectionChange}
         value={getDateFromStr(1)}
       >
@@ -86,7 +86,7 @@ const FilterDates = ({ dateEntries, setEntriesOptions }) => {
       {/* DAY OPTION */}
       <select
         id={2}
-        className="w-2/12 py-2 px-4 border-solid border-2 rounded-lg border-mainDarkest mr-2 bg-main3 text-mainDarkest text-2xl font-semibold tracking-wider"
+        className="w-3/12 py-2 px-4 border-solid border-2 rounded-lg border-mainDarkest mr-2 bg-main3 text-mainDarkest text-2xl font-semibold tracking-wider"
         onChange={handleSelectionChange}
         value={getDateFromStr(2)}
       >

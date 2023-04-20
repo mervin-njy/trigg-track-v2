@@ -12,54 +12,54 @@ const RecordSelection = ({
   setSearchEntries,
   setNewRecord,
 }) => {
-  // variables ----------------------------------------------------------------------------------------------------
-  const defaultYear = new Date().toISOString().split("-")[0];
+  // // variables ----------------------------------------------------------------------------------------------------
+  // const defaultYear = new Date().toISOString().split("-")[0];
 
-  // functions ----------------------------------------------------------------------------------------------------
-  function getDateFromStr(ind) {
-    return dateEntries.split("-")[ind] || "-"; // ind = 0, 1, 2 => Y, M, D, if undefined => "-"
-  }
+  // // functions ----------------------------------------------------------------------------------------------------
+  // function getDateFromStr(ind) {
+  //   return dateEntries.split("-")[ind] || "-"; // ind = 0, 1, 2 => Y, M, D, if undefined => "-"
+  // }
 
-  function getDaysOfMonth(year, month) {
-    return new Date(year, month, 0).getDate();
-  }
+  // function getDaysOfMonth(year, month) {
+  //   return new Date(year, month, 0).getDate();
+  // }
 
-  // generates dropdown options of for each select element (YYYY, MM, DD)
-  function getDateOptions(lastVal, total, digits) {
-    const val = parseInt(lastVal) + 1;
-    const options = digits === 4 ? [] : ["-"]; // allow empty option for MM & DD
-    for (let i = val - total; i < val; i++) {
-      options.push(("0" + i).slice(-digits)); // add 0 at the front to single digits
-    }
-    return options;
-  }
+  // // generates dropdown options of for each select element (YYYY, MM, DD)
+  // function getDateOptions(lastVal, total, digits) {
+  //   const val = parseInt(lastVal) + 1;
+  //   const options = digits === 4 ? [] : ["-"]; // allow empty option for MM & DD
+  //   for (let i = val - total; i < val; i++) {
+  //     options.push(("0" + i).slice(-digits)); // add 0 at the front to single digits
+  //   }
+  //   return options;
+  // }
 
-  function checkVal(val) {
-    return val && val !== "-" ? "-" + val : "";
-  }
+  // function checkVal(val) {
+  //   return val && val !== "-" ? "-" + val : "";
+  // }
 
   // states -------------------------------------------------------------------------------------------------------
 
   // event handlers -----------------------------------------------------------------------------------------------
-  const handleSelectionChange = (event) => {
-    console.log("RecordSelection - selection changed: ", event.target.id);
+  // const handleSelectionChange = (event) => {
+  //   console.log("RecordSelection - selection changed: ", event.target.id);
 
-    // combine YYYY-MM-DD function from parent state - entriesOptions.date || dateEntries
-    setEntriesOptions((prevEntriesOptions) => {
-      const currDate = prevEntriesOptions.date.split("-");
-      // const updatedDate = currDate.reduce((acc, val, ind) => {
-      //   acc += checkVal(event.target.id === ind ? event.target.value : val);
-      //   return acc;
-      // }, "");
-      const updatedDate =
-        (event.target.id === "0" ? event.target.value : currDate[0]) +
-        checkVal(event.target.id === "1" ? event.target.value : currDate[1]) +
-        checkVal(event.target.id === "2" ? event.target.value : currDate[2]);
-      console.log(updatedDate);
+  //   // combine YYYY-MM-DD function from parent state - entriesOptions.date || dateEntries
+  //   setEntriesOptions((prevEntriesOptions) => {
+  //     const currDate = prevEntriesOptions.date.split("-");
+  //     // const updatedDate = currDate.reduce((acc, val, ind) => {
+  //     //   acc += checkVal(event.target.id === ind ? event.target.value : val);
+  //     //   return acc;
+  //     // }, "");
+  //     const updatedDate =
+  //       (event.target.id === "0" ? event.target.value : currDate[0]) +
+  //       checkVal(event.target.id === "1" ? event.target.value : currDate[1]) +
+  //       checkVal(event.target.id === "2" ? event.target.value : currDate[2]);
+  //     console.log(updatedDate);
 
-      return { ...prevEntriesOptions, date: updatedDate };
-    });
-  };
+  //     return { ...prevEntriesOptions, date: updatedDate };
+  //   });
+  // };
 
   const handleViewRecords = (event) => {
     event.preventDefault();
