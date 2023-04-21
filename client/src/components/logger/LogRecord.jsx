@@ -269,6 +269,7 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
                 dateEntries={recordInput.date}
                 setEntriesOptions={setRecordInput}
               />
+
               <MdDone
                 size={30}
                 className="cursor-pointer ml-16 text-main2 hover:text-blueAccent hover:shadow-xl my-auto"
