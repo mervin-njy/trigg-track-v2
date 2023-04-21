@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import {
   MdEdit,
+  MdDone,
   MdReportProblem,
   MdOutlineAltRoute,
   MdClose,
@@ -262,29 +263,39 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
           <h2 className="tracking-wider text-4xl font-800 mx-3">Record for:</h2>
           {/* TODO: add state to toggle to form input */}
           {dateEdit && (
-            <FilterDates
-              dateEntries={recordInput.date}
-              setEntriesOptions={setRecordInput}
-            />
+            <div>
+              <FilterDates
+                dateEntries={recordInput.date}
+                setEntriesOptions={setRecordInput}
+              />
+              <MdDone
+                size={30}
+                className="cursor-pointer ml-16 text-main2 hover:text-blueAccent hover:shadow-xl my-auto"
+                id={"Date"}
+                onClick={handleEdit}
+              />
+            </div>
           )}
           {!dateEdit && (
-            <h2 className="tracking-widest text-4xl font-800 ml-12 text-purpleAccent">
-              {recordInput.date}
-            </h2>
-          )}
+            <div>
+              <h2 className="tracking-widest text-4xl font-800 ml-12 text-purpleAccent">
+                {recordInput.date}
+              </h2>
 
-          <MdEdit
-            size={30}
-            className="cursor-pointer ml-16 text-main2 hover:text-blueAccent hover:shadow-xl my-auto"
-            id={"Date"}
-            onClick={handleEdit}
-          />
-          <MdLibraryAddCheck
-            size={35}
-            className="cursor-pointer my-auto ml-4 text-greenAccent hover:text-greenMain hover:shadow-xl"
-            id={"All Records"}
-            onClick={handleSubmit}
-          />
+              <MdEdit
+                size={30}
+                className="cursor-pointer ml-16 text-main2 hover:text-blueAccent hover:shadow-xl my-auto"
+                id={"Date"}
+                onClick={handleEdit}
+              />
+              <MdLibraryAddCheck
+                size={35}
+                className="cursor-pointer my-auto ml-4 text-greenAccent hover:text-greenMain hover:shadow-xl"
+                id={"All Records"}
+                onClick={handleSubmit}
+              />
+            </div>
+          )}
         </div>
       </header>
 
