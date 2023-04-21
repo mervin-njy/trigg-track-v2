@@ -157,7 +157,8 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
 
   const handleEdit = (event) => {
     console.log("LogRecord - button clicked: ", event.target.id);
-    if (event.target.id === "Date") setDateEdit(true);
+    if (event.target.id.includes("begin")) setDateEdit(true);
+    if (event.target.id.includes("confirmed")) setDateEdit(false);
   };
 
   // // effects ------------------------------------------------------------------------------------------------------
@@ -271,7 +272,7 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
               <MdDone
                 size={30}
                 className="cursor-pointer ml-16 text-main2 hover:text-blueAccent hover:shadow-xl my-auto"
-                id={"Date"}
+                id={"Date Edit - confirmed"}
                 onClick={handleEdit}
               />
             </div>
@@ -285,7 +286,7 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
               <MdEdit
                 size={30}
                 className="cursor-pointer ml-16 text-main2 hover:text-blueAccent hover:shadow-xl my-auto"
-                id={"Date"}
+                id={"Date Edit - begin"}
                 onClick={handleEdit}
               />
               <MdLibraryAddCheck
