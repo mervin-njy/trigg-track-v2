@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import {
   MdEdit,
-  MdDone,
+  MdDoneOutline,
   MdReportProblem,
   MdOutlineAltRoute,
   MdClose,
@@ -165,26 +165,24 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
   // #1 - http request to check current date shown EXCEPT onMount
   useEffect(() => {
     if (dateEdit) {
-      console.log("useEffect", JSON.stringify(date));
-      // const controller = new AbortController();
-      // const fetchURL = `http://127.0.0.1:5001/logger/getRecordDate`;
-      // const fetchOptions = {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-type": "application/json",
-      //     Authorization: `Bearer ${loggerInfo.access}`,
-      //   },
-      //   body: JSON.stringify({ date }),
-      //   signal: controller.signal,
-      // };
-
-      // console.log(
-      //   "LoggerHome - ",
-      //   "useEffect triggered:",
-      //   "LOGGER - POST /getRecordDate"
-      // );
-
-      // fetchData(fetchURL, fetchOptions);
+      console.log("useEffect", JSON.stringify(recordInput.date));
+      const controller = new AbortController();
+      const fetchURL = `http://127.0.0.1:5001/logger/getRecordDate`;
+      const fetchOptions = {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${loggerInfo.access}`,
+        },
+        body: JSON.stringify(recordInput.date),
+        signal: controller.signal,
+      };
+      console.log(
+        "LoggerHome - ",
+        "useEffect triggered:",
+        "LOGGER - POST /getRecordDate"
+      );
+      fetchData(fetchURL, fetchOptions);
     }
   }, [recordInput.date]);
 
@@ -259,27 +257,29 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
     <>
       <ToastContainer />
       {/* header: date */}
-      <header className="flex flex-wrap justify-between">
-        <div className="flex flex-wrap justify-start w-9/12 mb-8">
-          <h2 className="tracking-wider text-4xl font-800 mx-3">Record for:</h2>
-          {/* TODO: add state to toggle to form input */}
+      <header>
+        <div className="flex flex-wrap justify-start mb-8">
+          <h2 className="w-3/20 tracking-wider text-4xl font-800 mx-3">
+            Record for:
+          </h2>
+          {/* Toggle date edit | confirm options */}
           {dateEdit && (
-            <div>
+            <div className="w-8/12 flex flex-wrap justify-start">
               <FilterDates
                 dateEntries={recordInput.date}
                 setEntriesOptions={setRecordInput}
               />
 
-              <MdDone
+              <MdDoneOutline
                 size={30}
-                className="cursor-pointer ml-16 text-main2 hover:text-blueAccent hover:shadow-xl my-auto"
+                className="cursor-pointer text-main2 hover:text-blueAccent hover:shadow-xl my-auto"
                 id={"Date Edit - confirmed"}
                 onClick={handleEdit}
               />
             </div>
           )}
           {!dateEdit && (
-            <div>
+            <div className="w-8/12 flex flex-wrap justify-start">
               <h2 className="tracking-widest text-4xl font-800 ml-12 text-purpleAccent">
                 {recordInput.date}
               </h2>
