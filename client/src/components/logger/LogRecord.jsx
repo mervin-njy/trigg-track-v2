@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import {
   MdEdit,
-  MdDoneOutline,
+  MdOutlineCheck,
   MdReportProblem,
   MdOutlineAltRoute,
   MdClose,
@@ -63,16 +63,16 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
   const [variableCount, setVariableCount] = useState([0]);
 
   // event handlers -----------------------------------------------------------------------------------------------
-  const handleChange = (event) => {
-    event.preventDefault();
-    setRecordInput((prevRecordInput) => {
-      console.log("LogRecord -", "handleChange, before:", recordInput);
-      return {
-        ...prevRecordInput,
-        [event.target.name]: event.target.value,
-      };
-    });
-  };
+  // const handleChange = (event) => {
+  //   event.preventDefault();
+  //   setRecordInput((prevRecordInput) => {
+  //     console.log("LogRecord -", "handleChange, before:", recordInput);
+  //     return {
+  //       ...prevRecordInput,
+  //       [event.target.name]: event.target.value,
+  //     };
+  //   });
+  // };
 
   const handleAddEntry = (event) => {
     console.log("LogRecord - button clicked: ", event.target.id);
@@ -270,7 +270,7 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
                 setEntriesOptions={setRecordInput}
               />
 
-              <MdDoneOutline
+              <MdOutlineCheck
                 size={30}
                 className="cursor-pointer text-main2 hover:text-blueAccent hover:shadow-xl my-auto"
                 id={"Date Edit - confirmed"}
@@ -289,12 +289,6 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
                 className="cursor-pointer ml-16 text-main2 hover:text-blueAccent hover:shadow-xl my-auto"
                 id={"Date Edit - begin"}
                 onClick={handleEdit}
-              />
-              <MdLibraryAddCheck
-                size={35}
-                className="cursor-pointer my-auto ml-4 text-greenAccent hover:text-greenMain hover:shadow-xl"
-                id={"All Records"}
-                onClick={handleSubmit}
               />
             </div>
           )}
@@ -439,6 +433,18 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
           )}
         </div>
       </section>
+
+      <div className="flex flex-wrap justify-end mt-12">
+        <h2 className="tracking-wider text-xl font-800 my-auto text-greenAccent">
+          Submit Record
+        </h2>
+        <MdLibraryAddCheck
+          size={35}
+          className="cursor-pointer my-auto ml-4 text-greenAccent hover:text-greenMain hover:shadow-xl"
+          id={"All Records"}
+          onClick={handleSubmit}
+        />
+      </div>
     </>
   );
 };
