@@ -96,22 +96,20 @@ const Records = ({ loggedUserData }) => {
           )}
           {recordExists && (
             <section>
-              {/* Display entries if fetched success and loaded */}
+              {/* Display entries if fetched successfully and loaded */}
               {!isLoading && isObject(data.records) && (
-                <div className="flex flex-wrap justify-between mb-8">
+                <div>
                   {/* display all record entries */}
-                  <div>
-                    {Object.entries(data.records).map((e, i) => {
-                      return (
-                        <div
-                          key={i}
-                          className="w-11/12 h-max py-12 px-12 border-solid border-2 rounded-2xl mx-2 my-10"
-                        >
-                          <RecordCard date={e[0]} entries={e[1]} />
-                        </div>
-                      );
-                    })}
-                  </div>
+                  {Object.entries(data.records).map((e, i) => {
+                    return (
+                      <div
+                        key={i}
+                        className="h-max py-12 px-12 border-solid border-2 rounded-2xl mx-2 my-10"
+                      >
+                        <RecordCard date={e[0]} entries={e[1]} />
+                      </div>
+                    );
+                  })}
                 </div>
               )}
 
