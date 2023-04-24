@@ -13,7 +13,9 @@ const LogEntry = ({
   sectionInput,
   entryCount,
   setEntryCount,
+  confirmSubmit,
   createEntries,
+  checkEmptyFields,
   setFetchStatus,
 }) => {
   // functions ----------------------------------------------------------------------------------------------------

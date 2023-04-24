@@ -210,6 +210,7 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
         setDateExists(true);
       }
 
+      // TODO: MAY HAVE TO RETHINK HOW TO DO THIS - createEntries vs confirmSubmit
       // 2. for checking if createRecord === successful
       if (data.message === "record created") {
         console.log("record creation success");
@@ -243,6 +244,7 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
     }
   }, [confirmSubmit]); // triggered upon change in date input => creates a newID that can be linked with date for adding entries
 
+  // #4 - submit record => after fetching => open toastbox to display result
   useEffect(() => {
     if (createEntries) {
       if (fetchStatus) {
@@ -269,7 +271,6 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
   // render component --------------------------------------------------------------------------------------------
   return (
     <>
-      <ToastContainer />
       {/* header: date */}
       <header>
         <div className="flex flex-wrap justify-start mb-8">
@@ -308,6 +309,8 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
           )}
         </div>
       </header>
+
+      <ToastContainer />
 
       {/* body: display form sections - Left: conditions; Right: variables */}
       <section className="flex flex-wrap justify-between mx-auto">
@@ -356,7 +359,9 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
                     access={loggerInfo.access}
                     recordDate={recordInput.date}
                     recordType={"Condition"}
+                    confirmSubmit={confirmSubmit}
                     createEntries={createEntries}
+                    checkEmptyFields={checkEmptyFields}
                     setFetchStatus={setFetchStatus}
                   />
                 );
@@ -423,7 +428,9 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
                     access={loggerInfo.access}
                     recordDate={recordInput.date}
                     recordType={"Variable"}
+                    confirmSubmit={confirmSubmit}
                     createEntries={createEntries}
+                    checkEmptyFields={checkEmptyFields}
                     setFetchStatus={setFetchStatus}
                   />
                 );

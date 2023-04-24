@@ -7,7 +7,9 @@ const LogSection = ({
   access,
   recordDate,
   recordType,
+  confirmSubmit,
   createEntries,
+  checkEmptyFields,
   setFetchStatus,
 }) => {
   // functions ----------------------------------------------------------------------------------------------------
@@ -86,7 +88,9 @@ const LogSection = ({
               sectionInput={sectionInput}
               entryCount={entryCount}
               setEntryCount={setEntryCount}
+              confirmSubmit={confirmSubmit}
               createEntries={createEntries}
+              checkEmptyFields={checkEmptyFields}
               setFetchStatus={setFetchStatus}
             />
           );
