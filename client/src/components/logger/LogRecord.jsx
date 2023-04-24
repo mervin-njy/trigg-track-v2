@@ -21,6 +21,9 @@ import FilterDates from "../Interactions/FilterDates";
 
 // START OF COMPONENT ***********************************************************************************************************************
 const LogRecord = ({ loggerInfo, recordDate }) => {
+  // variables ----------------------------------------------------------------------------------------------------
+  let allFilled = true; // to check if all input fields are filled for record submission
+
   // functions ----------------------------------------------------------------------------------------------------
   function isObject(value) {
     return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -43,6 +46,14 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
           id={"Variable"}
         />
       );
+    }
+  }
+
+  // TODO: prop down function to check allFilled
+  function checkEmptyFields(keyValFields) {
+    for (const val of Object.values(keyValFields)) {
+      val === "" && (allFilled = false);
+      break;
     }
   }
 
@@ -135,6 +146,7 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
 
   const handleSubmit = (event) => {
     console.log("LogRecord - submitting records w/", event.target.id);
+    // TODO: prop down function to check allFilled
     fetchStatus
       ? setConfirmSubmit(true)
       : alert("Please fill in details first!");
