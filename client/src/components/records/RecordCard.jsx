@@ -40,8 +40,8 @@ const RecordCard = ({ date, entries }) => {
       <section className="flex flex-wrap justify-start">
         {conditions.map((condition, i) => {
           return (
-            <div key={i} className="flex flex-wrap w-2/5">
-              <h2 className="tracking-widest text-2xl font-medium">
+            <div key={i} className="flex flex-wrap w-3/12">
+              <h2 className="w-1/12tracking-widest text-2xl font-medium mr-4">
                 {condition.title}
               </h2>
               <h2 className="tracking-widest text-2xl font-medium">
@@ -53,8 +53,8 @@ const RecordCard = ({ date, entries }) => {
 
         {variables.map((variable, i) => {
           return (
-            <div key={i} className="flex flex-wrap  w-3/5">
-              <h2 className="tracking-widest text-2xl font-medium">
+            <div key={i} className="flex flex-wrap w-8/12">
+              <h2 className="w-2/12 tracking-widest text-2xl font-medium mr-4">
                 {variable.title}
               </h2>
               <h2 className="tracking-widest text-2xl font-medium">

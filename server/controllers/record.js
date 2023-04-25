@@ -100,6 +100,7 @@ const getRecordEntriesOnDate = async (req, res) => {
     console.log("no. of entries: ", selectedRecord.rowCount);
     console.log("entries retrieved: ", selectedRecord.rows);
 
+    // TODO: one step further to categorize name & category
     const recordsByDay = Object.values(selectedRecord.rows).reduce(
       (acc, rec) => {
         rec.date in acc ? acc[rec.date].push(rec) : (acc[rec.date] = [rec]);
