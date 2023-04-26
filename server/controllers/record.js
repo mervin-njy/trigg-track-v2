@@ -100,7 +100,29 @@ const getRecordEntriesOnDate = async (req, res) => {
     console.log("no. of entries: ", selectedRecord.rowCount);
     console.log("entries retrieved: ", selectedRecord.rows);
 
-    // TODO: one step further to categorize name & category
+    // TODO: one step further to categorize name & category - test
+    function categorizeRecords(records) {
+      return records.reduce((acc, rec) => {
+        // const { date, type, name, category } = rec;
+
+        if (!acc[date]) {
+          acc[date] = {};
+        }
+        if (!acc[date][type]) {
+          acc[date][type] = {};
+        }
+        if (!acc[date][type][name]) {
+          acc[date][type][name] = {};
+        }
+        if (!acc[date][type][name][category]) {
+          acc[date][type][name][category] = [];
+        }
+        acc[date][type][name][category].push(rec);
+        return acc;
+      }, {});
+    }
+
+    // archive:
     const recordsByDay = Object.values(selectedRecord.rows).reduce(
       (acc, rec) => {
         rec.date in acc ? acc[rec.date].push(rec) : (acc[rec.date] = [rec]);
