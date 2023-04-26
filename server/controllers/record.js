@@ -100,11 +100,13 @@ const getRecordEntriesOnDate = async (req, res) => {
     console.log("no. of entries: ", selectedRecord.rowCount);
     console.log("entries retrieved: ", selectedRecord.rows);
 
-    // TODO: one step further to categorize name & category - test
+    // categorize records into date, followed by type (condition/variable), then name & category
     function categorizeRecords(records) {
       return records.reduce((acc, rec) => {
-        // const { date, type, name, category } = rec;
+        // 1. deconstruct to get val of each info
+        const { date, type, name, category } = rec;
 
+        // 2. create new key if it does not exist yet (for each category)
         if (!acc[date]) {
           acc[date] = {};
         }
@@ -117,25 +119,17 @@ const getRecordEntriesOnDate = async (req, res) => {
         if (!acc[date][type][name][category]) {
           acc[date][type][name][category] = [];
         }
+        // 3. if category exists, just add to key
         acc[date][type][name][category].push(rec);
+
         return acc;
       }, {});
     }
 
-    // archive:
-    const recordsByDay = Object.values(selectedRecord.rows).reduce(
-      (acc, rec) => {
-        rec.date in acc ? acc[rec.date].push(rec) : (acc[rec.date] = [rec]);
-        console.log("/server - curr records:", acc);
-        return acc;
-      },
-      {}
-    );
-
     res.json({
       status: "okay",
       message: "entries exist",
-      records: recordsByDay,
+      records: categorizeRecords(Object.values(selectedRecord.rows)),
     });
   } catch (error) {
     console.log("POST /user/getRecordEntries/", error);
