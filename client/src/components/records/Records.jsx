@@ -104,7 +104,7 @@ const Records = ({ loggedUserData }) => {
                     return (
                       <div
                         key={i}
-                        className="h-max pt-12 pb-4 px-10 border-solid border-2 border-main3 rounded-lg mx-2 my-10"
+                        className="h-max pt-12 pb-4 px-6 border-solid border-2 border-main3 rounded-lg mx-2 my-10"
                       >
                         <RecordCard date={e[0]} entries={e[1]} />
                       </div>

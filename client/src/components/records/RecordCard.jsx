@@ -3,7 +3,7 @@ import RecordSection from "./RecordSection";
 
 const RecordCard = ({ date, entries }) => {
   // variables ----------------------------------------------------------------------------------------------------
-  const nullMessage = { "No records yet.": "" };
+  const nullMessage = { "No records yet.": null };
   // functions -------------------------------------------------------------------------------------------------------
 
   // states ----------------------------------------------------------------------------------------------------------
@@ -38,7 +38,9 @@ const RecordCard = ({ date, entries }) => {
   // render component --------------------------------------------------------------------------------------------
   return (
     <div>
-      <h2 className="tracking-widest text-4xl font-medium mb-10">{date}</h2>
+      <h2 className="tracking-widest text-4xl font-medium px-4 mb-10">
+        {date}
+      </h2>
 
       <section className="flex flex-wrap justify-between">
         {/* Left: Conditions table (IF EXISTS) */}
