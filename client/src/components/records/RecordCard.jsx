@@ -44,15 +44,17 @@ const RecordCard = ({ date, entries }) => {
         {/* Left: Conditions table (IF EXISTS) */}
         <RecordSection
           type={"Conditions"}
-          name={"Condition" in entries ? entries["Condition"] : nullMessage} // e.g. eczema
+          content={"Condition" in entries ? entries["Condition"] : nullMessage} // e.g. eczema
           width={"w-4/12"}
+          headerFont={"2rem"}
         />
 
         {/* Right: Variables table (IF EXISTS)*/}
         <RecordSection
           type={"Variables"}
-          name={"Variable" in entries ? entries["Variable"] : nullMessage} // e.g. diet
+          content={"Variable" in entries ? entries["Variable"] : nullMessage} // e.g. diet
           width={"w-8/12"}
+          headerFont={"2rem"}
         />
       </section>
     </div>

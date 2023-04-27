@@ -103,7 +103,7 @@ const getRecordEntriesOnDate = async (req, res) => {
     // categorize records into date, followed by type (condition/variable), then name & category
     function categorizeRecords(records) {
       return records.reduce((acc, rec) => {
-        // 1. deconstruct to get val of each info
+        // 1. destructure k-v pair to get val of each info
         const { date, type, name, category } = rec;
 
         // 2. create new key if it does not exist yet (for each category)
