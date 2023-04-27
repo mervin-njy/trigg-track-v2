@@ -52,7 +52,7 @@ module.exports = {
         22: "1.375rem",
       },
       borderWidth: {
-        1: "0.1rem",
+        1: "0.05rem",
       },
       // borderRadius: {
       //   xs: "0.8rem",

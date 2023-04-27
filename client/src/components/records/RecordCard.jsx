@@ -38,15 +38,15 @@ const RecordCard = ({ date, entries }) => {
   // render component --------------------------------------------------------------------------------------------
   return (
     <div>
-      <h2 className="tracking-widest text-3xl font-medium mb-12">{date}</h2>
+      <h2 className="tracking-widest text-4xl font-medium mb-10">{date}</h2>
 
-      <section className="flex flex-wrap justify-start">
+      <section className="flex flex-wrap justify-between">
         {/* Left: Conditions table (IF EXISTS) */}
         <RecordSection
           type={"Conditions"}
           content={"Condition" in entries ? entries["Condition"] : nullMessage} // e.g. eczema
-          width={"w-4/12"}
-          headerFont={"2rem"}
+          width={"w-3/10"}
+          headerFont={"1.8rem"}
         />
 
         {/* Right: Variables table (IF EXISTS)*/}
@@ -54,7 +54,7 @@ const RecordCard = ({ date, entries }) => {
           type={"Variables"}
           content={"Variable" in entries ? entries["Variable"] : nullMessage} // e.g. diet
           width={"w-8/12"}
-          headerFont={"2rem"}
+          headerFont={"1.8rem"}
         />
       </section>
     </div>

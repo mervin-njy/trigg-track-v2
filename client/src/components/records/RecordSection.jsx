@@ -12,7 +12,7 @@ const RecordSection = ({ type, content, width, headerFont }) => {
   return (
     <div className={width}>
       <h1
-        className="tracking-widest font-bold mb-4"
+        className="tracking-wider font-semibold p-1 border-b-2 mb-6"
         style={{ fontSize: headerFont }}
       >
         {type}
@@ -23,33 +23,40 @@ const RecordSection = ({ type, content, width, headerFont }) => {
           <section key={i}>
             {/* stop recursion criteria: category: title & item */}
             {!("title" in val) && !("item" in val) && (
-              <div>
+              <>
                 {/* ----- SUB-HEADER ----- */}
-                <h1 className="tracking-widest text-2xl font-italic mb-4">
-                  {Object.keys(content)}
-                </h1>
+                <div className="flex flex-wrap justify-start tracking-widest text-2xl font-italic px-2 mb-2">
+                  <h1 className="mr-4">{i + 1 + "."}</h1>
+                  <h1>{Object.keys(content)}</h1>
+                </div>
 
                 {/* ----- BODY ----- */}
                 {Object.values(val).map((innerVal, j) => {
                   return (
-                    <div className="h-max p-8 border-solid border-2 rounded-xl mr-4">
+                    <div className="h-max p-4 border-main2 border-solid border-1 rounded-lg mb-4">
                       <RecordSection
                         type={Object.keys(val)[j]}
                         content={innerVal}
-                        headerFont={"1.5rem"}
+                        headerFont={"1.2rem"}
                       />
                     </div>
                   );
                 })}
-              </div>
+              </>
             )}
 
             {"title" in val && "item" in val && (
-              <div key={i} className="flex flex-wrap">
-                <h2 className="w-3/12 pr-2 tracking-widest text-xl font-medium">
+              <div
+                key={i}
+                className={
+                  "flex flex-wrap py-1 my-1" +
+                  (i % 2 === 0 && " bg-main7 rounded-md")
+                }
+              >
+                <h2 className="w-2/12 px-3 tracking-wider text-md font-medium">
                   {val.title}
                 </h2>
-                <h2 className="w-9/12 tracking-widest text-xl font-medium">
+                <h2 className="w-10/12 tracking-wider text-md font-medium">
                   {val.item}
                 </h2>
               </div>
