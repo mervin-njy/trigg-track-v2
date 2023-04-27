@@ -38,36 +38,53 @@ const RecordCard = ({ date, entries }) => {
       <h2 className="tracking-widest text-3xl font-medium mb-12">{date}</h2>
 
       <section className="flex flex-wrap justify-start">
-        {Object.values(entries["Condition"]).map((condition, i) => {
-          return (
-            <>
-              <h1 className="tracking-widest text-3xl font-bold mb-4">
-                {Object.keys(condition)}
-              </h1>
-              <div key={i} className="flex flex-wrap w-3/12">
-                <h2 className="w-1/12 tracking-widest text-2xl font-medium mr-4">
-                  {condition.title}
-                </h2>
-                <h2 className="tracking-widest text-2xl font-medium">
-                  {condition.item}
-                </h2>
-              </div>
-            </>
-          );
-        })}
+        <div className="w-3/12">
+          <h1 className="tracking-widest text-3xl font-bold mb-4">
+            Conditions
+          </h1>
 
-        {Object.values(entries["Variable"]).map((variable, i) => {
-          return (
-            <div key={i} className="flex flex-wrap w-8/12">
-              <h2 className="w-2/12 tracking-widest text-2xl font-medium mr-4">
-                {variable.title}
-              </h2>
-              <h2 className="tracking-widest text-2xl font-medium">
-                {variable.item}
-              </h2>
-            </div>
-          );
-        })}
+          {Object.values(entries["Condition"]).map((condition, i) => {
+            return (
+              <>
+                <h1 className="tracking-widest text-2xl font-italic mb-4">
+                  {Object.keys(entries["Condition"])}
+                </h1>
+
+                <div key={i} className="flex flex-wrap">
+                  <h2 className="w-1/12 tracking-widest text-2xl font-medium mr-4">
+                    {condition.title}
+                  </h2>
+                  <h2 className="tracking-widest text-2xl font-medium">
+                    {condition.item}
+                  </h2>
+                </div>
+              </>
+            );
+          })}
+        </div>
+
+        <div className="w-9/12">
+          <h1 className="tracking-widest text-3xl font-bold mb-4">Variables</h1>
+
+          {Object.values(entries["Variable"]).map((variable, i) => {
+            return (
+              <>
+                <h1 className="tracking-widest text-2xl font-italic mb-4">
+                  {Object.keys(entries["Variable"])}
+                </h1>
+                
+                <div key={i} className="flex flex-wrap">
+                  <h2 className="w-2/12 tracking-widest text-2xl font-medium mr-4">
+                    {variable.title}
+                  </h2>
+                  <h2 className="tracking-widest text-2xl font-medium">
+                    {variable.item}
+                  </h2>
+                </div>
+              </>
+            );
+          })}
+        </div>
       </section>
     </div>
   );
