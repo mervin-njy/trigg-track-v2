@@ -47,7 +47,7 @@ const RecordCard = ({ date, entries }) => {
         <RecordSection
           type={"Conditions"}
           content={"Condition" in entries ? entries["Condition"] : nullMessage} // e.g. eczema
-          width={"w-3/10"}
+          width={"w-4/12"}
           headerFont={"1.8rem"}
         />
 
