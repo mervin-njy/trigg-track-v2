@@ -39,19 +39,23 @@ const RecordCard = ({ date, entries }) => {
       <h2 className="tracking-widest text-3xl font-medium mb-12">{date}</h2>
 
       <section className="flex flex-wrap justify-start">
-        {/* Left: Conditions table */}
-        <RecordSection
-          type={"Conditions"}
-          name={entries["Condition"]} // e.g. eczema
-          width={"w-4/12"}
-        />
+        {/* Left: Conditions table (IF EXISTS) */}
+        {"Condition" in entries && (
+          <RecordSection
+            type={"Conditions"}
+            name={entries["Condition"]} // e.g. eczema
+            width={"w-4/12"}
+          />
+        )}
 
-        {/* Right: Variables table */}
-        <RecordSection
-          type={"Variables"}
-          name={entries["Variable"]} // e.g. diet
-          width={"w-8/12"}
-        />
+        {/* Right: Variables table (IF EXISTS)*/}
+        {"Variable" in entries && (
+          <RecordSection
+            type={"Variables"}
+            name={entries["Variable"]} // e.g. diet
+            width={"w-8/12"}
+          />
+        )}
       </section>
     </div>
   );
