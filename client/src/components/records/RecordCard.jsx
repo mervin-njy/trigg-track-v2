@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import RecordSection from "./RecordSection";
 
 const RecordCard = ({ date, entries }) => {
+  // variables ----------------------------------------------------------------------------------------------------
+  const nullMessage = { "No records yet.": "" };
   // functions -------------------------------------------------------------------------------------------------------
 
   // states ----------------------------------------------------------------------------------------------------------
@@ -40,22 +42,18 @@ const RecordCard = ({ date, entries }) => {
 
       <section className="flex flex-wrap justify-start">
         {/* Left: Conditions table (IF EXISTS) */}
-        {"Condition" in entries && (
-          <RecordSection
-            type={"Conditions"}
-            name={entries["Condition"]} // e.g. eczema
-            width={"w-4/12"}
-          />
-        )}
+        <RecordSection
+          type={"Conditions"}
+          name={"Condition" in entries ? entries["Condition"] : nullMessage} // e.g. eczema
+          width={"w-4/12"}
+        />
 
         {/* Right: Variables table (IF EXISTS)*/}
-        {"Variable" in entries && (
-          <RecordSection
-            type={"Variables"}
-            name={entries["Variable"]} // e.g. diet
-            width={"w-8/12"}
-          />
-        )}
+        <RecordSection
+          type={"Variables"}
+          name={"Variable" in entries ? entries["Variable"] : nullMessage} // e.g. diet
+          width={"w-8/12"}
+        />
       </section>
     </div>
   );
