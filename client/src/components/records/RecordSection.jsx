@@ -15,7 +15,8 @@ const RecordSection = ({ type, content, width, headerFont }) => {
 
   // render component --------------------------------------------------------------------------------------------
   return (
-    <div className={width + " hover:bg-main6 rounded-xl px-4 py-2"}>
+    // <div className={width + " hover:bg-main6 rounded-xl px-4 py-2"}>
+    <div className={width}>
       <h1
         className="tracking-wider font-semibold p-1 border-b-2 mb-6"
         style={{ fontSize: headerFont }}
@@ -28,8 +29,8 @@ const RecordSection = ({ type, content, width, headerFont }) => {
           <section key={i}>
             {/* stop recursion criteria: category: title & item */}
             {val && !("title" in val) && !("item" in val) && (
-              // <div className="hover:bg-main9 rounded-xl px-4 py-2">
-              <div>
+              <div className="hover:bg-main6 rounded-xl px-4 py-2">
+                {/* <div> */}
                 {/* ----- SUB-HEADER ----- */}
                 <div className="flex flex-wrap justify-start tracking-widest text-2xl font-italic px-2 mb-2">
                   <h1 className="mr-4">{i + 1 + "."}</h1>

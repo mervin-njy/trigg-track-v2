@@ -147,9 +147,10 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
   const handleSubmit = (event) => {
     console.log("LogRecord - submitting records w/", event.target.id);
     // TODO: prop down function to check allFilled
-    fetchStatus
-      ? setConfirmSubmit(true)
-      : alert("Please fill in details first!");
+    // fetchStatus
+    //   ? setConfirmSubmit(true)
+    //   : alert("Please fill in details first!");
+    setConfirmSubmit(true)
   };
 
   const handleClose = (event) => {
