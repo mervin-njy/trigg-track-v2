@@ -18,7 +18,7 @@ const RecordSection = ({ type, content, width, headerFont }) => {
     // <div className={width + " hover:bg-main6 rounded-xl px-4 py-2"}>
     <div className={width}>
       <h1
-        className="tracking-wider font-semibold p-1 border-b-2 mb-6"
+        className="tracking-wider font-semibold p-1 border-b-2 mx-2 mb-6"
         style={{ fontSize: headerFont }}
       >
         {type}
@@ -38,22 +38,30 @@ const RecordSection = ({ type, content, width, headerFont }) => {
                 </div>
 
                 {/* ----- BODY ----- */}
-                {Object.values(val).map((innerVal, j) => {
-                  return (
-                    <div className="h-max p-4 border-main2 border-solid border-1 rounded-lg mb-4">
-                      <RecordSection
-                        type={Object.keys(val)[j]}
-                        content={innerVal}
-                        headerFont={"1.2rem"}
-                      />
-                    </div>
-                  );
-                })}
+                {/* SORT + RECURSIVE: repeat to render each title + entry as row */}
+                {Object.values(val)
+                  // .sort((a, b) =>
+                  //   a["title"] === "location"
+                  //     ? -1
+                  //     : a["entry"].localeCompare(b["entry"])
+                  // )
+                  .map((innerVal, j) => {
+                    return (
+                      <div className="h-max p-4 border-main2 border-solid border-1 rounded-lg mb-4">
+                        <RecordSection
+                          type={Object.keys(val)[j]}
+                          content={innerVal}
+                          headerFont={"1.2rem"}
+                        />
+                      </div>
+                    );
+                  })}
               </div>
             )}
 
             {/* list the title + item pair (end of recursion) */}
             {val && "title" in val && "item" in val && (
+              // odd / even alternate bg
               <div
                 key={i}
                 className={
@@ -61,6 +69,7 @@ const RecordSection = ({ type, content, width, headerFont }) => {
                   (i % 2 === 0 && " bg-main7")
                 }
               >
+                {/* title + items => sort */}
                 <h2 className="w-2/12 px-3 tracking-wider text-md font-medium">
                   {val.title}
                 </h2>

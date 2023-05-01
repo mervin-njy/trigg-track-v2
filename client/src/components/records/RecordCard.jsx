@@ -38,7 +38,7 @@ const RecordCard = ({ date, entries }) => {
   // render component --------------------------------------------------------------------------------------------
   return (
     <div>
-      <h2 className="tracking-widest text-4xl font-medium px-4 mb-10">
+      <h2 className="tracking-widest text-5xl font-medium px-2 mb-10">
         {date}
       </h2>
 
