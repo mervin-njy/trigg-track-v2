@@ -104,7 +104,7 @@ const getRecordEntriesOnDate = async (req, res) => {
     function categorizeRecords(records) {
       return records.reduce((acc, rec) => {
         // 1. destructure k-v pair to get val of each info
-        const { date, type, name, category } = rec;
+        const { date, type, name, category, item } = rec;
 
         // 2. create new key if it does not exist yet (for each category)
         if (!acc[date]) {
@@ -119,8 +119,36 @@ const getRecordEntriesOnDate = async (req, res) => {
         if (!acc[date][type][name][category]) {
           acc[date][type][name][category] = [];
         }
-        // 3. if category exists, just add to key
+        // 3. if category exists, just add to key + sort in string then number
         acc[date][type][name][category].push(rec);
+        // const insertIndex = acc[date][type][name][category].findIndex(
+        //   (existingItem) => {
+        //     if (
+        //       typeof existingItem.title === "string" &&
+        //       typeof item.title === "string"
+        //     ) {
+        //       return existingItem.title.localeCompare(item.title) > 0;
+        //     } else if (
+        //       typeof existingItem.title === "string" &&
+        //       typeof item.title === "number"
+        //     ) {
+        //       return true;
+        //     } else if (
+        //       typeof existingItem.title === "number" &&
+        //       typeof item.title === "string"
+        //     ) {
+        //       return false;
+        //     } else {
+        //       return existingItem.title > item.title;
+        //     }
+        //   }
+        // );
+
+        // if (insertIndex === -1) {
+        //   acc[date][type][name][category].push(item);
+        // } else {
+        //   acc[date][type][name][category].splice(insertIndex, 0, item);
+        // }
 
         return acc;
       }, {});
