@@ -150,7 +150,7 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
     // fetchStatus
     //   ? setConfirmSubmit(true)
     //   : alert("Please fill in details first!");
-    setConfirmSubmit(true)
+    setConfirmSubmit(true);
   };
 
   const handleClose = (event) => {

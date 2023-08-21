@@ -131,12 +131,13 @@ COPY "record" ("id", "logger_username", "date") FROM stdin (DELIMITER ',');
 441234005,mervin,2023-03-05
 441234006,mervin,2023-03-06
 441234007,mervin,2023-03-07
+441234008,mervin,2023-03-08
 \.
 
 -- TODO: add image once working
 COPY "entry" ("record_id", "id", "type", "name", "category", "title", "item", "trigger_tag") FROM stdin (DELIMITER ',');
 441234001,881234001,Variable,Diet,Breakfast,location,"Mei cheng food court",false
-441234001,881234002,Variable,Diet,Breakfast,1,"Mifen w/ chicken cutlet\, spring rolls & cabbage w/ carrots",false
+441234001,881234002,Variable,Diet,Breakfast,1,Mifen w/ chicken cutlet\, spring rolls & cabbage w/ carrots,false
 441234001,881234003,Variable,Diet,Breakfast,2,"Kopi C kosong peng",false
 441234001,881234004,Variable,Diet,Lunch,location,"Putra Minang",false
 441234001,881234005,Variable,Diet,Lunch,1,"Nasi padang w/ beef rendang\, curry cabbage w/ carrots & french beans \, bergedil",false
