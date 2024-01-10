@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 // import components
-import NavBar from "./components/NavBar/NavBar";
+import NavBar from "/src/components/NavBar/NavBar";
 import LandingPage from "./components/account/LandingPage";
 import Home from "./components/home/Home";
 import AccountManager from "./components/admin/AccountManager";
