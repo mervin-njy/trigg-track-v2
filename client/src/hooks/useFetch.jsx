@@ -1,18 +1,23 @@
 import { useState } from "react";
 
-function useFetch(url, requestOptions) {
+function useFetch(endpoint, requestOptions) {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
-  const fetchData = async (url, requestOptions) => {
+  const fetchData = async (endpoint, requestOptions) => {
     console.log("fetching data");
     setIsLoading(true);
     setError(null);
     setData(null);
 
     try {
-      const response = await fetch(url, requestOptions);
+      const response = await fetch(
+        `${
+          process.env.REACT_APP_BACKEND_URL || "http://127.0.0.1:5001"
+        }/${endpoint}`,
+        requestOptions
+      );
       const fetchedData = await response.json();
       setData(fetchedData);
     } catch (err) {

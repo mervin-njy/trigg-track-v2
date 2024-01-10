@@ -35,7 +35,7 @@ const Records = ({ loggedUserData }) => {
   // #1 - http request to get logged entries with input date
   useEffect(() => {
     const controller = new AbortController();
-    const fetchURL = `http://127.0.0.1:5001/user/getRecordEntries`;
+    const endpoint = `user/getRecordEntries`;
     const fetchOptions = {
       method: "POST",
       headers: {
@@ -53,7 +53,7 @@ const Records = ({ loggedUserData }) => {
       entriesOptions
     );
 
-    fetchData(fetchURL, fetchOptions);
+    fetchData(endpoint, fetchOptions);
   }, [searchEntries]);
 
   // #2 - check if data is not null (object is true) => obtain entries data and pass down to record card for display

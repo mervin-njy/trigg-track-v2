@@ -182,7 +182,7 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
     if (dateEdit) {
       console.log("useEffect", JSON.stringify(recordInput.date));
       const controller = new AbortController();
-      const fetchURL = `http://127.0.0.1:5001/logger/getRecordDate`;
+      const endpoint = `logger/getRecordDate`;
       const fetchOptions = {
         method: "POST",
         headers: {
@@ -197,7 +197,7 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
         "useEffect triggered:",
         "LOGGER - POST /getRecordDate"
       );
-      fetchData(fetchURL, fetchOptions);
+      fetchData(endpoint, fetchOptions);
     }
   }, [recordInput.date]);
 
@@ -224,7 +224,7 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
   useEffect(() => {
     if (confirmSubmit) {
       const controller = new AbortController();
-      const fetchURL = `http://127.0.0.1:5001/logger/createRecord`;
+      const endpoint = `logger/createRecord`;
       const fetchOptions = {
         method: "PUT",
         headers: {
@@ -241,7 +241,7 @@ const LogRecord = ({ loggerInfo, recordDate }) => {
         "LOGGER - PUT /createRecord"
       );
 
-      fetchData(fetchURL, fetchOptions);
+      fetchData(endpoint, fetchOptions);
     }
   }, [confirmSubmit]); // triggered upon change in date input => creates a newID that can be linked with date for adding entries
 

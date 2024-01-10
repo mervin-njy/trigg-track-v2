@@ -31,7 +31,7 @@ const LoggerHome = ({ loggerInfo }) => {
   useEffect(() => {
     console.log("useEffect", JSON.stringify(date));
     const controller = new AbortController();
-    const fetchURL = `http://127.0.0.1:5001/logger/getRecordDate`;
+    const endpoint = `logger/getRecordDate`;
     const fetchOptions = {
       method: "POST",
       headers: {
@@ -48,7 +48,7 @@ const LoggerHome = ({ loggerInfo }) => {
       "LOGGER - POST /getRecordDate"
     );
 
-    fetchData(fetchURL, fetchOptions);
+    fetchData(endpoint, fetchOptions);
   }, []);
 
   // #2 - check if data is not null (object is true) => obtain dates to compare w/ current date

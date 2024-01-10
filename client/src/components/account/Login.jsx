@@ -100,7 +100,7 @@ const Login = ({ setLoggedUserData, setShowLogin }) => {
   // #1 - http request
   useEffect(() => {
     const controller = new AbortController();
-    const fetchURL = `http://127.0.0.1:5001/${requestTypes.accountEndpoint}`;
+    const endpoint = requestTypes.accountEndpoint;
     const fetchOptions = {
       method: requestTypes.fetchMethod, // "POST" => loginUser | "PUT" => createUser
       headers: {
@@ -110,7 +110,7 @@ const Login = ({ setLoggedUserData, setShowLogin }) => {
       signal: controller.signal,
     };
     console.log("Login -", "1st useEffect triggered:", requestTypes);
-    fetchData(fetchURL, fetchOptions);
+    fetchData(endpoint, fetchOptions);
   }, [checkStatus]);
 
   // #2 - once data fetched => store in state

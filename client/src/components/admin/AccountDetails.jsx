@@ -160,7 +160,7 @@ const AccountDetails = ({
   // #1 - http request - updateUser if update changes are confirmed
   useEffect(() => {
     const controller = new AbortController();
-    const fetchURL = `http://127.0.0.1:5001/${requestTypes.accountEndpoint}`;
+    const endpoint = requestTypes.accountEndpoint;
     const fetchOptions = {
       method: requestTypes.fetchMethod,
       headers: {
@@ -176,7 +176,7 @@ const AccountDetails = ({
       "http request useEffect triggered: ADMIN -",
       requestTypes
     );
-    fetchData(fetchURL, fetchOptions);
+    fetchData(endpoint, fetchOptions);
   }, [confirmUpdate, confirmDelete]);
 
   // #2 - upon http request success

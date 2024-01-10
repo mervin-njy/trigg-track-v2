@@ -92,7 +92,7 @@ const AccountManager = ({ adminInfo }) => {
   // #1 - http request - on mount, refreshAccounts
   useEffect(() => {
     const controller = new AbortController();
-    const fetchURL = `http://127.0.0.1:5001/getUsers`;
+    const endpoint = `getUsers`;
     const fetchOptions = {
       method: "GET",
       headers: {
@@ -108,7 +108,7 @@ const AccountManager = ({ adminInfo }) => {
       "ADMIN - GET /getUsers"
     );
 
-    fetchData(fetchURL, fetchOptions);
+    fetchData(endpoint, fetchOptions);
 
     // if not null
     // if (refreshAccounts) {

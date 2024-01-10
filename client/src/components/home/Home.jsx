@@ -34,7 +34,7 @@ const Home = ({ loggedUserData }) => {
   // #1 - http request
   useEffect(() => {
     // const controller = new AbortController();
-    // const fetchURL = `http://127.0.0.1:5001/${requestTypes.accountEndpoint}`;
+    // const endpoint = requestTypes.accountEndpoint;
     // const fetchOptions = {
     //   method: requestTypes.fetchMethod, // "POST" => loginUser | "PUT" => createUser
     //   headers: {
@@ -44,7 +44,7 @@ const Home = ({ loggedUserData }) => {
     //   signal: controller.signal,
     // };
     // console.log("1st useEffect triggered:", requestTypes);
-    // fetchData(fetchURL, fetchOptions);
+    // fetchData(endpoint, fetchOptions);
   }, []);
 
   // render component --------------------------------------------------------------------------------------------

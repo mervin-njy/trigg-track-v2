@@ -81,7 +81,7 @@ const LogEntry = ({
   useEffect(() => {
     if (createEntries) {
       const controller = new AbortController();
-      const fetchURL = `http://127.0.0.1:5001/logger/createEntry`;
+      const endpoint = `logger/createEntry`;
       const fetchOptions = {
         method: "PUT",
         headers: {
@@ -98,7 +98,7 @@ const LogEntry = ({
         "LOGGER - PUT /createEntry"
       );
 
-      fetchData(fetchURL, fetchOptions);
+      fetchData(endpoint, fetchOptions);
     }
   }, [createEntries]); // triggered upon change in date input => creates a newID that can be linked with date for adding entries
 
