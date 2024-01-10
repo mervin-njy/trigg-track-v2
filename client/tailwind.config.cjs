@@ -9,10 +9,10 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        karla: ['"Karla"'],
-        montserrat: ['"Montserrat"'],
-        oxygen: ['"Oxygen"'],
-        tilt: ['"Tilt Neon'],
+        karla: ["Karla"],
+        montserrat: ["Montserrat"],
+        oxygen: ["Oxygen"],
+        tilt: ["Tilt Neon"],
       },
       // fontSize: {
       //   xxxs: "0.75rem",
