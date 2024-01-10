@@ -11,16 +11,14 @@ function useFetch(endpoint, requestOptions) {
     setError(null);
     setData(null);
 
-    console.log(
-      "backend url for endpoints:",
-      process.env.REACT_APP_BACKEND_URL
-    );
+    // console.log(
+    //   "backend url for endpoints:",
+    //   process.env.REACT_APP_BACKEND_URL
+    // );
 
     try {
       const response = await fetch(
-        `${
-          process.env.REACT_APP_BACKEND_URL || "http://127.0.0.1:5001"
-        }/${endpoint}`,
+        `https://trigg-track-v2-backend.vercel.app/${endpoint}`,
         requestOptions
       );
       const fetchedData = await response.json();

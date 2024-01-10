@@ -45,7 +45,7 @@ const Login = ({ setLoggedUserData, setShowLogin }) => {
         "Login -",
         "handleChange, user:",
         accountInput.username,
-        "password length:",
+        ", password length:",
         accountInput.password.length
       );
       return {
@@ -61,7 +61,7 @@ const Login = ({ setLoggedUserData, setShowLogin }) => {
     console.log("Login -", `button clicked: ${event.target.name}`);
 
     if (event.target.name === "Log in") {
-      console.log("Login -", "submitting:", accountInput);
+      console.log("Login -", "submitting");
 
       // 1. toggle checkStatus state for http request
       setCheckStatus((prevCheckStatus) => {
