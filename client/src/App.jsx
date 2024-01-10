@@ -12,8 +12,8 @@ import Profile from "./components/profile/Profile";
 function App() {
   // states -------------------------------------------------------------------------------------------------------
   const [loggedUserData, setLoggedUserData] = useState(null);
-  // const [newUser, setNewUser] = useState(false);
-  // const [userConnections, setUserConnections] = useState(null);
+  const [newUser, setNewUser] = useState(false);
+  const [userConnections, setUserConnections] = useState(null);
 
   // variables ----------------------------------------------------------------------------------------------------
   const landingEndPoint = loggedUserData ? "home" : "welcome";
