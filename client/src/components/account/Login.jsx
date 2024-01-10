@@ -41,7 +41,13 @@ const Login = ({ setLoggedUserData, setShowLogin }) => {
   const handleChange = (event) => {
     // event.preventDefault();
     setAccountInput((prevAccountInput) => {
-      console.log("Login -", "handleChange, before:", accountInput);
+      console.log(
+        "Login -",
+        "handleChange, user:",
+        accountInput.username,
+        "password length:",
+        accountInput.password.length
+      );
       return {
         ...prevAccountInput,
         [event.target.name]: event.target.value,
@@ -123,7 +129,7 @@ const Login = ({ setLoggedUserData, setShowLogin }) => {
         setLoggedUserData(data);
 
         navigateToPage("home");
-        console.log("Login -", "2nd useEffect", data);
+        console.log("Login -", "2nd useEffect", "setting logged in user data");
       } else {
         setshowFields(false); // & display retry button
       }
@@ -136,20 +142,20 @@ const Login = ({ setLoggedUserData, setShowLogin }) => {
       {showFields && (
         <div className="mx-auto">
           <div className="flex flex-wrap justify-between">
-            <h1 className="text-2xl tracking-wider mb-14">
+            <h1 className="mb-14 text-2xl tracking-wider">
               Please fill in your details
             </h1>
             <MdClose
               size={24}
-              className="cursor-pointer my-auto w-1/12 mb-14 hover:font-bold hover:text-main2"
+              className="my-auto mb-14 w-1/12 cursor-pointer hover:font-bold hover:text-main2"
               id="Close"
               onClick={handleClose}
             />
           </div>
-          <div className="flex flex-wrap justify-between mt-8">
-            <div className="flex flex-wrap justify-start w-3/12">
+          <div className="mt-8 flex flex-wrap justify-between">
+            <div className="flex w-3/12 flex-wrap justify-start">
               <FaUser size={18} className="my-auto mr-3" />
-              <h4 className="text-lg tracking-widest my-auto">username:</h4>
+              <h4 className="my-auto text-lg tracking-widest">username:</h4>
             </div>
             <InputGeneral
               type="text"
@@ -161,10 +167,10 @@ const Login = ({ setLoggedUserData, setShowLogin }) => {
               required={true}
             />
           </div>
-          <div className="flex flex-wrap justify-between mt-5">
-            <div className="flex flex-wrap justify-start w-3/12">
+          <div className="mt-5 flex flex-wrap justify-between">
+            <div className="flex w-3/12 flex-wrap justify-start">
               <FaKey size={18} className="my-auto mr-3" />
-              <h4 className="text-lg tracking-widest my-auto">password:</h4>
+              <h4 className="my-auto text-lg tracking-widest">password:</h4>
             </div>
             <InputGeneral
               type="password"
@@ -176,7 +182,7 @@ const Login = ({ setLoggedUserData, setShowLogin }) => {
               required={true}
             />
           </div>
-          <div className="flex flex-wrap justify-between mx-auto mt-8">
+          <div className="mx-auto mt-8 flex flex-wrap justify-between">
             <ButtonEmptyBg
               displayName={"Forget password."}
               category={"account"}
@@ -205,7 +211,7 @@ const Login = ({ setLoggedUserData, setShowLogin }) => {
           {/* Display date's contents if fetched success and loaded */}
           {!isLoading && data && (
             <div>
-              <h2 className="text-2xl tracking-widest text-redAccent font-bold my-auto mb-8">
+              <h2 className="my-auto mb-8 text-2xl font-bold tracking-widest text-redAccent">
                 {toPascalCase(data.message)}
               </h2>
               <ButtonError

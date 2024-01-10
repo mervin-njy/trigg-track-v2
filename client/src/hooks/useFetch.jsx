@@ -11,6 +11,11 @@ function useFetch(endpoint, requestOptions) {
     setError(null);
     setData(null);
 
+    console.log(
+      "backend url for endpoints:",
+      process.env.REACT_APP_BACKEND_URL
+    );
+
     try {
       const response = await fetch(
         `${
