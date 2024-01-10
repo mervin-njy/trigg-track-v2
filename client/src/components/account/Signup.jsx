@@ -198,95 +198,103 @@ const Signup = ({ setNewUser, setShowSignup }) => {
 
           {/* Choose userType */}
           <div className="mt-5">
-            <div className="flex flex-wrap justify-between">
+            <div className="flex flex-wrap justify-start">
               {/* label */}
-              <div className="flex flex-wrap justify-start w-3/12">
+              <div className="flex flex-wrap w-3/12">
                 <FaUserTag size={18} className="my-auto mr-3" />
                 <h4 className="text-md tracking-widest my-auto">user type:</h4>
               </div>
               {/* selection 1.*/}
-              <InputGeneral
-                type="radio"
-                name="userType"
-                value="Health Logger"
-                reference={userTypeRef}
-                checked={accountInput.userType === "Health Logger"}
-                width={"3%"}
-                onChange={handleChange}
-              />
-              <div className="flex flex-wrap justify-start w-9/15">
-                <FaHouseUser size={24} className="my-auto mr-3" />
-                <label className="text-md tracking-wider my-auto">
-                  Health Logger
-                </label>
+              <div className="flex ml-10">
+                <InputGeneral
+                  type="radio"
+                  name="userType"
+                  value="Health Logger"
+                  reference={userTypeRef}
+                  checked={accountInput.userType === "Health Logger"}
+                  width={"10%"}
+                  onChange={handleChange}
+                />
+                <div className="flex ml-10">
+                  <FaHouseUser size={24} className="my-auto mr-3" />
+                  <label className="text-md tracking-wider my-auto w-max">
+                    Health Logger
+                  </label>
+                </div>
               </div>
             </div>
 
-            <div className="flex flex-wrap justify-between mt-2">
+            <div className="flex flex-wrap justify-start mt-2">
               {/* label placeholder */}
               <div className="w-3/12"></div>
               {/* selection 2.*/}
-              <InputGeneral
-                type="radio"
-                name="userType"
-                value="Service Provider"
-                reference={userTypeRef}
-                checked={accountInput.userType === "Service Provider"}
-                width={"3%"}
-                onChange={handleChange}
-              />
-              <div className="flex flex-wrap justify-start w-9/15">
-                <FaUserTie size={24} className="my-auto mr-3" />
-                <label className="text-md tracking-wider my-auto">
-                  Service Provider
-                </label>
+              <div className="flex ml-10">
+                <InputGeneral
+                  type="radio"
+                  name="userType"
+                  value="Service Provider"
+                  reference={userTypeRef}
+                  checked={accountInput.userType === "Service Provider"}
+                  width={"10%"}
+                  onChange={handleChange}
+                />
+                <div className="flex ml-10">
+                  <FaUserTie size={24} className="my-auto mr-3" />
+                  <label className="text-md tracking-wider my-auto w-max">
+                    Service Provider
+                  </label>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Choose accessType */}
           <div className="mt-5">
-            <div className="flex flex-wrap justify-between">
+            <div className="flex flex-wrap justify-start">
               {/* label */}
               <div className="flex flex-wrap justify-start w-3/12">
                 <MdAccessibility size={18} className="my-auto mr-3" />
                 <h4 className="text-md tracking-widest my-auto">access:</h4>
               </div>
               {/* selection 1.*/}
-              <InputGeneral
-                type="radio"
-                name="accessType"
-                value="Public"
-                reference={accessTypeRef}
-                checked={accountInput.accessType === "Public"}
-                width={"3%"}
-                onChange={handleChange}
-              />
-              <div className="flex flex-wrap justify-start w-9/15">
-                <MdPublic size={24} className="my-auto mr-3" />
-                <label className="w-9/15 text-md tracking-wider my-auto">
-                  Public
-                </label>
+              <div className="flex ml-10">
+                <InputGeneral
+                  type="radio"
+                  name="accessType"
+                  value="Public"
+                  reference={accessTypeRef}
+                  checked={accountInput.accessType === "Public"}
+                  width={"10%"}
+                  onChange={handleChange}
+                />
+                <div className="flex ml-10">
+                  <MdPublic size={24} className="my-auto mr-3" />
+                  <label className="text-md tracking-wider my-auto w-max">
+                    Public
+                  </label>
+                </div>
               </div>
             </div>
-            <div className="flex flex-wrap justify-between mt-2">
+            <div className="flex flex-wrap justify-start mt-2">
               {/* label placeholder */}
               <div className="w-3/12"></div>
               {/* selection 2.*/}
-              <InputGeneral
-                type="radio"
-                name="accessType"
-                value="Private"
-                reference={accessTypeRef}
-                checked={accountInput.accessType === "Private"}
-                width={"3%"}
-                onChange={handleChange}
-              />
-              <div className="flex flex-wrap justify-start w-9/15">
-                <MdPrivateConnectivity size={24} className="my-auto mr-3" />
-                <label className="w-9/15 text-md tracking-wider my-auto">
-                  Private
-                </label>
+              <div className="flex ml-10">
+                <InputGeneral
+                  type="radio"
+                  name="accessType"
+                  value="Private"
+                  reference={accessTypeRef}
+                  checked={accountInput.accessType === "Private"}
+                  width={"10%"}
+                  onChange={handleChange}
+                />
+                <div className="flex ml-10">
+                  <MdPrivateConnectivity size={24} className="my-auto mr-3" />
+                  <label className="text-md tracking-wider my-auto w-max">
+                    Private
+                  </label>
+                </div>
               </div>
             </div>
           </div>
