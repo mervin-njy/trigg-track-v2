@@ -17,6 +17,12 @@ function useFetch(endpoint, requestOptions) {
     // );
 
     try {
+      // const response = await fetch(
+      //   `${
+      //     process.env.REACT_APP_BACKEND_URL || "http://127.0.0.1:5001"
+      //   }/${endpoint}`,
+      //   requestOptions
+      // );
       const response = await fetch(
         `https://trigg-track-v2-backend.vercel.app/${endpoint}`,
         requestOptions

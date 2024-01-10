@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 // import components
-// import NavBar from "./components/NavBar/NavBar";
+import NavBar from "/src/components/NavBar/NavBar";
 import LandingPage from "./components/account/LandingPage";
 import Home from "./components/home/Home";
 import AccountManager from "./components/admin/AccountManager";
@@ -22,12 +22,12 @@ function App() {
   return (
     <>
       {/* Navigation bar showing available routes for each user type --------------------------------------------------------------- */}
-      {/* {loggedUserData && (
+      {loggedUserData && (
         <NavBar
           userType={loggedUserData.userType}
           setLoggedUserData={setLoggedUserData}
         />
-      )} */}
+      )}
 
       <Routes>
         {/* Navigate to welcome or home - according to login status ---------------------------------------------------------------- */}
