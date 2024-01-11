@@ -244,7 +244,7 @@ const AccountDetails = ({
             </div>
 
             {/* field 2: password */}
-            <div className="mb-4 flex flex-wrap">
+            {/* <div className="mb-4 flex flex-wrap">
               <h2 className="my-auto w-3/10 text-2xl italic">password:</h2>
               {updateUser ? (
                 <TextAreaAdmin
@@ -259,7 +259,7 @@ const AccountDetails = ({
               ) : (
                 <h2 className="my-auto w-7/10 text-2xl italic">********</h2>
               )}
-            </div>
+            </div> */}
 
             {/* field 3: profession */}
             <div className="mb-4 flex flex-wrap">
