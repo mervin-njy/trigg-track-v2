@@ -225,8 +225,8 @@ const AccountDetails = ({
 
           <div className="w-7/12">
             {/* field 1: alias */}
-            <div className="flex flex-wrap mb-4">
-              <h2 className="w-3/10 my-auto text-2xl italic">alias:</h2>
+            <div className="mb-4 flex flex-wrap">
+              <h2 className="my-auto w-3/10 text-2xl italic">alias:</h2>
               {updateUser ? (
                 <TextAreaAdmin
                   type="text"
@@ -237,15 +237,35 @@ const AccountDetails = ({
                   required={true}
                 />
               ) : (
-                <h2 className="w-7/10 my-auto text-2xl italic">
+                <h2 className="my-auto w-7/10 text-2xl italic">
                   {info.displayName}
                 </h2>
               )}
             </div>
 
-            {/* field 2: alias */}
-            <div className="flex flex-wrap mb-4">
-              <h2 className="w-3/10 my-auto text-2xl italic">profession:</h2>
+            {/* field 2: password */}
+            <div className="mb-4 flex flex-wrap">
+              <h2 className="my-auto w-3/10 text-2xl italic">password:</h2>
+              {updateUser ? (
+                <TextAreaAdmin
+                  type="password"
+                  name="profession"
+                  value={info.password}
+                  margin={"0.2rem 0"}
+                  width={"70%"}
+                  onChange={handleChange}
+                  required={true}
+                />
+              ) : (
+                <h2 className="my-auto w-7/10 text-2xl italic">
+                  {info.profession}
+                </h2>
+              )}
+            </div>
+
+            {/* field 3: profession */}
+            <div className="mb-4 flex flex-wrap">
+              <h2 className="my-auto w-3/10 text-2xl italic">profession:</h2>
               {updateUser ? (
                 <TextAreaAdmin
                   type="text"
@@ -257,15 +277,15 @@ const AccountDetails = ({
                   required={true}
                 />
               ) : (
-                <h2 className="w-7/10 my-auto text-2xl italic">
+                <h2 className="my-auto w-7/10 text-2xl italic">
                   {info.profession}
                 </h2>
               )}
             </div>
 
-            {/* field 3: email */}
-            <div className="flex flex-wrap mb-4">
-              <h2 className="w-3/10 my-auto text-2xl italic">email:</h2>
+            {/* field 4: email */}
+            <div className="mb-4 flex flex-wrap">
+              <h2 className="my-auto w-3/10 text-2xl italic">email:</h2>
               {updateUser ? (
                 <TextAreaAdmin
                   type="text"
@@ -277,13 +297,13 @@ const AccountDetails = ({
                   required={true}
                 />
               ) : (
-                <h2 className="w-7/10 my-auto text-2xl italic">{info.email}</h2>
+                <h2 className="my-auto w-7/10 text-2xl italic">{info.email}</h2>
               )}
             </div>
 
-            {/* field 4: bio */}
-            <div className="flex flex-wrap mb-4">
-              <h2 className="w-3/10 my-auto text-2xl italic">bio:</h2>
+            {/* field 5: bio */}
+            <div className="mb-4 flex flex-wrap">
+              <h2 className="my-auto w-3/10 text-2xl italic">bio:</h2>
               {updateUser ? (
                 <TextAreaAdmin
                   type="text"
@@ -295,14 +315,15 @@ const AccountDetails = ({
                   required={true}
                 />
               ) : (
-                <h2 className="w-7/10 my-auto text-2xl italic">{info.bio}</h2>
+                <h2 className="my-auto w-7/10 text-2xl italic">{info.bio}</h2>
               )}
             </div>
           </div>
         </div>
+
         {/* confirmation icons */}
         {updateUser && (
-          <div className="flex flex-wrap justify-end mt-auto ml-auto">
+          <div className="mt-auto ml-auto flex flex-wrap justify-end">
             <MdClose
               size={30}
               className="mr-4 cursor-pointer text-main2 hover:text-orangeMain hover:shadow-xl"
@@ -321,8 +342,8 @@ const AccountDetails = ({
       {deleteUser && (
         <div className="my-12 flex flex-wrap">
           <div className="w-8/12"></div>
-          <h2 className="text-2xl text-center">Confirm delete?</h2>
-          <div className="flex flex-wrap justify-end mt-auto ml-auto">
+          <h2 className="text-center text-2xl">Confirm delete?</h2>
+          <div className="mt-auto ml-auto flex flex-wrap justify-end">
             <MdClose
               size={30}
               className="mr-4 cursor-pointer text-main2 hover:text-orangeMain hover:shadow-xl"
@@ -342,7 +363,7 @@ const AccountDetails = ({
         <>
           {!isLoading && data && (
             <div className="my-12">
-              <h2 className="text-2xl text-center">{data.message}</h2>
+              <h2 className="text-center text-2xl">{data.message}</h2>
             </div>
           )}
 
@@ -355,7 +376,7 @@ const AccountDetails = ({
           {/* Display error message if fetch has an error */}
           {!isLoading && error && (
             <div className="my-12">
-              <h2 className="text-2xl text-center">{error}</h2>
+              <h2 className="text-center text-2xl">{error}</h2>
             </div>
           )}
         </>
