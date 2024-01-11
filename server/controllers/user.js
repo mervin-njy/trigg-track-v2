@@ -173,8 +173,9 @@ const updateUser = async (req, res) => {
 
     // b. check if same
     const currentHash = userPasswordResult.rows[0].hash;
+    const isSamePassword = await bcrypt.compare(req.body.password, currentHash);
 
-    const hash = bcrypt.compare(req.body.password, currentHash)
+    const hash = isSamePassword
       ? currentHash // no changes
       : await bcrypt.hash(req.body.password, 12); // update to new hash
 
