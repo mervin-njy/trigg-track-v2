@@ -249,7 +249,7 @@ const AccountDetails = ({
               {updateUser ? (
                 <TextAreaAdmin
                   type="password"
-                  name="profession"
+                  name="password"
                   value={info.password}
                   margin={"0.2rem 0"}
                   width={"70%"}
@@ -258,7 +258,7 @@ const AccountDetails = ({
                 />
               ) : (
                 <h2 className="my-auto w-7/10 text-2xl italic">
-                  {info.profession}
+                  {info.password}
                 </h2>
               )}
             </div>
