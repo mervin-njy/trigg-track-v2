@@ -182,7 +182,11 @@ const updateUser = async (req, res) => {
     );
 
     console.log("updated user:", updatedUser.rows);
-    res.json({ status: "okay", message: "user profile has been updated" });
+    res.json({
+      status: "okay",
+      message:
+        "user profile has been updated to" + JSON.stringify(updatedUser.rows),
+    });
   } catch (error) {
     console.log("PATCH /updateUser", error);
     res.status(400).json({ status: "error", message: error.message });
