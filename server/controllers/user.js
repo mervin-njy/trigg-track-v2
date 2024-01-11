@@ -164,8 +164,21 @@ const getUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-    // 1. rehash given password
-    const hash = await bcrypt.hash(req.body.password, 12);
+    // 1. rehash given password if password was changed
+    // a. get user's current password
+    const userPassword = await pool.query(
+      `SELECT "hash" FROM "user" WHERE "username" = $1`,
+      [req.body.username]
+    );
+
+    // b. check if same
+    const hash = bcrypt.compare(req.body.password, userPassword)
+      ? req.body.password // no changes
+      : await bcrypt.hash(req.body.password, 12); // update to new hash
+    // const hash =
+    //   userPassword === req.body.password
+    //     ? userPassword
+    //     : await bcrypt.hash(req.body.password, 12);
 
     // 2. pass all other info (whether changed or not) EXCEPT for username
     const updatedUser = await pool.query(
@@ -184,8 +197,7 @@ const updateUser = async (req, res) => {
     console.log("updated user:", updatedUser.rows);
     res.json({
       status: "okay",
-      message:
-        "user profile has been updated to" + JSON.stringify(updatedUser.rows),
+      message: "user profile has been updated.",
     });
   } catch (error) {
     console.log("PATCH /updateUser", error);
