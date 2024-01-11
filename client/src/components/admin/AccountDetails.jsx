@@ -257,9 +257,7 @@ const AccountDetails = ({
                   required={true}
                 />
               ) : (
-                <h2 className="my-auto w-7/10 text-2xl italic">
-                  {info.password}
-                </h2>
+                <h2 className="my-auto w-7/10 text-2xl italic">********</h2>
               )}
             </div>
 
